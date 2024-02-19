@@ -1,10 +1,14 @@
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
-import { Home } from '../screens/Home'
 import { Text, View } from 'react-native'
+
 import { Ofertas } from '../screens/Ofertas'
+import { Home } from '../screens/Home'
+import { Carrinho } from '../screens/Carrinho'
+
+import Cart from '../../assets/svgs/cart.svg'
+import HomeIcon from '../../assets/svgs/Home-m.svg'
 
 export function AppRoutes() {
 
@@ -49,10 +53,11 @@ export function AppRoutes() {
                   paddingBottom: 10,
                   height: '100%', alignItems: 'center', justifyContent: 'center'
                 }}>
+                  <HomeIcon/>
                   <Text style={{
-                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#009c3d'
+                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
                   }}>
-                    Inicío feferf
+                    Inicío
                   </Text>
                 </View>
               ) :
@@ -63,10 +68,51 @@ export function AppRoutes() {
                     paddingBottom: 10,
                     height: '100%', alignItems: 'center', justifyContent: 'center'
                   }}>
+                    <HomeIcon/>
                     <Text style={{
                       fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
+
                       Inicío
+                    </Text>
+                  </View>
+                )
+            )
+          }}
+        />
+        <Tab.Screen 
+          name="Carrinho" 
+          component={Carrinho}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? (
+                <View style={{
+                  width: '100%',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <Cart/>
+                  <Text style={{
+                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
+                  }}>
+                    Carrinho
+                  </Text>
+                </View>
+              ) :
+                (
+                  <View style={{
+                    width: '100%',
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <Cart/>
+                    <Text style={{
+                      fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
+                    }}>
+                      
+                      Carrinho
                     </Text>
                   </View>
                 )

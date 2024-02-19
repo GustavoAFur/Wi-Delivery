@@ -8,7 +8,7 @@ import Search from '../../../assets/svgs/search.svg'
 //@ts-ignore
 export function Home({navigation}) {
   return (
-    <View style={{ backgroundColor: '#fff', width: '100%', flex: 1 }}>
+    <View style={{ width: '100%', flex: 1 }}>
 
     <StatusBar
       translucent
@@ -295,6 +295,8 @@ export const styles = StyleSheet.create({
   },
   sectionsImg: {
     backgroundColor: '#f7f49c',
+    borderColor: '#f00',
+    borderWidth: 1,
     width: 78,
     height: 78,
     borderRadius: 39,
@@ -318,14 +320,13 @@ export const styles = StyleSheet.create({
   ofertasItem: {
     borderWidth: 1,
     borderColor:'#d2d2d2',
+    backgroundColor: '#fff',
     width: 140,
     height: 190,
     borderRadius: 10,
     marginRight: 10,
     overflow: 'hidden'
   },
-  
- 
   novidadesInfo:{
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -338,6 +339,7 @@ export const styles = StyleSheet.create({
   novidadesItem: {
     borderWidth: 1,
     borderColor: '#d2d2d2',
+    backgroundColor: '#fff',
     width: 220,
     height: 130,
     borderRadius: 10,
