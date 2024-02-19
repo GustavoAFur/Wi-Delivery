@@ -1,9 +1,10 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Home } from '../screens/Home'
 import { Text, View } from 'react-native'
+import { Ofertas } from '../screens/Ofertas'
 
 export function AppRoutes() {
 
@@ -85,7 +86,13 @@ export function AppRoutes() {
 
       <Screen name="TabNavigation" component={TabNavigation} />
       <Screen name="Home" component={Home} />
-
+      <Screen 
+        name="Ofertas" 
+        component={Ofertas}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
     </Navigator>
   )
 }

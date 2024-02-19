@@ -5,7 +5,8 @@ import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpa
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
 import Search from '../../../assets/svgs/search.svg'
 
-export function Home() {
+//@ts-ignore
+export function Home({navigation}) {
   return (
     <View style={{ backgroundColor: '#fff', width: '100%', flex: 1 }}>
 
@@ -35,20 +36,18 @@ export function Home() {
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 16,
-        marginTop: 20
+        marginTop: 20,
+        paddingLeft: 10
       }}>
+        <Search width={20} height={20} />
         <TextInput
           placeholder='Pesquisar Produto'
           placeholderTextColor={'#d2d2d2'}
           style={styles.input} />
-        <Search width={20} height={20} />
       </View>
-
-
 
     </View>
     <ScrollView>
-
 
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         <View style={styles.sectionsItens}>
@@ -141,10 +140,14 @@ export function Home() {
             fontFamily: 'Manrope-SemiBold',
           }}
           >Ofertas do dia</Text>
-          <TouchableOpacity style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+          <TouchableOpacity 
+            onPress={()=>{
+              navigation.navigate('Ofertas')
+            }}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
           }}>
             <Text style={{ color: '#EB3738', paddingRight: 5 }}>Ver mais</Text>
             <ArrowRight width={10} height={10} />
