@@ -82,7 +82,7 @@ export function Ofertas({navigation}) {
           </View>
           <View style={styles.detailsProd}>
             <View>
-              <Text style={{ color: '#000', fontSize: 15 }}>Arroz Camil</Text>
+              <Text style={{ color: '#000', fontSize: 15 }}>Arroz Branco Camil Kg</Text>
             </View>
             
             <View>
@@ -95,7 +95,6 @@ export function Ofertas({navigation}) {
                   <Text style={{ color: '#fff', }}>Adicionar</Text>
                 </View>
             </View>
-              
             
           </View>
         </View>
