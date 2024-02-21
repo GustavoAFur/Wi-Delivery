@@ -49,10 +49,12 @@ export function Home({navigation}) {
           paddingLeft: 10
         }}>
           <Search width={20} height={20} />
-          <TextInput
-            placeholder='Pesquisar Produto'
-            placeholderTextColor={'#d2d2d2'}
-            style={styles.input} />
+          <TouchableOpacity 
+            style={styles.input}
+            onPress={()=>{navigation.navigate('Procurar')}}
+          >
+            <Text style={{color: '#c6c6c6', fontSize: 15}}>Pesquisar Produto</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -241,11 +243,9 @@ export const styles = StyleSheet.create({
     width:'88%',
     height: 45,
     alignSelf:'center',
-    
     borderRadius: 16,
     paddingLeft: 20,
-    color: '#000',
-
+    justifyContent: 'center'
   },
   header: {
     backgroundColor:'#F2B705',

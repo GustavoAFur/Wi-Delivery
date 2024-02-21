@@ -95,7 +95,7 @@ export function Ofertas({navigation}) {
                   <Text style={{ color: '#fff', }}>Adicionar</Text>
                 </View>
             </View>
-            
+
           </View>
         </View>
 
@@ -126,9 +126,9 @@ export const styles = StyleSheet.create({
 
   },
   btnAdicionar: {
-    backgroundColor: '#f00',
+    backgroundColor: '#D9042B',
     width: '100%',
-    height: 32,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10
