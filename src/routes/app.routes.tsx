@@ -6,9 +6,11 @@ import { Text, View } from 'react-native'
 import { Ofertas } from '../screens/Ofertas'
 import { Home } from '../screens/Home'
 import { Carrinho } from '../screens/Carrinho'
+import { Procurar } from '../screens/Procurar'
 
 import Cart from '../../assets/svgs/cart.svg'
 import HomeIcon from '../../assets/svgs/Home-m.svg'
+import Search from '../../assets/svgs/search-prod.svg'
 
 export function AppRoutes() {
 
@@ -81,6 +83,45 @@ export function AppRoutes() {
           }}
         />
         <Tab.Screen 
+          name="Procurar" 
+          component={Procurar}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? (
+                <View style={{
+                  width: '100%',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <Search/>
+                  <Text style={{
+                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
+                  }}>
+                    Procurar
+                  </Text>
+                </View>
+              ) :
+                (
+                  <View style={{
+                    width: '100%',
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <Search />
+                    <Text style={{
+                      fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
+                    }}>
+                      
+                      Procurar
+                    </Text>
+                  </View>
+                )
+            )
+          }}
+        />
+        <Tab.Screen 
           name="Carrinho" 
           component={Carrinho}
           options={{
@@ -119,6 +160,7 @@ export function AppRoutes() {
             )
           }}
         />
+        
       </Tab.Navigator>
     )
   }

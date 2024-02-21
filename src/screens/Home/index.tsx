@@ -21,41 +21,41 @@ export function Home({navigation}) {
       translucent
       backgroundColor={"#F2B705"}
       barStyle={"light-content"} />
-    <View style={styles.header}>
-      <View style={styles.details}>
+    
+    <ScrollView contentContainerStyle={styles.scrollViewMain}>
+      <View style={styles.header}>
+        <View style={styles.details}>
 
-        <View style={styles.userDetails}>
-          <Text style={{ fontWeight: 'bold', color: '#c6c6c6', fontSize: 12 }}>Loja 1 - Reriutaba</Text>
-          <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>Gustavo Furtado</Text>
+          <View style={styles.userDetails}>
+            <Text style={{ fontWeight: 'bold', color: '#c6c6c6', fontSize: 12 }}>Loja 1 - Reriutaba</Text>
+            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>Gustavo Furtado</Text>
+          </View>
+          <View style={styles.perfil}>
+            <Image
+              source={require('../../../assets/images/mercado.png')}
+              style={{width: 56, height: 56}}
+            />
+          </View>
         </View>
-        <View style={styles.perfil}>
-          <Image
-            source={require('../../../assets/images/mercado.png')}
-            style={{width: 56, height: 56}}
-          />
+        <View style={{
+          width: '90%',
+          height: 45,
+          backgroundColor: '#fff',
+          flexDirection: 'row',
+          alignItems: 'center',
+          alignSelf: 'center',
+          borderRadius: 16,
+          marginTop: 20,
+          paddingLeft: 10
+        }}>
+          <Search width={20} height={20} />
+          <TextInput
+            placeholder='Pesquisar Produto'
+            placeholderTextColor={'#d2d2d2'}
+            style={styles.input} />
         </View>
-      </View>
-      <View style={{
-        width: '90%',
-        height: 45,
-        backgroundColor: '#fff',
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'center',
-        borderRadius: 16,
-        marginTop: 20,
-        paddingLeft: 10
-      }}>
-        <Search width={20} height={20} />
-        <TextInput
-          placeholder='Pesquisar Produto'
-          placeholderTextColor={'#d2d2d2'}
-          style={styles.input} />
-      </View>
 
-    </View>
-    <ScrollView>
-
+      </View>
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         <View style={styles.sectionsItens}>
           <View style={styles.sectionsImg}>
@@ -252,6 +252,7 @@ export const styles = StyleSheet.create({
     width:'100%', 
     height: 155,
     marginTop: 35,
+    paddingTop: 15
   },
   details: {
     flexDirection: 'row',
@@ -288,6 +289,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 40
   },
+  scrollViewMain: {
+    paddingBottom: 50
+  },
   sectionsItens: {
     width: 88,
     height: 108,
@@ -301,7 +305,7 @@ export const styles = StyleSheet.create({
     marginBottom:10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 15,
     borderColor:'#d2d2d2',
     borderWidth: .5,
   },

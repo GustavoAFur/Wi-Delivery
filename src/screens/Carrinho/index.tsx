@@ -6,8 +6,8 @@ import { getStatusBarHeight } from 'react-native-status-bar-height'
 import ScreenBack from '../../../assets/svgs/arrow-right.svg'
 import Menos from '../../../assets/svgs/menos.svg'
 import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
-import Left from '../../../assets/svgs/close-left.svg'
-import Right from '../../../assets/svgs/close-right.svg'
+import Close from '../../../assets/svgs/close.svg'
+
 
 
 //@ts-ignore
@@ -18,6 +18,7 @@ export function Carrinho({navigation}) {
       width: width,
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
+      flex: 1
     }}>
       <View style={{
         width: width,
@@ -25,88 +26,123 @@ export function Carrinho({navigation}) {
         marginTop: 0,
         height: 60,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         flexDirection: 'row',
         backgroundColor: '#fff',
-        
         borderBottomColor: '#E2E2E2',
         borderBottomWidth: .5
       }}>
-        <View>
-          <TouchableOpacity
-            onPress={()=>{
-              //@ts-ignore
-              navigation.goBack()
-            }}
-          >
-            <ScreenBack  width={20} height={20}/>
-          </TouchableOpacity>
-        </View>
-        
         <View style={{alignItems: 'center'}}>
           <Text style={{
             fontSize: 20,
             alignSelf:'center',
             color: '#323232',}}
           >
-            Carrinho
+            Meu Carrinho
           </Text>
         </View>
-        <View style={{width: 20, height: 20}}></View>
       </View>
       <ScrollView style={{backgroundColor:'#fff'}}>
         <View style={styles.prodsCar}>
-            <View style={{width: '72%', height:'84%', flexDirection:'row'}}>
-              <View style={{width: '30%', height:'100%', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{
+              width: '72%', 
+              height:'84%', 
+              flexDirection:'row', 
+              alignItems: 'center'
+            }}>
+              <View style={{
+                width: '30%', 
+                height:'100%', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
                 <Image source={require('../../../assets/images/coca.png')}/>
               </View>
-              <View style={{width: '70%', height:'100%'}}>
+              <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
                   <Text style={{color: '#000', fontWeight: 'bold'}}>Coca-Cola</Text>
                   <Text style={{color: '#7C7C7C'}}>350 ml</Text>
                 </View>
-                <View style={{ width: '100%', height:'50%', flexDirection: 'row', alignItems: 'center', gap: 10, paddingLeft: 6}}>
+                <View style={{ 
+                  width: '100%', 
+                  height:'50%', 
+                  flexDirection: 'row',
+                  alignItems: 'center', 
+                  gap: 14, 
+                  paddingLeft: 6,
+                }}>
                   <View style={styles.menosMais}>
-                    <Menos  width={20} height={20}/>
+                    <Menos  width={15} height={15}/>
                   </View>
                   <View>
-                    <Text style={{color: '#000'}}>1</Text>
+                    <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>1</Text>
                   </View>
                   <View style={styles.menosMais}>
-                    <Mais  width={20} height={20} fill="#333"/>
+                    <Mais  width={15} height={15} fill="#333"/>
                   </View>
                 </View>
               </View>
               
             </View>
 
-            <View style={{width: '18%', height:'60%', justifyContent: 'space-between', alignItems: 'flex-end'}}>
-              <View style={{flexDirection: 'row', alignItems: 'center',justifyContent: 'center',paddingHorizontal: 10,}}>
-                <Right  width={20} height={20} style={styles.close}/>
-                <Left  width={20} height={20} style={styles.close}/>
+            <View style={{
+              width: '22%', 
+              height:'50%', 
+              justifyContent: 'space-between', 
+              alignItems: 'flex-end'
+            }}>
+              <View style={{
+                flexDirection: 'row', 
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 10,
+              }}>
+                <Close  width={15} height={15}/>
+                
               </View>
               <View>
-                <Text style={{color: '#000'}}>R$ 3,49</Text>
+                <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>R$ 3,49</Text>
               </View>
             </View>
             
         </View>
-        <View style={styles.prodsCar}>
-
-        </View>
+         
       </ScrollView>
+
+      <View style={{
+        width: '100%',
+        position: 'absolute',
+        bottom: 85, // Ajuste conforme necessário
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+      }}>
+        
+        <TouchableOpacity style={{
+          backgroundColor: '#F2B705',
+          paddingHorizontal: 76,
+          paddingVertical: 13,
+          borderRadius: 10
+        }}>
+          <Text style={{
+            fontSize: 16,
+            fontWeight: 'bold'
+          }}>Finalizar Compra</Text>
+        </TouchableOpacity>
+      </View> 
 
     </View>
   );
 }
 export const styles = StyleSheet.create({
   prodsCar: {
-    width: '100%',
-    height: 150,
+    width: '92%',
+    height: 140,
     borderBottomColor: '#E2E2E2',
-    borderBottomWidth: .5,
+    borderBottomWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     flexDirection: 'row'
   },
   menosMais: {
@@ -118,7 +154,5 @@ export const styles = StyleSheet.create({
     borderColor:'#d2d2d2',
     borderWidth: .5,
   },
-  close: { 
-    marginRight:-13
-  }
+  
 })
