@@ -57,7 +57,7 @@ export function AppRoutes() {
                 }}>
                   <HomeIcon/>
                   <Text style={{
-                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
                   }}>
                     Inicío
                   </Text>
@@ -72,7 +72,7 @@ export function AppRoutes() {
                   }}>
                     <HomeIcon/>
                     <Text style={{
-                      fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
                       Inicío
@@ -96,7 +96,7 @@ export function AppRoutes() {
                 }}>
                   <Search/>
                   <Text style={{
-                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
                   }}>
                     Procurar
                   </Text>
@@ -111,7 +111,7 @@ export function AppRoutes() {
                   }}>
                     <Search />
                     <Text style={{
-                      fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
                       
                       Procurar
@@ -135,7 +135,7 @@ export function AppRoutes() {
                 }}>
                   <Cart/>
                   <Text style={{
-                    fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
                   }}>
                     Carrinho
                   </Text>
@@ -150,7 +150,7 @@ export function AppRoutes() {
                   }}>
                     <Cart/>
                     <Text style={{
-                      fontFamily: 'Inter-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
                       
                       Carrinho

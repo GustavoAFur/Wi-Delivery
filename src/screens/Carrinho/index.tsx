@@ -1,18 +1,17 @@
-import React from 'react';
-import { View, Text, Dimensions, StyleSheet,  Image} from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import React from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { View, Text, Dimensions, StyleSheet,  Image, StatusBar} from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
 import Menos from '../../../assets/svgs/menos.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
 import Close from '../../../assets/svgs/close.svg'
-
-
+import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
 
 //@ts-ignore
 export function Carrinho({navigation}) {
+
   const { width, height } = Dimensions.get("window")
+
   return (
     <View style={{ 
       width: width,
@@ -20,6 +19,13 @@ export function Carrinho({navigation}) {
       paddingTop: getStatusBarHeight(),
       flex: 1
     }}>
+
+
+    <StatusBar
+      translucent
+      backgroundColor={"#FFFF"}
+      barStyle={"dark-content"} />
+
       <View style={{
         width: width,
         paddingHorizontal: 20,
@@ -34,9 +40,11 @@ export function Carrinho({navigation}) {
       }}>
         <View style={{alignItems: 'center'}}>
           <Text style={{
-            fontSize: 20,
+            fontSize: 18,
             alignSelf:'center',
-            color: '#323232',}}
+            color: '#323232',
+            fontFamily: 'Manrope-SemiBold'
+          }}
           >
             Meu Carrinho
           </Text>
@@ -104,7 +112,7 @@ export function Carrinho({navigation}) {
                 
               </View>
               <View>
-                <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>R$ 3,49</Text>
+                <Text style={{color: '#000',fontFamily: 'Manrope-SemiBold', fontSize: 18}}>R$ 3,49</Text>
               </View>
             </View>
             
@@ -114,29 +122,32 @@ export function Carrinho({navigation}) {
 
       <View style={{
         width: '100%',
-        height: 230,
-        //backgroundColor: '#F0f',
+        height: 250,
         position: 'absolute',
         bottom: 0, // Ajuste conforme necessário
         left: 0,
         right: 0,
         alignItems: 'center',
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 2,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        shadowColor: "#0005",
+        shadowOffset: {
+          width: 0,
+          height: -4,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: -4.65,
+        
+        elevation: 2,
       }}>
         <View style={{width: '100%',height: '50%', paddingHorizontal: 30, paddingTop: 30, gap: 15}}>
           <View style={styles.detalhesEntrega}>
-            <Text style={{color: '#000'}}>Total:</Text>
-            <Text style={{color: '#000', fontWeight: 'bold'}}>R$ 3,49</Text>
+            <Text style={{color: '#000', fontFamily: 'Manrope-SemiBold'}}>Total:</Text>
+            <Text style={{color: '#000', fontFamily: 'Manrope-Bold'}}>R$ 3,49</Text>
           </View>
           <View style={styles.detalhesEntrega}>
-            <Text style={{color: '#000'}}>Total min. por distancia(3Km):</Text>
-            <Text style={{color: '#000', fontWeight: 'bold'}}>R$ 50,00</Text>
+            <Text style={{color: '#000', fontFamily: 'Manrope-SemiBold'}}>Total min. por distancia(3Km):</Text>
+            <Text style={{color: '#000', fontFamily: 'Manrope-Bold'}}>R$ 50,00</Text>
           </View>
         </View>
 
@@ -146,15 +157,15 @@ export function Carrinho({navigation}) {
           paddingHorizontal: 72,
           paddingVertical: 15,
           borderRadius: 10,
+          bottom: 15,
           flexDirection: 'row',
           gap: 7,
           alignItems: 'center'
         }}>
           <Text style={{
             fontSize: 18,
-            fontWeight: 'bold',
             color: '#fff',
-            fontFamily: 'Manrope-Light',
+            fontFamily: 'Manrope-SemiBold',
           }}>Finalizar Compra</Text>
           
         </TouchableOpacity>

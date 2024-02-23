@@ -27,8 +27,8 @@ export function Home({navigation}) {
         <View style={styles.details}>
 
           <View style={styles.userDetails}>
-            <Text style={{ fontWeight: 'bold', color: '#B3B3B3', fontSize: 12 }}>Loja 1 - Reriutaba</Text>
-            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>Gustavo Furtado</Text>
+            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 12,  fontFamily: 'Manrope-SemiBold',  }}>Loja 1 - Reriutaba</Text>
+            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15,  fontFamily: 'Manrope-SemiBold',  }}>Gustavo Furtado</Text>
           </View>
           <View style={styles.perfil}>
             <Image
@@ -44,7 +44,7 @@ export function Home({navigation}) {
           flexDirection: 'row',
           alignItems: 'center',
           alignSelf: 'center',
-          borderRadius: 16,
+          borderRadius: 10,
           marginTop: 20,
           paddingLeft: 10
         }}>
@@ -53,7 +53,7 @@ export function Home({navigation}) {
             style={styles.input}
             onPress={()=>{navigation.navigate('Procurar')}}
           >
-            <Text style={{color: '#c6c6c6', fontSize: 15}}>Pesquisar Produto</Text>
+            <Text style={{color: '#c6c6c6', fontSize: 15,  fontFamily: 'Manrope-SemiBold', }}>Pesquisar Produto</Text>
           </TouchableOpacity>
         </View>
 
@@ -67,6 +67,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Cereais</Text>
           </View>
         </View>
@@ -78,6 +79,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Açougue</Text>
           </View>
         </View>
@@ -89,6 +91,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Horti-Fruti
             </Text>
           </View>
@@ -102,6 +105,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Perfumaria
             </Text>
           </View>
@@ -114,6 +118,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Limpeza
             </Text>
           </View>
@@ -126,6 +131,7 @@ export function Home({navigation}) {
             <Text style={{
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Manrope-SemiBold', 
             }}>Mais
             </Text>
           </View>
@@ -159,7 +165,7 @@ export function Home({navigation}) {
 
 
         </View>
-        <ScrollView horizontal contentContainerStyle={styles.scrollViewContentOfertasNews}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}  contentContainerStyle={styles.scrollViewContentOfertasNews}>
           <View style={styles.ofertasItem}>
             <View style={{
               backgroundColor: '#D9042B',
@@ -174,7 +180,7 @@ export function Home({navigation}) {
             }}>
               <Text style={{
                 color: '#fff',
-                fontWeight: 'bold',
+                fontFamily: 'Manrope-SBold',
               }}>Oferta</Text>
             </View>
 
@@ -185,18 +191,15 @@ export function Home({navigation}) {
           </View>
           <View style={styles.detailsProd}>
             <View>
-              <Text style={{ color: '#000', fontSize: 15 }}>Arroz Branco Camil Kg</Text>
+              <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>Arroz Branco Camil Kg</Text>
             </View>
             
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                  <Text style={{ color: '#000', fontSize: 14 }}>R$ 5,85</Text>
-                  <Text style={{ color: '#000', fontSize: 8 }}> Und</Text>
+                  <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ 5,85</Text>
+                  <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> Und</Text>
                 </View>
-
-                <View style={styles.btnAdicionar}>
-                  <Text style={{ color: '#fff', }}>Adicionar</Text>
-                </View>
+                
             </View>
 
             </View>
@@ -227,7 +230,7 @@ export function Home({navigation}) {
             <ArrowRight width={10} height={10} />
           </TouchableOpacity>
         </View>
-        <ScrollView horizontal contentContainerStyle={styles.scrollViewContentNews}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContentNews}>
           <View style={styles.novidadesItem}></View>
           <View style={styles.novidadesItem}></View>
           <View style={styles.novidadesItem}></View>
@@ -331,10 +334,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   ofertasItem: {
-    borderWidth: .5,
+    borderWidth: 0.5,
     borderColor:'#d2d2d2',
-    width: 110,
-    height: 198,
+    width: 140,
+    height: 200,
     borderRadius: 10,
     marginBottom: 10,
     marginRight: 10,
