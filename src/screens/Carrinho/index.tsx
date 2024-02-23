@@ -56,7 +56,10 @@ export function Carrinho({navigation}) {
                 alignItems: 'center', 
                 justifyContent: 'center'
               }}>
-                <Image source={require('../../../assets/images/coca.png')}/>
+                <Image 
+                  source={require('../../../assets/images/coca.png')}
+                  style={styles.imageStyle}
+                />
               </View>
               <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
@@ -120,14 +123,26 @@ export function Carrinho({navigation}) {
         
         <TouchableOpacity style={{
           backgroundColor: '#F2B705',
-          paddingHorizontal: 76,
-          paddingVertical: 13,
-          borderRadius: 10
+          paddingHorizontal: 52,
+          paddingVertical: 15,
+          borderRadius: 10,
+          flexDirection: 'row',
+          gap: 7,
+          alignItems: 'center'
         }}>
           <Text style={{
-            fontSize: 16,
-            fontWeight: 'bold'
-          }}>Finalizar Compra</Text>
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: '#fff',
+            fontFamily: 'Manrope-Light',
+          }}>Finalizar Compra:</Text>
+          <Text style={{
+            fontSize: 13,
+            color: '#fff',
+            backgroundColor: '#e1a715',
+            borderRadius: 3,
+            padding: 4
+          }}>R$ 3,49</Text>
         </TouchableOpacity>
       </View> 
 
@@ -154,5 +169,9 @@ export const styles = StyleSheet.create({
     borderColor:'#d2d2d2',
     borderWidth: .5,
   },
-  
+  imageStyle: {
+    width: '60%', 
+    height: '60%',
+    resizeMode: 'contain',
+  },
 })

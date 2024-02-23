@@ -27,7 +27,7 @@ export function Home({navigation}) {
         <View style={styles.details}>
 
           <View style={styles.userDetails}>
-            <Text style={{ fontWeight: 'bold', color: '#c6c6c6', fontSize: 12 }}>Loja 1 - Reriutaba</Text>
+            <Text style={{ fontWeight: 'bold', color: '#B3B3B3', fontSize: 12 }}>Loja 1 - Reriutaba</Text>
             <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>Gustavo Furtado</Text>
           </View>
           <View style={styles.perfil}>
@@ -381,6 +381,7 @@ export const styles = StyleSheet.create({
     width: '86%', 
     height:'45%', 
     alignSelf: 'center', 
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    
   }
 });
