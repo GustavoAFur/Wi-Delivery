@@ -114,16 +114,36 @@ export function Carrinho({navigation}) {
 
       <View style={{
         width: '100%',
+        height: 230,
+        //backgroundColor: '#F0f',
         position: 'absolute',
-        bottom: 85, // Ajuste conforme necessário
+        bottom: 0, // Ajuste conforme necessário
         left: 0,
         right: 0,
         alignItems: 'center',
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 2,
       }}>
-        
-        <TouchableOpacity style={{
+        <View style={{width: '100%',height: '50%', paddingHorizontal: 30, paddingTop: 30, gap: 15}}>
+          <View style={styles.detalhesEntrega}>
+            <Text style={{color: '#000'}}>Total:</Text>
+            <Text style={{color: '#000', fontWeight: 'bold'}}>R$ 3,49</Text>
+          </View>
+          <View style={styles.detalhesEntrega}>
+            <Text style={{color: '#000'}}>Total min. por distancia(3Km):</Text>
+            <Text style={{color: '#000', fontWeight: 'bold'}}>R$ 50,00</Text>
+          </View>
+        </View>
+
+        <View>
+          <TouchableOpacity style={{
           backgroundColor: '#F2B705',
-          paddingHorizontal: 52,
+          paddingHorizontal: 72,
           paddingVertical: 15,
           borderRadius: 10,
           flexDirection: 'row',
@@ -135,15 +155,11 @@ export function Carrinho({navigation}) {
             fontWeight: 'bold',
             color: '#fff',
             fontFamily: 'Manrope-Light',
-          }}>Finalizar Compra:</Text>
-          <Text style={{
-            fontSize: 13,
-            color: '#fff',
-            backgroundColor: '#e1a715',
-            borderRadius: 3,
-            padding: 4
-          }}>R$ 3,49</Text>
+          }}>Finalizar Compra</Text>
+          
         </TouchableOpacity>
+        </View>
+        
       </View> 
 
     </View>
@@ -174,4 +190,11 @@ export const styles = StyleSheet.create({
     height: '60%',
     resizeMode: 'contain',
   },
+  detalhesEntrega: {
+    justifyContent: 'space-between', 
+    flexDirection: 'row', 
+    borderBottomColor: '#d2d2d2',
+    borderBottomWidth: .5,
+    
+  }
 })
