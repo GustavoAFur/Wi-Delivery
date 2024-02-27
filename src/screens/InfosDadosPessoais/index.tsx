@@ -1,24 +1,24 @@
-import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import TextInputMask from 'react-native-text-input-mask'
 import React from 'react'
-
+ 
 import ScreenBack from '../../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
 export function InfosDadosPessoais({navigation}) {
   const { width, height } = Dimensions.get("window")
   return (
-    <View style={{
-      width: width,
-      height: height +getStatusBarHeight(),
-      paddingTop: getStatusBarHeight(),
-    }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1, backgroundColor: '#fff',}}>
+     
       <View style={{
+        paddingTop: getStatusBarHeight(),
         width: width,
         paddingHorizontal: 20,
-        height: 60,
+        height: 60+getStatusBarHeight(),
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -46,58 +46,70 @@ export function InfosDadosPessoais({navigation}) {
         <View style={{width: 20, height: 20}}></View>
       </View>
       <View style={{flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center'}}>
-        <View style={{ 
-            width: '86%',
-            marginTop: 25
-        }}>
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Nome</Text>
-            <TextInput
-              placeholder='Digite aqui...'
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            />
-          </View>
-
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Telefone</Text>
-            <TextInput
-              placeholder='Digite aqui...'
-              keyboardType="numeric" 
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            /> 
-          </View>
-
-          <View style={{
-            marginTop: 15,
+        
+          <View style={{ 
+              width: '86%',
+              height: '82%',
+              justifyContent: 'space-between',
+              marginTop: 25,
+              
           }}>
-            <TouchableOpacity  
-              style={{
-                width: '100%',
-                height: 55,
-                paddingHorizontal: 20,
-                justifyContent: 'center',
-                backgroundColor: '#F2B705',
-                borderRadius: 10,
-                alignItems: 'center'
-              }}
-              onPress={()=>{
-                navigation.navigate('InfosEndereco')
-              }}
-            >
-              <Text style={{
-                fontSize: 18,
-                fontFamily: 'Manrope-SemiBold',
-                color: '#fff',
-              }}>
-                Continuar
-              </Text>
-            </TouchableOpacity>
+            <View>
+              <View style={{marginBottom: 30}}>
+                <Text style={styles.textos}>Nome</Text>
+                <TextInput
+                  placeholder='Digite aqui...'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                />
+              </View>
+
+              <View style={{marginBottom: 30}}>
+                <Text style={styles.textos}>Telefone</Text>
+                <TextInput 
+                  placeholder='Digite aqui...'
+                  keyboardType="numeric" 
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                /> 
+              </View>
+            </View>
+            
+            
+            <View style={{
+              marginTop: 15,
+            }}>
+              <TouchableOpacity  
+                style={{
+                  width: '100%',
+                  height: 55,
+                  paddingHorizontal: 20,
+                  justifyContent: 'center',
+                  backgroundColor: '#F2B705',
+                  borderRadius: 10,
+                  alignItems: 'center'
+                }}
+                onPress={()=>{
+                  navigation.navigate('InfosEndereco')
+                }}
+              >
+                <Text style={{
+                  fontSize: 18,
+                  fontFamily: 'Manrope-SemiBold',
+                  color: '#fff',
+                }}>
+                  Continuar
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
+            
           </View>
-        </View>
+        
       </View>
-    </View>
+    
+      </KeyboardAvoidingView>
+    
   );
 }
 export const styles = StyleSheet.create({

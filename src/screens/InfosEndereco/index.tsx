@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
+import { View, Text, Dimensions, TextInput, StyleSheet , KeyboardAvoidingView, Platform} from 'react-native'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
@@ -9,15 +9,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export function InfosEndereco({navigation}) {
   const { width, height } = Dimensions.get("window")
   return (
-    <View style={{
-      width: width,
-      height: height +getStatusBarHeight(),
-      paddingTop: getStatusBarHeight(),
-    }}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={{flex: 1, backgroundColor: '#fff',}}>
       <View style={{
         width: width,
         paddingHorizontal: 20,
-        height: 60,
+        height: 60+getStatusBarHeight(),
+        paddingTop: getStatusBarHeight(),
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -48,54 +47,58 @@ export function InfosEndereco({navigation}) {
       <View style={{flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center'}}>
         <View style={{ 
             width: '86%',
+            height: '82%',
+            justifyContent: 'space-between',
             marginTop: 25
         }}>
-          
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Bairro</Text>
-            <TextInput
-              placeholder='Digite aqui...'
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            />
-          </View>
-
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Rua</Text>
-            <TextInput
-              placeholder='Digite aqui...'
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            />
-          </View>
-
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Número</Text>
-            <TextInput
-              keyboardType='numeric'
-              placeholder='Número de construção/casa'
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            />
-          </View>  
-
-          <View style={{marginBottom: 30}}>
-              <Text style={styles.textos}>Complemento</Text>
+          <View>
+            <View style={{marginBottom: 30}}>
+              <Text style={styles.textos}>Bairro</Text>
               <TextInput
-                placeholder='Apartamento, edificio,...'
+                placeholder='Digite aqui...'
                 placeholderTextColor={'#f1f1f1'}
                 style={styles.inputs}
               />
             </View>
 
             <View style={{marginBottom: 30}}>
-              <Text style={styles.textos}>Referência</Text>
+              <Text style={styles.textos}>Rua</Text>
               <TextInput
-                placeholder='Perto de...'
+                placeholder='Digite aqui...'
                 placeholderTextColor={'#f1f1f1'}
                 style={styles.inputs}
               />
+            </View>
+
+            <View style={{marginBottom: 30}}>
+              <Text style={styles.textos}>Número</Text>
+              <TextInput
+                keyboardType='numeric'
+                placeholder='Número de construção/casa'
+                placeholderTextColor={'#f1f1f1'}
+                style={styles.inputs}
+              />
+            </View>  
+
+            <View style={{marginBottom: 30}}>
+                <Text style={styles.textos}>Complemento</Text>
+                <TextInput
+                  placeholder='Apartamento, edificio,...'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                />
+            </View>
+
+            <View style={{marginBottom: 30}}>
+                <Text style={styles.textos}>Referência</Text>
+                <TextInput
+                  placeholder='Perto de...'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                />
+            </View>
           </View>
+          
 
           <View style={{
             marginTop: 15,
@@ -125,7 +128,10 @@ export function InfosEndereco({navigation}) {
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
+    
+      
+    
   );
 }
 export const styles = StyleSheet.create({
