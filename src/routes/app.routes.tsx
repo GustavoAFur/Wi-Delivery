@@ -1,16 +1,21 @@
 import React from 'react'
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Text, View } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
-import { Ofertas } from '../screens/Ofertas'
 import { Home } from '../screens/Home'
-import { Carrinho } from '../screens/Carrinho'
+import { Perfil } from '../screens/Perfil'
+import { Ofertas } from '../screens/Ofertas'
 import { Procurar } from '../screens/Procurar'
+import { Carrinho } from '../screens/Carrinho'
+import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
 
 import Cart from '../../assets/svgs/cart.svg'
 import HomeIcon from '../../assets/svgs/Home-m.svg'
+import PerfilIcon from '../../assets/svgs/perfil.svg'
 import Search from '../../assets/svgs/search-prod.svg'
+import { InfosEndereco } from '../screens/InfosEndereco'
+import { InfosPagamento } from '../screens/InfosPagamento'
 
 export function AppRoutes() {
 
@@ -160,6 +165,45 @@ export function AppRoutes() {
             )
           }}
         />
+        <Tab.Screen 
+          name="Perfil" 
+          component={Perfil}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              focused ? (
+                <View style={{
+                  width: '100%',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <PerfilIcon/>
+                  <Text style={{
+                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
+                  }}>
+                    Perfil
+                  </Text>
+                </View>
+              ) :
+                (
+                  <View style={{
+                    width: '100%',
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <PerfilIcon/>
+                    <Text style={{
+                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
+                    }}>
+                      
+                      Perfil
+                    </Text>
+                  </View>
+                )
+            )
+          }}
+        />
         
       </Tab.Navigator>
     )
@@ -177,6 +221,27 @@ export function AppRoutes() {
       <Screen 
         name="Ofertas" 
         component={Ofertas}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Screen 
+        name="InfosDadosPessoais" 
+        component={InfosDadosPessoais}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Screen 
+        name="InfosEndereco" 
+        component={InfosEndereco}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Screen 
+        name="InfosPagamento" 
+        component={InfosPagamento}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

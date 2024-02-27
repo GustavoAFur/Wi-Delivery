@@ -1,25 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { View, Text, Dimensions, StyleSheet,  Image, StatusBar} from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, Dimensions, StyleSheet,  Image, StatusBar} from 'react-native'
 
 import Menos from '../../../assets/svgs/menos.svg'
 import Close from '../../../assets/svgs/close.svg'
 import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
+
 
 //@ts-ignore
 export function Carrinho({navigation}) {
 
   const { width, height } = Dimensions.get("window")
 
+  const [quantidade, setQuantidade] = useState(1)
+  const preco = 3.49
+
   return (
     <View style={{ 
-      width: width,
+      width: width, 
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
       flex: 1
     }}>
-
 
     <StatusBar
       translucent
@@ -44,8 +47,7 @@ export function Carrinho({navigation}) {
             alignSelf:'center',
             color: '#323232',
             fontFamily: 'Manrope-SemiBold'
-          }}
-          >
+          }}>
             Meu Carrinho
           </Text>
         </View>
@@ -82,15 +84,27 @@ export function Carrinho({navigation}) {
                   gap: 14, 
                   paddingLeft: 6,
                 }}>
-                  <View style={styles.menosMais}>
-                    <Menos  width={15} height={15}/>
-                  </View>
-                  <View>
-                    <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>1</Text>
-                  </View>
-                  <View style={styles.menosMais}>
-                    <Mais  width={15} height={15} fill="#333"/>
-                  </View>
+
+                  <TouchableOpacity onPress={()=>{
+                    setQuantidade(quantidade-1)
+                  }}>
+                    <View style={styles.menosMais}>
+                      <Menos  width={15} height={15}/>
+                    </View>
+                  </TouchableOpacity>
+                  
+                    <View>
+                      <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
+                    </View>
+                  
+                  <TouchableOpacity onPress={()=>{
+                    setQuantidade(quantidade+1)
+                  }}>
+                    <View style={styles.menosMais}>
+                      <Mais  width={15} height={15} fill="#333"/>
+                    </View>
+                  </TouchableOpacity>
+                  
                 </View>
               </View>
               
@@ -100,24 +114,27 @@ export function Carrinho({navigation}) {
               width: '22%', 
               height:'50%', 
               justifyContent: 'space-between', 
-              alignItems: 'flex-end'
+              alignItems: 'flex-end',
+              paddingRight: 5
             }}>
-              <View style={{
-                flexDirection: 'row', 
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingHorizontal: 10,
-              }}>
-                <Close  width={15} height={15}/>
-                
+              <View >
+                <TouchableOpacity>
+                  <Close  width={15} height={15}/> 
+                </TouchableOpacity>
               </View>
               <View>
-                <Text style={{color: '#000',fontFamily: 'Manrope-SemiBold', fontSize: 18}}>R$ 3,49</Text>
+                <Text style={{
+                  color: '#000',
+                  fontFamily: 'Manrope-SemiBold', 
+                  fontSize: 15
+                  }}>
+                    R$ {parseFloat((quantidade*preco).toFixed(2))}
+                </Text>
               </View>
             </View>
             
         </View>
-         
+ 
       </ScrollView>
 
       <View style={{
@@ -128,17 +145,19 @@ export function Carrinho({navigation}) {
         left: 0,
         right: 0,
         alignItems: 'center',
+        
+        backgroundColor: 'white',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        shadowColor: "#0005",
+        shadowColor: "#000",
         shadowOffset: {
           width: 0,
-          height: -4,
+          height: -8,
         },
-        shadowOpacity: 0.30,
-        shadowRadius: -4.65,
+        shadowOpacity: 1,
+        shadowRadius: 8,
+        elevation: 5,
         
-        elevation: 2,
       }}>
         <View style={{width: '100%',height: '50%', paddingHorizontal: 30, paddingTop: 30, gap: 15}}>
           <View style={styles.detalhesEntrega}>
@@ -152,16 +171,21 @@ export function Carrinho({navigation}) {
         </View>
 
         <View>
-          <TouchableOpacity style={{
-          backgroundColor: '#F2B705',
-          paddingHorizontal: 72,
-          paddingVertical: 15,
-          borderRadius: 10,
-          bottom: 15,
-          flexDirection: 'row',
-          gap: 7,
-          alignItems: 'center'
-        }}>
+          <TouchableOpacity 
+          style={{
+            backgroundColor: '#F2B705',
+            paddingHorizontal: 72,
+            paddingVertical: 15,
+            borderRadius: 10,
+            bottom: 15,
+            flexDirection: 'row',
+            gap: 7,
+            alignItems: 'center'
+          }}
+          onPress={()=>{
+            navigation.navigate('InfosDadosPessoais')
+          }}
+        >
           <Text style={{
             fontSize: 18,
             color: '#fff',
@@ -179,7 +203,7 @@ export function Carrinho({navigation}) {
 export const styles = StyleSheet.create({
   prodsCar: {
     width: '92%',
-    height: 140,
+    height: 135,
     borderBottomColor: '#E2E2E2',
     borderBottomWidth: 1,
     alignItems: 'center',

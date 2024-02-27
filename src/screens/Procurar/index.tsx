@@ -1,9 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import React from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
 import Search from '../../../assets/svgs/search.svg'
 //@ts-ignore
 export function Procurar({navigation}) {
@@ -13,7 +12,6 @@ export function Procurar({navigation}) {
       width: width,
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
-      
     }}>
       
       <View style={{

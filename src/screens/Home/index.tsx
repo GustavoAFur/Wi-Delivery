@@ -1,15 +1,14 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-
-import ArrowRight from '../../../assets/svgs/arrow-p.svg'
-import Search from '../../../assets/svgs/search.svg'
 import More from '../../../assets/svgs/more.svg'
+import Search from '../../../assets/svgs/search.svg'
+import ArrowRight from '../../../assets/svgs/arrow-p.svg'
+import Notification from '../../../assets/svgs/notification.svg'
 
 import Rice from '../../../assets/images/rice.png'
 import MeetFish from '../../../assets/images/meet-fish.png'
-import HortiFruti from '../../../assets/images/horti-fruti.png'
 import Beauty from '../../../assets/images/beauty-product.png'
+import HortiFruti from '../../../assets/images/horti-fruti.png'
 import Clean from '../../../assets/images/Produtos-de-Limpeza.png'
 
 //@ts-ignore
@@ -30,11 +29,8 @@ export function Home({navigation}) {
             <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 12,  fontFamily: 'Manrope-SemiBold',  }}>Loja 1 - Reriutaba</Text>
             <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15,  fontFamily: 'Manrope-SemiBold',  }}>Gustavo Furtado</Text>
           </View>
-          <View style={styles.perfil}>
-            <Image
-              source={require('../../../assets/images/mercado.png')}
-              style={{width: 56, height: 56}}
-            />
+          <View style={styles.notification}>
+            <Notification />
           </View>
         </View>
         <View style={{
@@ -148,8 +144,9 @@ export function Home({navigation}) {
             fontWeight: 'bold',
             paddingVertical: 10,
             fontFamily: 'Manrope-SemiBold',
-          }}
-          >Ofertas do dia</Text>
+          }}>
+            Ofertas do dia
+            </Text>
           <TouchableOpacity 
             onPress={()=>{
               navigation.navigate('Ofertas')
@@ -163,9 +160,11 @@ export function Home({navigation}) {
             <ArrowRight width={10} height={10} />
           </TouchableOpacity>
 
-
         </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}  contentContainerStyle={styles.scrollViewContentOfertasNews}>
+        <ScrollView 
+          horizontal showsHorizontalScrollIndicator={false}  
+          contentContainerStyle={styles.scrollViewContentOfertasNews}
+        >
           <View style={styles.ofertasItem}>
             <View style={{
               backgroundColor: '#D9042B',
@@ -196,10 +195,15 @@ export function Home({navigation}) {
             
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                  <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ 5,85</Text>
-                  <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> Und</Text>
+                <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ 5,85</Text>
+                <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> Und</Text>
+              </View>
+              <TouchableOpacity>
+                <View style={styles.btnAdicionar}>
+                  <Text style={{ color: '#fff', }}>Adicionar</Text>
                 </View>
-                
+              </TouchableOpacity>
+              
             </View>
 
             </View>
@@ -264,12 +268,10 @@ export const styles = StyleSheet.create({
     width: '82%',
     alignItems: 'center'
   },
-  perfil: {
+  notification: {
     backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: '#D9042B',
-    width: 46,
-    height: 46,
+    width: 42,
+    height: 42,
     borderRadius: 23,
     alignItems: 'center',
     justifyContent: 'center',
