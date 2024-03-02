@@ -177,7 +177,7 @@ export function Carrinho({navigation}) {
             paddingHorizontal: 72,
             paddingVertical: 15,
             borderRadius: 10,
-            bottom: 15,
+            bottom: 12,
             flexDirection: 'row',
             gap: 7,
             alignItems: 'center'
@@ -230,6 +230,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row', 
     borderBottomColor: '#d2d2d2',
     borderBottomWidth: .5,
-    
+    paddingBottom: 6
   }
 })

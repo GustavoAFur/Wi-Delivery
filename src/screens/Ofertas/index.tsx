@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import ScreenBack from '../../../assets/svgs/arrow-right.svg'
+import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
 import Search from '../../../assets/svgs/search.svg'
+import Menos from '../../../assets/svgs/menos.svg'
 //@ts-ignore
 export function Ofertas({navigation}) {
   const { width, height } = Dimensions.get("window")
+  const [modoEditar, setModoEditar] = useState(false)
+  const [quantidade, setQuantidade] = useState(1)
+  //@ts-ignore
+  const handleAdicionarCarrinho = () => {
+    setModoEditar(true);
+  };
+
   return (
     <View style={{ 
       width: width,
@@ -91,9 +100,45 @@ export function Ofertas({navigation}) {
                   <Text style={{ color: '#000', fontSize: 8 }}> Und</Text>
                 </View>
 
-                <View style={styles.btnAdicionar}>
-                  <Text style={{ color: '#fff', }}>Adicionar</Text>
-                </View>
+                <TouchableOpacity onPress={handleAdicionarCarrinho}>
+                  {
+                    modoEditar ? (
+                      <View style={{
+                        width: '100%',
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        flexDirection: 'row',
+                        borderRadius: 10
+                      }}>
+                        <TouchableOpacity onPress={()=>{
+                          setQuantidade(quantidade-1)
+                        }}>
+                          <View style={styles.menosMais}>
+                            <Menos  width={10} height={10}/>
+                          </View>
+                        </TouchableOpacity>
+                        
+                          <View>
+                            <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
+                          </View>
+                        
+                        <TouchableOpacity onPress={()=>{
+                          setQuantidade(quantidade+1)
+                        }}>
+                          <View style={styles.menosMais}>
+                            <Mais  width={10} height={10} fill="#333"/>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ): 
+                      <View style={styles.btnAdicionar}>
+                        <Text style={{ color: '#fff', }}>Adicionar</Text>
+                      </View>
+                  }
+                  
+                </TouchableOpacity>
+                
             </View>
 
           </View>
@@ -147,5 +192,14 @@ export const styles = StyleSheet.create({
     height:'45%', 
     alignSelf: 'center', 
     justifyContent: 'space-between'
-  }
+  },
+  menosMais: {
+    width: 25, 
+    height:25, 
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderColor:'#d2d2d2',
+    borderWidth: .5,
+  },
 })

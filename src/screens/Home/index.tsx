@@ -5,14 +5,21 @@ import Search from '../../../assets/svgs/search.svg'
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
 import Notification from '../../../assets/svgs/notification.svg'
 
-import Rice from '../../../assets/images/rice.png'
-import MeetFish from '../../../assets/images/meet-fish.png'
-import Beauty from '../../../assets/images/beauty-product.png'
-import HortiFruti from '../../../assets/images/horti-fruti.png'
-import Clean from '../../../assets/images/Produtos-de-Limpeza.png'
+import a from '../../../assets/images/arroz.png'
+
+import SectionsComponent from '../../components/SectionsComponent'
 
 //@ts-ignore
 export function Home({navigation}) {
+
+  const sectionsObj = [
+    { name: 'Cereais', img: '../../../assets/images/arroz.png' },
+    { name: 'Açougue', img: '../../../assets/images/arroz.png'},
+    { name: 'Horti-Fruti', img: '../../../assets/images/arroz.png' },
+    { name: 'Perfumaria', img: '../../../assets/images/arroz.png' },
+    { name: 'Limpeza', img: '../../../assets/images/arroz.png' },
+  ];
+
   return (
     <View style={{ width: '100%', flex: 1, backgroundColor: '#fff' }}>
 
@@ -55,70 +62,12 @@ export function Home({navigation}) {
 
       </View>
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        <View style={styles.sectionsItens}>
-          <View style={styles.sectionsImg}>
-            <Image source={Rice} style={styles.imageStyle}/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Cereais</Text>
-          </View>
-        </View>
-        <View style={styles.sectionsItens}>
-          <View style={styles.sectionsImg}>
-            <Image source={MeetFish} style={styles.imageStyle}/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Açougue</Text>
-          </View>
-        </View>
-        <View style={styles.sectionsItens}>
-          <View style={styles.sectionsImg}>
-          <Image source={HortiFruti} style={styles.imageStyle}/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Horti-Fruti
-            </Text>
-          </View>
-        </View>
-        
-        <View style={styles.sectionsItens}>
-          <View style={styles.sectionsImg}>
-          <Image source={Beauty} style={styles.imageStyle}/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Perfumaria
-            </Text>
-          </View>
-        </View>
-        <View style={styles.sectionsItens}>
-          <View style={styles.sectionsImg}>
-          <Image source={Clean} style={styles.imageStyle}/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Limpeza
-            </Text>
-          </View>
-        </View>
+        {
+          sectionsObj.map((objeto, index)=>(
+            <SectionsComponent name={objeto.name} img={objeto.img} key={index}/>
+          ))
+        }
+
         <View style={styles.sectionsItens}>
           <View style={styles.sectionsImg}>
             <More/>
