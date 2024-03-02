@@ -7,6 +7,7 @@ import ScreenBack from '../../../assets/svgs/arrow-right.svg'
 import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
 import Search from '../../../assets/svgs/search.svg'
 import Menos from '../../../assets/svgs/menos.svg'
+import Cart from '../../../assets/svgs/cart.svg'
 //@ts-ignore
 export function Ofertas({navigation}) {
   const { width, height } = Dimensions.get("window")
@@ -52,7 +53,15 @@ export function Ofertas({navigation}) {
               Ofertas
           </Text>
         </View>
-        <View style={{width: 20, height: 20}}></View>
+        <View>
+          <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate('Carrinho')
+            }}
+          >
+            <Cart width={25} height={25}/>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={{
         width: '90%',

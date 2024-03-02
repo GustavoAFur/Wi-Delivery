@@ -5,7 +5,11 @@ import Search from '../../../assets/svgs/search.svg'
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
 import Notification from '../../../assets/svgs/notification.svg'
 
-import a from '../../../assets/images/arroz.png'
+import Cereais from '../../../assets/images/rice.png'
+import Acougue from '../../../assets/images/meet-fish.png'
+import Hortifruti from '../../../assets/images/horti-fruti.png'
+import Perfumaria from '../../../assets/images/beauty-product.png'
+import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
 
 import SectionsComponent from '../../components/SectionsComponent'
 
@@ -13,11 +17,11 @@ import SectionsComponent from '../../components/SectionsComponent'
 export function Home({navigation}) {
 
   const sectionsObj = [
-    { name: 'Cereais', img: '../../../assets/images/arroz.png' },
-    { name: 'Açougue', img: '../../../assets/images/arroz.png'},
-    { name: 'Horti-Fruti', img: '../../../assets/images/arroz.png' },
-    { name: 'Perfumaria', img: '../../../assets/images/arroz.png' },
-    { name: 'Limpeza', img: '../../../assets/images/arroz.png' },
+    { name: 'Cereais', img: Cereais },
+    { name: 'Açougue', img: Acougue},
+    { name: 'Horti-Fruti', img: Hortifruti },
+    { name: 'Perfumaria', img: Perfumaria },
+    { name: 'Limpeza', img: Limpeza },
   ];
 
   return (

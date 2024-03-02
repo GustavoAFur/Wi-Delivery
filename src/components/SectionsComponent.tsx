@@ -1,12 +1,16 @@
 import React from 'react';
 import {Image,TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 
+interface Props{
+  name: string,
+  img: any
+}
 //@ts-ignore
-const SectionsComponent = ({ name, img }) => {
+const SectionsComponent = ({ name, img }: Props) => {
   return (
     <View style={styles.sectionsItens}>
       <View style={styles.sectionsImg}>
-        <Image source={{uri: img}} style={styles.imageStyle}/>
+        <Image source={img} style={styles.imageStyle}/>
       </View>
       <View>
         <Text style={{
