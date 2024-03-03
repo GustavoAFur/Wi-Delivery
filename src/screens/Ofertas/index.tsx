@@ -162,8 +162,8 @@ export const styles = StyleSheet.create({
   ofertasItem: {
     borderWidth: 1,
     borderColor:'#d2d2d2',
-    width: 110,
-    height: 198,
+    width: 140,
+    height: 200,
     borderRadius: 10,
     marginBottom: 10,
     backgroundColor: '#fff'

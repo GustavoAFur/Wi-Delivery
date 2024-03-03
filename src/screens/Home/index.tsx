@@ -4,6 +4,8 @@ import More from '../../../assets/svgs/more.svg'
 import Search from '../../../assets/svgs/search.svg'
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
 import Notification from '../../../assets/svgs/notification.svg'
+import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
+import Menos from '../../../assets/svgs/menos.svg'
 
 import Cereais from '../../../assets/images/rice.png'
 import Acougue from '../../../assets/images/meet-fish.png'
@@ -12,6 +14,7 @@ import Perfumaria from '../../../assets/images/beauty-product.png'
 import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
 
 import SectionsComponent from '../../components/SectionsComponent'
+import { useState } from 'react'
 
 //@ts-ignore
 export function Home({navigation}) {
@@ -23,6 +26,12 @@ export function Home({navigation}) {
     { name: 'Perfumaria', img: Perfumaria },
     { name: 'Limpeza', img: Limpeza },
   ];
+  const [modoEditar, setModoEditar] = useState(false)
+  const [quantidade, setQuantidade] = useState(1)
+  //@ts-ignore
+  const handleAdicionarCarrinho = () => {
+    setModoEditar(true)
+  }
 
   return (
     <View style={{ width: '100%', flex: 1, backgroundColor: '#fff' }}>
@@ -68,11 +77,16 @@ export function Home({navigation}) {
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         {
           sectionsObj.map((objeto, index)=>(
-            <SectionsComponent name={objeto.name} img={objeto.img} key={index}/>
+            <SectionsComponent page={objeto.name} name={objeto.name} img={objeto.img} key={index}/>
           ))
         }
 
-        <View style={styles.sectionsItens}>
+        <TouchableOpacity 
+          onPress={()=>{
+            navigation.navigate('SecoesList')
+          }}
+          style={styles.sectionsItens}
+        >
           <View style={styles.sectionsImg}>
             <More/>
           </View>
@@ -84,7 +98,7 @@ export function Home({navigation}) {
             }}>Mais
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
       </ScrollView>
 
@@ -151,11 +165,44 @@ export function Home({navigation}) {
                 <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ 5,85</Text>
                 <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> Und</Text>
               </View>
-              <TouchableOpacity>
-                <View style={styles.btnAdicionar}>
-                  <Text style={{ color: '#fff', }}>Adicionar</Text>
-                </View>
-              </TouchableOpacity>
+              <TouchableOpacity onPress={handleAdicionarCarrinho}>
+                  {
+                    modoEditar ? (
+                      <View style={{
+                        width: '100%',
+                        height: 28,
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        flexDirection: 'row',
+                        borderRadius: 10
+                      }}>
+                        <TouchableOpacity onPress={()=>{
+                          setQuantidade(quantidade-1)
+                        }}>
+                          <View style={styles.menosMais}>
+                            <Menos  width={10} height={10}/>
+                          </View>
+                        </TouchableOpacity>
+                        
+                          <View>
+                            <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
+                          </View>
+                        
+                        <TouchableOpacity onPress={()=>{
+                          setQuantidade(quantidade+1)
+                        }}>
+                          <View style={styles.menosMais}>
+                            <Mais  width={10} height={10} fill="#333"/>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ): 
+                      <View style={styles.btnAdicionar}>
+                        <Text style={{ color: '#fff', }}>Adicionar</Text>
+                      </View>
+                  }
+                  
+                </TouchableOpacity>
               
             </View>
 
@@ -341,5 +388,14 @@ export const styles = StyleSheet.create({
     alignSelf: 'center', 
     justifyContent: 'space-between',
     
-  }
+  },
+  menosMais: {
+    width: 25, 
+    height:25, 
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderColor:'#d2d2d2',
+    borderWidth: .5,
+  },
 });

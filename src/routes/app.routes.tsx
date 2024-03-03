@@ -16,6 +16,8 @@ import PerfilIcon from '../../assets/svgs/perfil.svg'
 import Search from '../../assets/svgs/search-prod.svg'
 import { InfosEndereco } from '../screens/InfosEndereco'
 import { InfosPagamento } from '../screens/InfosPagamento'
+import SecoesList from '../screens/SecoesList'
+
 
 export function AppRoutes() {
 
@@ -242,6 +244,13 @@ export function AppRoutes() {
       <Screen 
         name="InfosPagamento" 
         component={InfosPagamento}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Screen 
+        name="SecoesList" 
+        component={SecoesList}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

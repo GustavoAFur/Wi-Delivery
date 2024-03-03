@@ -1,14 +1,21 @@
 import React from 'react';
 import {Image,TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 interface Props{
   name: string,
-  img: any
+  img: any,
+  page: string,
 }
-//@ts-ignore
-const SectionsComponent = ({ name, img }: Props) => {
+
+const SectionsComponent = ({ name, img, page }: Props) => {
+
+  const navigation = useNavigation();
+ 
   return (
-    <View style={styles.sectionsItens}>
+    <TouchableOpacity onPress={() => {
+      
+    }} style={styles.sectionsItens}>
       <View style={styles.sectionsImg}>
         <Image source={img} style={styles.imageStyle}/>
       </View>
@@ -19,7 +26,7 @@ const SectionsComponent = ({ name, img }: Props) => {
           fontFamily: 'Manrope-SemiBold', 
         }}>{name}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
