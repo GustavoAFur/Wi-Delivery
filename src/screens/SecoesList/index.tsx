@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
 
 import Search from '../../../assets/svgs/search.svg'
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import Cereais from '../../../assets/images/rice.png'
+import SecoesListComponent from '../SecoesListComponent'
 import Acougue from '../../../assets/images/meet-fish.png'
 import Hortifruti from '../../../assets/images/horti-fruti.png'
 import Perfumaria from '../../../assets/images/beauty-product.png'
 import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
-import SecoesListComponent from '../SecoesListComponent';
 //@ts-ignore
 export default function SecoesList({navigation}) {
 
@@ -50,14 +50,12 @@ export default function SecoesList({navigation}) {
       </View>
 
       <View style={{
-        flexDirection: 'row',
-        
+        flexDirection: 'row', 
         justifyContent: 'space-between',
         width: '93%',
         alignSelf: 'center',
         rowGap: 8,
         flexWrap: 'wrap',
-        
         }}>
           {
             sectionsObj.map((secoes, index)=>(

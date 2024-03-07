@@ -134,7 +134,88 @@ export function Carrinho({navigation}) {
             </View>
             
         </View>
- 
+        
+        <View style={styles.prodsCar}>
+            <View style={{
+              width: '72%', 
+              height:'84%', 
+              flexDirection:'row', 
+              alignItems: 'center'
+            }}>
+              <View style={{
+                width: '30%', 
+                height:'100%', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                <Image 
+                  source={require('../../../assets/images/arroz.png')}
+                  style={styles.imageStyle}
+                />
+              </View>
+              <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
+                <View style={{ width: '100%', height:'50%', padding: 6}}>
+                  <Text style={{color: '#000', fontWeight: 'bold'}}>Arroz Branco Camil Kg</Text>
+                  <Text style={{color: '#7C7C7C'}}>1 Kg</Text>
+                </View>
+                <View style={{ 
+                  width: '100%', 
+                  height:'50%', 
+                  flexDirection: 'row',
+                  alignItems: 'center', 
+                  gap: 14, 
+                  paddingLeft: 6,
+                }}>
+
+                  <TouchableOpacity onPress={()=>{
+                    setQuantidade(quantidade-1)
+                  }}>
+                    <View style={styles.menosMais}>
+                      <Menos  width={15} height={15}/>
+                    </View>
+                  </TouchableOpacity>
+                  
+                    <View>
+                      <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
+                    </View>
+                  
+                  <TouchableOpacity onPress={()=>{
+                    setQuantidade(quantidade+1)
+                  }}>
+                    <View style={styles.menosMais}>
+                      <Mais  width={15} height={15} fill="#333"/>
+                    </View>
+                  </TouchableOpacity>
+                  
+                </View>
+              </View>
+              
+            </View>
+
+            <View style={{
+              width: '22%', 
+              height:'50%', 
+              justifyContent: 'space-between', 
+              alignItems: 'flex-end',
+              paddingRight: 5
+            }}>
+              <View >
+                <TouchableOpacity>
+                  <Close  width={15} height={15}/> 
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Text style={{
+                  color: '#000',
+                  fontFamily: 'Manrope-SemiBold', 
+                  fontSize: 15
+                  }}>
+                    R$ {parseFloat((quantidade*preco).toFixed(2))}
+                </Text>
+              </View>
+            </View>
+            
+        </View>
       </ScrollView>
 
       <View style={{

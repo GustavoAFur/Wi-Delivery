@@ -1,17 +1,22 @@
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import More from '../../../assets/svgs/more.svg'
+import Menos from '../../../assets/svgs/menos.svg'
 import Search from '../../../assets/svgs/search.svg'
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
-import Notification from '../../../assets/svgs/notification.svg'
 import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
-import Menos from '../../../assets/svgs/menos.svg'
+import Notification from '../../../assets/svgs/notification.svg'
 
 import Cereais from '../../../assets/images/rice.png'
 import Acougue from '../../../assets/images/meet-fish.png'
 import Hortifruti from '../../../assets/images/horti-fruti.png'
 import Perfumaria from '../../../assets/images/beauty-product.png'
 import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
+
+import Feijao from '../../../assets/images/feijao.png'
+import Arroz from '../../../assets/images/arroz.png'
+import Cerveja from '../../../assets/images/heineken.png'
+import OvoPascoa from '../../../assets/images/ovo-pascoa.png'
 
 import SectionsComponent from '../../components/SectionsComponent'
 import { useState } from 'react'
@@ -25,7 +30,15 @@ export function Home({navigation}) {
     { name: 'Horti-Fruti', img: Hortifruti },
     { name: 'Perfumaria', img: Perfumaria },
     { name: 'Limpeza', img: Limpeza },
-  ];
+  ]
+
+  const ofertas = [
+    {nome: 'Arroz Branco Camil Kg', preco: '5,85', und: 'Und', caminho: Arroz},
+    {nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', caminho: Feijao},
+    {nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', caminho: Cerveja},
+    {nome: 'Ovo da pascoa Arcor', preco: '55,99 ', und: 'Und', caminho: OvoPascoa},
+  ]
+
   const [modoEditar, setModoEditar] = useState(false)
   const [quantidade, setQuantidade] = useState(1)
   //@ts-ignore
@@ -53,25 +66,29 @@ export function Home({navigation}) {
             <Notification />
           </View>
         </View>
-        <View style={{
-          width: '90%',
-          height: 45,
-          backgroundColor: '#fff',
-          flexDirection: 'row',
-          alignItems: 'center',
-          alignSelf: 'center',
-          borderRadius: 10,
-          marginTop: 20,
-          paddingLeft: 10
-        }}>
-          <Search width={20} height={20} />
-          <TouchableOpacity 
-            style={styles.input}
-            onPress={()=>{navigation.navigate('Procurar')}}
-          >
-            <Text style={{color: '#c6c6c6', fontSize: 15,  fontFamily: 'Manrope-SemiBold', }}>Pesquisar Produto</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity 
+        onPress={()=>{navigation.navigate('Procurar')}}
+        >
+          <View style={{
+            width: '90%',
+            height: 45,
+            backgroundColor: '#fff',
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'center',
+            borderRadius: 10,
+            marginTop: 20,
+            paddingLeft: 10
+          }}>
+            <Search width={20} height={20} />
+            <View 
+              style={styles.input}
+            >
+              <Text style={{color: '#c6c6c6', fontSize: 15,  fontFamily: 'Manrope-SemiBold', }}>Pesquisar Produto</Text>
+            </View>
+          </View>
+          
+        </TouchableOpacity>
 
       </View>
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
@@ -132,87 +149,90 @@ export function Home({navigation}) {
           horizontal showsHorizontalScrollIndicator={false}  
           contentContainerStyle={styles.scrollViewContentOfertasNews}
         >
-          <View style={styles.ofertasItem}>
-            <View style={{
-              backgroundColor: '#D9042B',
-              width: 55,
-              height: 20,
-              position: 'absolute',
-              zIndex: 1,
-              alignSelf: 'flex-start',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomRightRadius: 5
-            }}>
-              <Text style={{
-                color: '#fff',
-                fontFamily: 'Manrope-SBold',
-              }}>Oferta</Text>
-            </View>
+          {
+            //@ts-ignore
+            ofertas.map((itens,index)=>(
+              <View style={styles.ofertasItem} key={index}>
+                <View style={{
+                  backgroundColor: '#D9042B',
+                  width: 55,
+                  height: 20,
+                  position: 'absolute',
+                  zIndex: 1,
+                  alignSelf: 'flex-start',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderBottomRightRadius: 5
+                }}>
+                  <Text style={{
+                    color: '#fff',
+                    fontFamily: 'Manrope-SBold',
+                  }}>Oferta</Text>
+                </View>
 
-            <View style={styles.imgProdView}>
-            <Image
-              source={require('../../../assets/images/arroz.png')}
-              style={styles.imgProd} />
-          </View>
-          <View style={styles.detailsProd}>
-            <View>
-              <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>Arroz Branco Camil Kg</Text>
-            </View>
+                <View style={styles.imgProdView}>
+                <Image
+                  source={itens.caminho}
+                  style={styles.imgProd} />
+                </View>
+                <View style={styles.detailsProd}>
+                  <View>
+                    <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>{itens.nome}</Text>
+                  </View>
             
-            <View>
-              <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ 5,85</Text>
-                <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> Und</Text>
+                  <View>
+                    <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                      <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ {itens.preco}</Text>
+                      <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> {itens.und}</Text>
+                    </View>
+                    <TouchableOpacity onPress={handleAdicionarCarrinho}>
+                        {
+                          modoEditar ? (
+                            <View style={{
+                              width: '100%',
+                              height: 28,
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              flexDirection: 'row',
+                              borderRadius: 10
+                            }}>
+                              <TouchableOpacity onPress={()=>{
+                                setQuantidade(quantidade-1)
+                              }}>
+                                <View style={styles.menosMais}>
+                                  <Menos  width={10} height={10}/>
+                                </View>
+                              </TouchableOpacity>
+                              
+                                <View>
+                                  <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
+                                </View>
+                              
+                              <TouchableOpacity onPress={()=>{
+                                setQuantidade(quantidade+1)
+                              }}>
+                                <View style={styles.menosMais}>
+                                  <Mais  width={10} height={10} fill="#333"/>
+                                </View>
+                              </TouchableOpacity>
+                            </View>
+                          ): 
+                            <View style={styles.btnAdicionar}>
+                              <Text style={{ color: '#fff', }}>Adicionar</Text>
+                            </View>
+                        }
+                        
+                      </TouchableOpacity>
+                    
+                  </View>
+
+                  </View>
+
               </View>
-              <TouchableOpacity onPress={handleAdicionarCarrinho}>
-                  {
-                    modoEditar ? (
-                      <View style={{
-                        width: '100%',
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        borderRadius: 10
-                      }}>
-                        <TouchableOpacity onPress={()=>{
-                          setQuantidade(quantidade-1)
-                        }}>
-                          <View style={styles.menosMais}>
-                            <Menos  width={10} height={10}/>
-                          </View>
-                        </TouchableOpacity>
-                        
-                          <View>
-                            <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
-                          </View>
-                        
-                        <TouchableOpacity onPress={()=>{
-                          setQuantidade(quantidade+1)
-                        }}>
-                          <View style={styles.menosMais}>
-                            <Mais  width={10} height={10} fill="#333"/>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    ): 
-                      <View style={styles.btnAdicionar}>
-                        <Text style={{ color: '#fff', }}>Adicionar</Text>
-                      </View>
-                  }
-                  
-                </TouchableOpacity>
-              
-            </View>
-
-            </View>
-
-          </View>
-          <View style={styles.ofertasItem}></View>
-          <View style={styles.ofertasItem}></View>
-          <View style={styles.ofertasItem}></View>
-          <View style={styles.ofertasItem}></View>
+            ))
+          }
+          
+          
         </ScrollView>
       </View>
 

@@ -34,15 +34,13 @@ export function Procurar({navigation}) {
       </View>
 
       <View style={{
-        flexDirection: 'row', 
         alignItems: 'center',
         alignSelf: 'center', 
+        justifyContent: 'center',
         width: '98%',
-        paddingHorizontal: 8,
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        height: '80%',
         }}>
-          
+          <Text style={{color: '#000'}}>Procure por um produto da loja.</Text>
      </View>
     </View>
     
