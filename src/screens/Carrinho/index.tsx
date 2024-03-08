@@ -149,14 +149,14 @@ export function Carrinho({navigation}) {
                 justifyContent: 'center'
               }}>
                 <Image 
-                  source={require('../../../assets/images/arroz.png')}
+                  source={require('../../../assets/images/heineken.png')}
                   style={styles.imageStyle}
                 />
               </View>
               <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#000', fontWeight: 'bold'}}>Arroz Branco Camil Kg</Text>
-                  <Text style={{color: '#7C7C7C'}}>1 Kg</Text>
+                  <Text style={{color: '#000', fontWeight: 'bold'}}>Cerv. Heineken</Text>
+                  <Text style={{color: '#7C7C7C'}}>350 ml</Text>
                 </View>
                 <View style={{ 
                   width: '100%', 
