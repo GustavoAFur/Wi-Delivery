@@ -217,66 +217,31 @@ export function Carrinho({navigation}) {
             
         </View>
       </ScrollView>
-
-      <View style={{
-        width: '100%',
-        height: 250,
-        position: 'absolute',
-        bottom: 0, // Ajuste conforme necessário
-        left: 0,
-        right: 0,
-        alignItems: 'center',
-        
-        backgroundColor: 'white',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: -8,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 8,
-        elevation: 5,
-        
-      }}>
-        <View style={{width: '100%',height: '50%', paddingHorizontal: 30, paddingTop: 30, gap: 15}}>
-          <View style={styles.detalhesEntrega}>
-            <Text style={{color: '#000', fontFamily: 'Manrope-SemiBold'}}>Total:</Text>
-            <Text style={{color: '#000', fontFamily: 'Manrope-Bold'}}>R$ 3,49</Text>
-          </View>
-          <View style={styles.detalhesEntrega}>
-            <Text style={{color: '#000', fontFamily: 'Manrope-SemiBold'}}>Total min. por distancia(3Km):</Text>
-            <Text style={{color: '#000', fontFamily: 'Manrope-Bold'}}>R$ 50,00</Text>
-          </View>
-        </View>
-
-        <View>
-          <TouchableOpacity 
-          style={{
-            backgroundColor: '#F2B705',
-            paddingHorizontal: 72,
-            paddingVertical: 15,
-            borderRadius: 10,
-            bottom: 12,
-            flexDirection: 'row',
-            gap: 7,
-            alignItems: 'center'
-          }}
+      
+      <TouchableOpacity 
           onPress={()=>{
             navigation.navigate('InfosDadosPessoais')
           }}
-        >
+      >
+        <View style={{
+          position: 'absolute',
+          backgroundColor: '#F2B705',
+          flexDirection: 'row',
+          alignItems: 'center', 
+          justifyContent: 'center',
+          width: '85%', 
+          height: 55,
+          alignSelf: 'center',
+          borderRadius: 10,
+          bottom: 100
+        }}>
           <Text style={{
             fontSize: 18,
             color: '#fff',
             fontFamily: 'Manrope-SemiBold',
           }}>Finalizar Compra</Text>
-          
-        </TouchableOpacity>
-        </View>
-        
-      </View> 
+        </View> 
+      </TouchableOpacity>
 
     </View>
   );
@@ -293,8 +258,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   menosMais: {
-    width: 35, 
-    height:35, 
+    width: 32, 
+    height:32, 
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 13,

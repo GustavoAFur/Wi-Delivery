@@ -13,8 +13,8 @@ import Hortifruti from '../../../assets/images/horti-fruti.png'
 import Perfumaria from '../../../assets/images/beauty-product.png'
 import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
 
-import Feijao from '../../../assets/images/feijao.png'
 import Arroz from '../../../assets/images/arroz.png'
+import Feijao from '../../../assets/images/feijao.png'
 import Cerveja from '../../../assets/images/heineken.png'
 import OvoPascoa from '../../../assets/images/ovo-pascoa.png'
 

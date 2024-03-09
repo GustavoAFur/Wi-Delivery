@@ -3,20 +3,16 @@ import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
-import Search from '../../../assets/svgs/search.svg'
-import Menos from '../../../assets/svgs/menos.svg'
-import Cart from '../../../assets/svgs/cart.svg'
+import Detalhes from '../../../assets/svgs/details.svg'
+import Arrow from '../../../assets/svgs/back-arrow.svg'
+import About from '../../../assets/svgs/about icon.svg'
+import DetliveryAdress from '../../../assets/svgs/delivery-address.svg'
+import Help from '../../../assets/svgs/help icon.svg'
+import Logout from '../../../assets/svgs/logoutw.svg'
+
 //@ts-ignore
 export function Perfil({navigation}) {
   const { width, height } = Dimensions.get("window")
-  const [modoEditar, setModoEditar] = useState(false)
-  const [quantidade, setQuantidade] = useState(1)
-  //@ts-ignore
-  const handleAdicionarCarrinho = () => {
-    setModoEditar(true);
-  };
 
   return (
     <View style={{ 
@@ -62,6 +58,52 @@ export function Perfil({navigation}) {
             </Text>
           </View>
         </View>
+
+        <View style={{width: '92%', alignSelf: 'center'}}>
+
+          <View style={styles.optionsPerfil}>
+            <View style={styles.iconText}>
+              <Detalhes width={20} height={20}/>
+              <Text style={styles.optionText}>Meus Detalhes</Text>
+            </View>
+            <Arrow width={20} height={20}/>
+          </View>
+          
+          <View style={styles.optionsPerfil}>
+            <View style={styles.iconText}>
+              <DetliveryAdress width={20} height={20}/>
+              <Text style={styles.optionText}>Detalhes Endereco</Text>
+            </View>
+            <Arrow width={20} height={20}/>
+          </View>
+
+          <View style={styles.optionsPerfil}>
+            <View style={styles.iconText}>
+              <About width={20} height={20}/>
+              <Text style={styles.optionText}>Sobre</Text>
+            </View>
+            <Arrow width={20} height={20}/>
+          </View>
+
+
+          <View style={styles.optionsPerfil}>
+            <View style={styles.iconText}>
+              <Help width={20} height={20}/>
+              <Text style={styles.optionText}>Ajuda</Text>
+            </View>
+            <Arrow width={20} height={20}/>
+          </View>
+          
+          <TouchableOpacity>
+            <View style={styles.btnSair}>
+              <Logout width={20} height={20} style={{position: 'absolute', left: 20}}/>
+              <Text style={{color: '#fff', fontFamily: 'Manrope-SemiBold', fontSize: 18, }}>Sair</Text>
+            </View>
+          </TouchableOpacity>
+          
+
+        </View>
+
       </View>
     </View>
     
@@ -87,5 +129,34 @@ export const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     
+  },
+  optionsPerfil:{
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    paddingVertical: 25,
+    borderBottomColor: '#E2E2E2',
+    borderBottomWidth: .5
+  },
+  iconText: {
+    width: '70%', 
+    flexDirection: 'row', 
+    
+  },
+  optionText: {
+    color: '#000', 
+    fontFamily: 'Manrope-SemiBold', 
+    fontSize: 15,
+    paddingLeft: 8
+  },
+  btnSair: {
+    backgroundColor: '#F2B705',
+    flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    width: '85%', 
+    height: 55,
+    alignSelf: 'center',
+    marginTop: 80,
+    borderRadius: 10,
   }
 })
