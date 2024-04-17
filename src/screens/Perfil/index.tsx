@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import React, { useState } from 'react'
 
+import DetliveryAdress from '../../../assets/svgs/delivery-address.svg'
 import Detalhes from '../../../assets/svgs/details.svg'
 import Arrow from '../../../assets/svgs/back-arrow.svg'
 import About from '../../../assets/svgs/about icon.svg'
-import DetliveryAdress from '../../../assets/svgs/delivery-address.svg'
 import Help from '../../../assets/svgs/help icon.svg'
 import Logout from '../../../assets/svgs/logoutw.svg'
 
@@ -59,41 +59,47 @@ export function Perfil({navigation}) {
           </View>
         </View>
 
-        <View style={{width: '92%', alignSelf: 'center'}}>
-
-          <View style={styles.optionsPerfil}>
-            <View style={styles.iconText}>
-              <Detalhes width={20} height={20}/>
-              <Text style={styles.optionText}>Meus Detalhes</Text>
+        <View style={{width: '88%', alignSelf: 'center'}}>
+          <TouchableOpacity>
+            <View style={styles.optionsPerfil}>
+              <View style={styles.iconText}>
+                <Detalhes width={20} height={20}/>
+                <Text style={styles.optionText}>Meus Detalhes</Text>
+              </View>
+              <Arrow width={15} height={15}/>
             </View>
-            <Arrow width={20} height={20}/>
-          </View>
+          </TouchableOpacity>
           
-          <View style={styles.optionsPerfil}>
-            <View style={styles.iconText}>
-              <DetliveryAdress width={20} height={20}/>
-              <Text style={styles.optionText}>Detalhes Endereco</Text>
+          <TouchableOpacity>
+            <View style={styles.optionsPerfil}>
+              <View style={styles.iconText}>
+                <DetliveryAdress width={20} height={20}/>
+                <Text style={styles.optionText}>Detalhes Endereço</Text>
+              </View>
+              <Arrow width={15} height={15}/>
             </View>
-            <Arrow width={20} height={20}/>
-          </View>
-
-          <View style={styles.optionsPerfil}>
-            <View style={styles.iconText}>
-              <About width={20} height={20}/>
-              <Text style={styles.optionText}>Sobre</Text>
-            </View>
-            <Arrow width={20} height={20}/>
-          </View>
-
-
-          <View style={styles.optionsPerfil}>
-            <View style={styles.iconText}>
-              <Help width={20} height={20}/>
-              <Text style={styles.optionText}>Ajuda</Text>
-            </View>
-            <Arrow width={20} height={20}/>
-          </View>
+          </TouchableOpacity>
           
+          <TouchableOpacity>
+            <View style={styles.optionsPerfil}>
+              <View style={styles.iconText}>
+                <About width={20} height={20}/>
+                <Text style={styles.optionText}>Sobre</Text>
+              </View>
+              <Arrow width={15} height={15}/>
+            </View>
+          </TouchableOpacity>
+          
+          <TouchableOpacity>
+            <View style={styles.optionsPerfil}>
+              <View style={styles.iconText}>
+                <Help width={20} height={20}/>
+                <Text style={styles.optionText}>Ajuda</Text>
+              </View>
+              <Arrow width={15} height={15}/>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity>
             <View style={styles.btnSair}>
               <Logout width={20} height={20} style={{position: 'absolute', left: 20}}/>
@@ -140,7 +146,7 @@ export const styles = StyleSheet.create({
   iconText: {
     width: '70%', 
     flexDirection: 'row', 
-    
+    alignItems: 'center'
   },
   optionText: {
     color: '#000', 

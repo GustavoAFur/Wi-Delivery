@@ -1,10 +1,18 @@
-import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { 
+  Image, 
+  ScrollView, 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  View,Pressable, PressableProps, Alert} from 'react-native'
 
 import More from '../../../assets/svgs/more.svg'
-import Menos from '../../../assets/svgs/menos.svg'
+
 import Search from '../../../assets/svgs/search.svg'
 import ArrowRight from '../../../assets/svgs/arrow-p.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
+
 import Notification from '../../../assets/svgs/notification.svg'
 
 import Cereais from '../../../assets/images/rice.png'
@@ -19,7 +27,8 @@ import Cerveja from '../../../assets/images/heineken.png'
 import OvoPascoa from '../../../assets/images/ovo-pascoa.png'
 
 import SectionsComponent from '../../components/SectionsComponent'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { ItensOferta } from '../ItensOferta'
 
 //@ts-ignore
 export function Home({navigation}) {
@@ -33,18 +42,39 @@ export function Home({navigation}) {
   ]
 
   const ofertas = [
-    {nome: 'Arroz Branco Camil Kg', preco: '5,85', und: 'Und', caminho: Arroz},
-    {nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', caminho: Feijao},
-    {nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', caminho: Cerveja},
-    {nome: 'Ovo da pascoa Arcor', preco: '55,99 ', und: 'Und', caminho: OvoPascoa},
+    {id_: 1, nome: 'Arroz Branco Camil Kg', preco: '5,85', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
+    {id_: 2, nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
+    {id_: 3, nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
+    {id_: 4, nome: 'Ovo da pascoa Arcor', preco: '55,99 ', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
   ]
 
-  const [modoEditar, setModoEditar] = useState(false)
+  const [modoEditar, setModoEditar] = useState<String[]>([])
   const [quantidade, setQuantidade] = useState(1)
-  //@ts-ignore
-  const handleAdicionarCarrinho = () => {
-    setModoEditar(true)
+
+  function handleToggleEdit (value: string){
+    //@ts-ignore
+    setModoEditar((state)=>[...state, value])
+    console.log(modoEditar)
   }
+
+  function delProdCart (value: string){
+    Alert.alert(
+      "Excluir Produto",
+      "Deseja mesmo excluir? ",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => setModoEditar((state)=> state.filter(item => item !== value)) 
+        }
+      ]
+    );
+                    
+  }
+  
 
   return (
     <View style={{ width: '100%', flex: 1, backgroundColor: '#fff' }}>
@@ -152,83 +182,33 @@ export function Home({navigation}) {
           {
             //@ts-ignore
             ofertas.map((itens,index)=>(
-              <View style={styles.ofertasItem} key={index}>
-                <View style={{
-                  backgroundColor: '#D9042B',
-                  width: 55,
-                  height: 20,
-                  position: 'absolute',
-                  zIndex: 1,
-                  alignSelf: 'flex-start',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderBottomRightRadius: 5
-                }}>
-                  <Text style={{
-                    color: '#fff',
-                    fontFamily: 'Manrope-SBold',
-                  }}>Oferta</Text>
-                </View>
-
-                <View style={styles.imgProdView}>
-                <Image
-                  source={itens.caminho}
-                  style={styles.imgProd} />
-                </View>
-                <View style={styles.detailsProd}>
-                  <View>
-                    <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>{itens.nome}</Text>
-                  </View>
-            
-                  <View>
-                    <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                      <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ {itens.preco}</Text>
-                      <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> {itens.und}</Text>
-                    </View>
-                    <TouchableOpacity onPress={handleAdicionarCarrinho}>
-                        {
-                          modoEditar ? (
-                            <View style={{
-                              width: '100%',
-                              height: 28,
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              flexDirection: 'row',
-                              borderRadius: 10
-                            }}>
-                              <TouchableOpacity onPress={()=>{
-                                setQuantidade(quantidade-1)
-                              }}>
-                                <View style={styles.menosMais}>
-                                  <Menos  width={10} height={10}/>
-                                </View>
-                              </TouchableOpacity>
-                              
-                                <View>
-                                  <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
-                                </View>
-                              
-                              <TouchableOpacity onPress={()=>{
-                                setQuantidade(quantidade+1)
-                              }}>
-                                <View style={styles.menosMais}>
-                                  <Mais  width={10} height={10} fill="#333"/>
-                                </View>
-                              </TouchableOpacity>
-                            </View>
-                          ): 
-                            <View style={styles.btnAdicionar}>
-                              <Text style={{ color: '#fff', }}>Adicionar</Text>
-                            </View>
-                        }
-                        
-                      </TouchableOpacity>
-                    
-                  </View>
-
-                  </View>
-
-              </View>
+              
+              <ItensOferta 
+                key={index}
+                name={itens.nome} 
+                price={itens.preco} 
+                imagem={itens.caminho}
+                und={itens.und}
+                selected={modoEditar.length <= 0 ? false :  modoEditar.includes(String(itens.id_))}
+                addToCart={()=>{
+                  console.log(itens.caminho)
+                  handleToggleEdit(String(itens.id_))
+                  }
+                }
+                addProd={()=>{
+                  itens.qtd = itens.qtd+1
+                  console.log(itens.qtd)
+                }}
+                decProd={()=>{
+                  itens.qtd = itens.qtd-1
+                  if(itens.qtd <= 0){
+                    delProdCart(String(itens.id_))
+                  }
+                  console.log(itens.qtd)
+                }}
+                //@ts-ignore
+                qtd={itens.qtd}
+                />
             ))
           }
           
