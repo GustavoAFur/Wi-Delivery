@@ -158,9 +158,9 @@ export function Home({navigation}) {
                 </View>
                 <View>
                   <Text style={{
-                    color: '#000',
-                    fontWeight: '500',
+                    color: '#3E423F',
                     fontFamily: 'Manrope-SemiBold', 
+                    fontSize: 14
                   }}>{objeto.name}</Text>
                 </View>
               </TouchableOpacity>
@@ -192,7 +192,7 @@ export function Home({navigation}) {
       <View style={styles.ofertas}>
         <View style={styles.ofertasInfo}>
           <Text style={{
-            color: '#000',
+            color: '#030303',
             fontSize: 18,
             paddingVertical: 10,
             fontFamily: 'Manrope-Medium',
@@ -208,7 +208,7 @@ export function Home({navigation}) {
               flexDirection: 'row',
               alignItems: 'center',
           }}>
-            <Text style={{ color: '#D9042B', paddingRight: 5 }}>Ver mais</Text>
+            <Text style={{ color: '#D9042B', paddingRight: 5, fontFamily: 'Manrope-Semibold' }}>Ver mais</Text>
             <ArrowRight width={10} height={10} />
           </TouchableOpacity>
 
@@ -256,18 +256,19 @@ export function Home({navigation}) {
       <View>
         <View style={styles.novidadesInfo}>
           <Text style={{
-            color: '#000',
+            color: '#030303',
             fontSize: 18,
             paddingVertical: 10,
-            fontFamily: 'Manrope-Bold'
-          }}
-          >Novidades</Text>
+            fontFamily: 'Manrope-Medium',
+          }}>
+            Novidades
+          </Text>
           <TouchableOpacity style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-            <Text style={{ color: '#D9042B', paddingRight: 5 }}>Ver mais</Text>
+            <Text style={{ color: '#D9042B', paddingRight: 5, fontFamily: 'Manrope-Semibold' }}>Ver mais</Text>
             <ArrowRight width={10} height={10} />
           </TouchableOpacity>
         </View>

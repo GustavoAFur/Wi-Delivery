@@ -3,7 +3,7 @@ import { View, Text, Dimensions, StatusBar, StyleSheet, TouchableOpacity } from 
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useRoute } from '@react-navigation/native'
 
-import Search from './../../assets/svgs/search.svg'
+import Search from './../../assets/svgs/search-b.svg'
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 import { TextInput } from 'react-native-gesture-handler';
@@ -16,6 +16,8 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
     <View style={{ 
       width: width, 
       height: height +getStatusBarHeight(),
+      paddingTop: getStatusBarHeight(),
+      backgroundColor: '#fff',
       flex: 1
     }}>
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
@@ -23,13 +25,11 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
         width: width,
         paddingHorizontal: 20,
         marginTop: 0,
-        height: 100,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
         backgroundColor: '#fff',
-        borderBottomColor: '#E2E2E2',
-        borderBottomWidth: .5
       }}>
         <View
           style={{
@@ -62,7 +62,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
       <View style={{
         width: '90%',
         height: 45,
-        backgroundColor: '#fff',
+        backgroundColor: '#d9d9d9',
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
@@ -74,7 +74,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
         <Search width={20} height={20} />
         <TextInput
           placeholder='Pesquisar Produto'
-          placeholderTextColor={'#d2d2d2'}
+          placeholderTextColor={'#000'}
           style={styles.input} />
       </View>
 
@@ -84,7 +84,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
 export const styles = StyleSheet.create({
   
   input: {
-    backgroundColor:'#fff',
+    backgroundColor:'#d9d9d9',
     width:'88%',
     height: 45,
     alignSelf:'center',

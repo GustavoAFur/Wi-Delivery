@@ -37,7 +37,7 @@ export  function ItensOferta({name, imagem, quantidade, price, und, selected = f
       }}>
         <Text style={{
           color: '#fff',
-          fontFamily: 'Manrope-SBold',
+          fontFamily: 'Manrope-SemiBold',
         }}>Oferta</Text>
       </View>
 
@@ -51,7 +51,7 @@ export  function ItensOferta({name, imagem, quantidade, price, und, selected = f
           <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>{name}</Text>
         </View>
   
-        <View>
+       
           <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
             <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ {price}</Text>
             <Text style={{ color: '#000', fontSize: 8 , fontFamily: 'Manrope-SemiBold',}}> {und}</Text>
@@ -75,7 +75,7 @@ export  function ItensOferta({name, imagem, quantidade, price, und, selected = f
                     
                       <View>
                         {/* @ts-ignore */}
-                        <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{String(quantidade.qtd)}</Text>
+                        <Text style={{color: '#000',fontSize: 18, fontFamily: 'Manrope-SemiBold',}}>{String(quantidade.qtd)}</Text>
                       </View>
                     
                     <Pressable onPress={addProd}>
@@ -92,7 +92,7 @@ export  function ItensOferta({name, imagem, quantidade, price, und, selected = f
               
             </Pressable>
           
-        </View>
+       
 
         </View>
 
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor:'#d2d2d2',
     width: 140,
-    height: 200,
+    height: 240,
     borderRadius: 10,
     marginBottom: 10,
     marginRight: 10,
@@ -145,7 +145,7 @@ export const styles = StyleSheet.create({
     height:'45%', 
     alignSelf: 'center', 
     justifyContent: 'space-between',
-    
+    gap: 8
   },
   menosMais: {
     width: 25, 

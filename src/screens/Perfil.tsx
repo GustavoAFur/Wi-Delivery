@@ -1,5 +1,5 @@
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
@@ -19,8 +19,9 @@ export function Perfil({navigation}) {
       width: width,
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
-      
+      backgroundColor: '#fff'
     }}>
+      <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
       <View style={{
         flex: 1,
         backgroundColor: '#fff',

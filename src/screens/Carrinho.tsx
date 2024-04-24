@@ -21,18 +21,15 @@ export function Carrinho({navigation}) {
       width: width, 
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
-      flex: 1
+      flex: 1,
+      backgroundColor: '#fff'
     }}>
 
-    <StatusBar
-      translucent
-      backgroundColor={"#FFFF"}
-      barStyle={"dark-content"} />
+     <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
       <View style={{
         width: width,
         paddingHorizontal: 20,
-        marginTop: 0,
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
@@ -73,8 +70,8 @@ export function Carrinho({navigation}) {
               </View>
               <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#000', fontWeight: 'bold'}}>Arroz Branco Camil</Text>
-                  <Text style={{color: '#7C7C7C'}}>1 Kg</Text>
+                  <Text style={{color: '#1A1926', fontFamily: 'Manrope-Bold'}}>Arroz Branco Camil</Text>
+                  <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-ExtraLight'}}>1 Kg</Text>
                 </View>
                 <View style={{ 
                   width: '100%', 
@@ -155,8 +152,8 @@ export function Carrinho({navigation}) {
               </View>
               <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#000', fontWeight: 'bold'}}>Cerv. Heineken</Text>
-                  <Text style={{color: '#7C7C7C'}}>350 ml</Text>
+                  <Text style={{color: '#1A1926', fontFamily: 'Manrope-Bold'}}>Cerv. Heineken</Text>
+                  <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-ExtraLight'}}>350 ml</Text>
                 </View>
                 <View style={{ 
                   width: '100%', 
@@ -206,7 +203,7 @@ export function Carrinho({navigation}) {
               </View>
               <View>
                 <Text style={{
-                  color: '#000',
+                  color: '#1A1926',
                   fontFamily: 'Manrope-SemiBold', 
                   fontSize: 15
                   }}>

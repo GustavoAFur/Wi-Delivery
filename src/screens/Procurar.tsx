@@ -1,9 +1,9 @@
 import React from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 
-import Search from './../../assets/svgs/search.svg'
+import Search from './../../assets/svgs/search-b.svg'
 //@ts-ignore
 export function Procurar({navigation}) {
   const { width, height } = Dimensions.get("window")
@@ -12,12 +12,13 @@ export function Procurar({navigation}) {
       width: width,
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
+      backgroundColor: '#fff'
     }}>
-      
+      <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
       <View style={{
         width: '90%',
         height: 45,
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F3F2',
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
@@ -29,7 +30,7 @@ export function Procurar({navigation}) {
         <Search width={20} height={20} />
         <TextInput
           placeholder='Pesquisar Produto'
-          placeholderTextColor={'#d2d2d2'}
+          placeholderTextColor={'#7C7C7C'}
           style={styles.input} />
       </View>
 
@@ -40,7 +41,7 @@ export function Procurar({navigation}) {
         width: '98%',
         height: '80%',
         }}>
-          <Text style={{color: '#000'}}>Procure por um produto da loja.</Text>
+          <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-SemiBold'}}>Procure por um produto da loja.</Text>
      </View>
     </View>
     
@@ -57,14 +58,14 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   input: {
-    backgroundColor:'#fff',
+    backgroundColor:'#F2F3F2',
     width:'88%',
     height: 45,
     alignSelf:'center',
-    
+    fontFamily: 'Manrope-Semibold',
     borderRadius: 16,
     paddingLeft: 20,
-    color: '#000',
+    
 
   },
   btnAdicionar: {
