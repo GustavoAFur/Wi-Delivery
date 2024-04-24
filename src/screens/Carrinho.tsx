@@ -3,9 +3,9 @@ import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text, Dimensions, StyleSheet,  Image, StatusBar} from 'react-native'
 
-import Menos from '../../../assets/svgs/menos.svg'
-import Close from '../../../assets/svgs/close.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
+import Menos from './../../assets/svgs/menos.svg'
+import Close from './../../assets/svgs/close.svg'
+import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 
 
 //@ts-ignore
@@ -67,14 +67,14 @@ export function Carrinho({navigation}) {
                 justifyContent: 'center'
               }}>
                 <Image 
-                  source={require('../../../assets/images/coca.png')}
+                  source={{uri: 'https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png'}}
                   style={styles.imageStyle}
                 />
               </View>
               <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
                 <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#000', fontWeight: 'bold'}}>Coca-Cola</Text>
-                  <Text style={{color: '#7C7C7C'}}>350 ml</Text>
+                  <Text style={{color: '#000', fontWeight: 'bold'}}>Arroz Branco Camil</Text>
+                  <Text style={{color: '#7C7C7C'}}>1 Kg</Text>
                 </View>
                 <View style={{ 
                   width: '100%', 
@@ -149,7 +149,7 @@ export function Carrinho({navigation}) {
                 justifyContent: 'center'
               }}>
                 <Image 
-                  source={require('../../../assets/images/heineken.png')}
+                  source={{uri: 'https://apoioentrega.vteximg.com.br/arquivos/ids/541936/178415.png?v=638419050718770000'}}
                   style={styles.imageStyle}
                 />
               </View>
@@ -267,9 +267,9 @@ export const styles = StyleSheet.create({
     borderWidth: .5,
   },
   imageStyle: {
-    width: '60%', 
-    height: '60%',
-    resizeMode: 'contain',
+    width: 80,
+    height: 80,
+    resizeMode: 'contain'
   },
   detalhesEntrega: {
     justifyContent: 'space-between', 

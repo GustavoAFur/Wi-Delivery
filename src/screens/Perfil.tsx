@@ -3,12 +3,12 @@ import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
-import DetliveryAdress from '../../../assets/svgs/delivery-address.svg'
-import Detalhes from '../../../assets/svgs/details.svg'
-import Arrow from '../../../assets/svgs/back-arrow.svg'
-import About from '../../../assets/svgs/about icon.svg'
-import Help from '../../../assets/svgs/help icon.svg'
-import Logout from '../../../assets/svgs/logoutw.svg'
+import DetliveryAdress from './../../assets/svgs/delivery-address.svg'
+import Detalhes from './../../assets/svgs/details.svg'
+import Arrow from './../../assets/svgs/back-arrow.svg'
+import About from './../../assets/svgs/about icon.svg'
+import Help from './../../assets/svgs/help icon.svg'
+import Logout from './../../assets/svgs/logoutw.svg'
 
 //@ts-ignore
 export function Perfil({navigation}) {
@@ -35,7 +35,7 @@ export function Perfil({navigation}) {
               backgroundColor: '#a0a0f7'
             }}>
               <Image 
-                source={require('../../../assets/images/bolsa-de-compras.png')}
+                source={require('./../../assets/images/bolsa-de-compras.png')}
                 style={{width: '100%', height: '100%'}}
               />
             </View>

@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import TextInputMask from 'react-native-text-input-mask'
 import React from 'react'
  
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
 export function InfosDadosPessoais({navigation}) {

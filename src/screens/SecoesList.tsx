@@ -1,15 +1,15 @@
 import React from 'react'
 import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
 
-import Search from '../../../assets/svgs/search.svg'
+import Search from './../../assets/svgs/search.svg'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import Cereais from '../../../assets/images/rice.png'
-import SecoesListComponent from '../SecoesListComponent'
-import Acougue from '../../../assets/images/meet-fish.png'
-import Hortifruti from '../../../assets/images/horti-fruti.png'
-import Perfumaria from '../../../assets/images/beauty-product.png'
-import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
+import Cereais from './../../assets/images/rice.png'
+import SecoesListComponent from './SecoesListComponent'
+import Acougue from './../../assets/images/meet-fish.png'
+import Hortifruti from './../../assets/images/horti-fruti.png'
+import Perfumaria from './../../assets/images/beauty-product.png'
+import Limpeza from './../../assets/images/Produtos-de-Limpeza.png'
 //@ts-ignore
 export default function SecoesList({navigation}) {
 

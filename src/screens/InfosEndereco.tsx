@@ -3,7 +3,7 @@ import { View, Text, Dimensions, TextInput, StyleSheet , KeyboardAvoidingView, P
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 //@ts-ignore
 export function InfosEndereco({navigation}) {

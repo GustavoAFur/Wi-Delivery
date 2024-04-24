@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, PressableProps, StyleSheet, Image, Pressable } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import Menos from '../../../assets/svgs/menos.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
+import Menos from './../../assets/svgs/menos.svg'
+import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 
 export type ItensProps = {
   name: string,
   imagem: string,
-  qtd : string,
+  quantidade : string,
   price: string,
   und: string,
   selected?: boolean,
@@ -16,10 +16,9 @@ export type ItensProps = {
   addProd: () => void,
   decProd: () => void,
 }
-//@ts-ignore
 
 
-export  function ItensOferta({name, imagem, qtd, price, und, selected = false, addToCart, addProd, decProd}: ItensProps & PressableProps) {
+export  function ItensOferta({name, imagem, quantidade, price, und, selected = false, addToCart, addProd, decProd}: ItensProps & PressableProps) {
 
   
   
@@ -75,7 +74,8 @@ export  function ItensOferta({name, imagem, qtd, price, und, selected = false, a
                     </Pressable>
                     
                       <View>
-                        <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{String(qtd)}</Text>
+                        {/* @ts-ignore */}
+                        <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{String(quantidade.qtd)}</Text>
                       </View>
                     
                     <Pressable onPress={addProd}>
@@ -137,7 +137,8 @@ export const styles = StyleSheet.create({
   },
   imgProd: {
     width: 80,
-    height: 80
+    height: 80,
+    resizeMode: 'contain'
   },
   detailsProd: {
     width: '86%', 

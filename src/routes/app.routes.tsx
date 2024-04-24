@@ -17,6 +17,7 @@ import Search from '../../assets/svgs/search-prod.svg'
 import { InfosEndereco } from '../screens/InfosEndereco'
 import { InfosPagamento } from '../screens/InfosPagamento'
 import SecoesList from '../screens/SecoesList'
+import ProdutosPorCategoria from '../screens/ProdutosPorCategoria'
 
 
 export function AppRoutes() {
@@ -251,6 +252,14 @@ export function AppRoutes() {
       <Screen 
         name="SecoesList" 
         component={SecoesList}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+
+      <Screen 
+        name="ProdutosPorCategoria" 
+        component={ProdutosPorCategoria}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

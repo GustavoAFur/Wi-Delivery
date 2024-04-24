@@ -6,32 +6,32 @@ import {
   Text, 
   TextInput, 
   TouchableOpacity, 
-  View,Pressable, PressableProps, Alert} from 'react-native'
+  View,Pressable, PressableProps, Alert,
+  FlatList} from 'react-native'
 
-import More from '../../../assets/svgs/more.svg'
+import { NavigationProp, useRoute } from '@react-navigation/native'
 
-import Search from '../../../assets/svgs/search.svg'
-import ArrowRight from '../../../assets/svgs/arrow-p.svg'
+import More from './../../assets/svgs/more.svg'
 
-import Notification from '../../../assets/svgs/notification.svg'
+import Search from './../../assets/svgs/search.svg'
+import ArrowRight from './../../assets/svgs/arrow-p.svg'
 
-import Cereais from '../../../assets/images/rice.png'
-import Acougue from '../../../assets/images/meet-fish.png'
-import Hortifruti from '../../../assets/images/horti-fruti.png'
-import Perfumaria from '../../../assets/images/beauty-product.png'
-import Limpeza from '../../../assets/images/Produtos-de-Limpeza.png'
+import Notification from './../../assets/svgs/notification.svg'
 
-import Arroz from '../../../assets/images/arroz.png'
-import Feijao from '../../../assets/images/feijao.png'
-import Cerveja from '../../../assets/images/heineken.png'
-import OvoPascoa from '../../../assets/images/ovo-pascoa.png'
+import Cereais from './../../assets/images/rice.png'
+import Acougue from './../../assets/images/meet-fish.png'
+import Hortifruti from './../../assets/images/horti-fruti.png'
+import Perfumaria from './../../assets/images/beauty-product.png'
+import Limpeza from './../../assets/images/Produtos-de-Limpeza.png'
 
-import SectionsComponent from '../../components/SectionsComponent'
 import { useEffect, useState } from 'react'
-import { ItensOferta } from '../ItensOferta'
+import { ItensOferta } from './ItensOferta'
 
 //@ts-ignore
 export function Home({navigation}) {
+
+  
+  const route = useRoute()
 
   const sectionsObj = [
     { name: 'Cereais', img: Cereais },
@@ -42,19 +42,44 @@ export function Home({navigation}) {
   ]
 
   const ofertas = [
-    {id_: 1, nome: 'Arroz Branco Camil Kg', preco: '5,85', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
-    {id_: 2, nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
-    {id_: 3, nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
-    {id_: 4, nome: 'Ovo da pascoa Arcor', preco: '55,99 ', und: 'Und', qtd: 1, caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
+    {id_: 1, nome: 'Arroz Branco Urbano Kg', preco: '5,85', und: 'Und', caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
+    {id_: 2, nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', caminho: "https://www.camil.com.br/wp-content/uploads/sites/12/2020/06/1582828742-mkp-feijao-preto-1kg-3-768x768.png"},
+    {id_: 3, nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', caminho: "https://apoioentrega.vteximg.com.br/arquivos/ids/541936/178415.png?v=638419050718770000"},
+    {id_: 4, nome: 'Caixa de Bombons Nestle', preco: '55,99 ', und: 'Und',  caminho: "https://upside.vteximg.com.br/arquivos/ids/164912-1000-1000/29878.png?v=637594707434230000"},
   ]
 
-  const [modoEditar, setModoEditar] = useState<String[]>([])
+
+  const [produtosCarrinho, setProdutosCarrinho] = useState<String[]>([])
   const [quantidade, setQuantidade] = useState(1)
 
-  function handleToggleEdit (value: string){
+  useEffect(()=>{
+    console.log(produtosCarrinho)
+  },[produtosCarrinho])
+
+
+  function handleToggleAddCart (value: any, qtd: number){
     //@ts-ignore
-    setModoEditar((state)=>[...state, value])
-    console.log(modoEditar)
+    setProdutosCarrinho((state)=>[...state, {...value, qtd}])
+    console.log(produtosCarrinho)
+  }
+
+  function addQtd (idProd: any){
+    setProdutosCarrinho(prevObjetos => 
+      prevObjetos.map(objeto => 
+        //@ts-ignore
+        objeto.id_ === idProd ? { ...objeto, qtd: objeto.qtd+1 } : objeto
+      )
+    )
+  }
+
+  function decQtd(idProd: any) {
+    //@ts-ignore
+    setProdutosCarrinho(prevObjetos =>
+      prevObjetos.map(objeto =>
+        //@ts-ignore
+        objeto && objeto.id_ === idProd ?  { ...objeto, qtd: objeto.qtd - 1 }: objeto
+      )
+    );
   }
 
   function delProdCart (value: string){
@@ -68,7 +93,8 @@ export function Home({navigation}) {
         },
         {
           text: "OK",
-          onPress: () => setModoEditar((state)=> state.filter(item => item !== value)) 
+          //@ts-ignore
+          onPress: () => setProdutosCarrinho((state)=> state.filter(item => item.id_ !== value)) 
         }
       ]
     );
@@ -79,18 +105,15 @@ export function Home({navigation}) {
   return (
     <View style={{ width: '100%', flex: 1, backgroundColor: '#fff' }}>
 
-    <StatusBar
-      translucent
-      backgroundColor={"#F2B705"}
-      barStyle={"light-content"} />
+    <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
     
     <ScrollView contentContainerStyle={styles.scrollViewMain}>
       <View style={styles.header}>
         <View style={styles.details}>
 
           <View style={styles.userDetails}>
-            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 12,  fontFamily: 'Manrope-SemiBold',  }}>Loja 1 - Reriutaba</Text>
-            <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15,  fontFamily: 'Manrope-SemiBold',  }}>Gustavo Furtado</Text>
+            <Text style={{color: '#fff', fontSize: 12,  fontFamily: 'Manrope-SemiBold',  }}>Loja 1 - Reriutaba</Text>
+            <Text style={{color: '#fff', fontSize: 15,  fontFamily: 'Manrope-SemiBold',  }}>Gustavo Furtado</Text>
           </View>
           <View style={styles.notification}>
             <Notification />
@@ -124,7 +147,23 @@ export function Home({navigation}) {
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         {
           sectionsObj.map((objeto, index)=>(
-            <SectionsComponent page={objeto.name} name={objeto.name} img={objeto.img} key={index}/>
+            <TouchableOpacity 
+              key={index}
+              onPress={() => {
+                navigation.navigate('ProdutosPorCategoria', { categoria: objeto.name })
+              }} 
+              style={styles.sectionsItens}>
+                <View style={styles.sectionsImg}>
+                  <Image source={objeto.img} style={styles.imageStyle}/>
+                </View>
+                <View>
+                  <Text style={{
+                    color: '#000',
+                    fontWeight: '500',
+                    fontFamily: 'Manrope-SemiBold', 
+                  }}>{objeto.name}</Text>
+                </View>
+              </TouchableOpacity>
           ))
         }
 
@@ -155,9 +194,8 @@ export function Home({navigation}) {
           <Text style={{
             color: '#000',
             fontSize: 18,
-            fontWeight: 'bold',
             paddingVertical: 10,
-            fontFamily: 'Manrope-SemiBold',
+            fontFamily: 'Manrope-Medium',
           }}>
             Ofertas do dia
             </Text>
@@ -175,54 +213,53 @@ export function Home({navigation}) {
           </TouchableOpacity>
 
         </View>
-        <ScrollView 
-          horizontal showsHorizontalScrollIndicator={false}  
-          contentContainerStyle={styles.scrollViewContentOfertasNews}
-        >
-          {
-            //@ts-ignore
-            ofertas.map((itens,index)=>(
-              
+        </View>
+        <FlatList
+        contentContainerStyle={{paddingHorizontal: 20}}
+        data={ofertas}
+        //  @ts-ignore
+        keyExtractor={item=> item.id}
+        horizontal={true}
+        renderItem={({item,index}) => {
+        
+          //@ts-ignore
+          let qtdProdutoSelecionado = produtosCarrinho.find(objeto => objeto.id_ === item.id_)
+
+          return(
               <ItensOferta 
                 key={index}
-                name={itens.nome} 
-                price={itens.preco} 
-                imagem={itens.caminho}
-                und={itens.und}
-                selected={modoEditar.length <= 0 ? false :  modoEditar.includes(String(itens.id_))}
+                name={item.nome} 
+                price={item.preco} 
+                imagem={item.caminho}
+                und={item.und}
+                //@ts-ignore
+                selected={produtosCarrinho.length <= 0 ? false :  produtosCarrinho.some(objeto => objeto.id_ === item.id_)}
                 addToCart={()=>{
-                  console.log(itens.caminho)
-                  handleToggleEdit(String(itens.id_))
+                  handleToggleAddCart(item, 1)
+
                   }
                 }
                 addProd={()=>{
-                  itens.qtd = itens.qtd+1
-                  console.log(itens.qtd)
+                  addQtd(item.id_)
                 }}
                 decProd={()=>{
-                  itens.qtd = itens.qtd-1
-                  if(itens.qtd <= 0){
-                    delProdCart(String(itens.id_))
-                  }
-                  console.log(itens.qtd)
+                  //@ts-ignore
+                  qtdProdutoSelecionado.qtd <= 1 ?  delProdCart (item.id_) : decQtd(item.id_)
                 }}
                 //@ts-ignore
-                qtd={itens.qtd}
+                quantidade={qtdProdutoSelecionado}
                 />
-            ))
-          }
-          
-          
-        </ScrollView>
-      </View>
+              )
+            }}
+            />
 
       <View>
         <View style={styles.novidadesInfo}>
           <Text style={{
             color: '#000',
             fontSize: 18,
-            fontWeight: 'bold',
             paddingVertical: 10,
+            fontFamily: 'Manrope-Bold'
           }}
           >Novidades</Text>
           <TouchableOpacity style={{
@@ -257,9 +294,8 @@ export const styles = StyleSheet.create({
   header: {
     backgroundColor:'#F2B705',
     width:'100%', 
-    height: 155,
-    marginTop: 35,
-    paddingTop: 15
+    height: 195,
+    paddingTop: 55
   },
   details: {
     flexDirection: 'row',

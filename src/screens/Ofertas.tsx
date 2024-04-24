@@ -3,11 +3,11 @@ import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import ScreenBack from '../../../assets/svgs/arrow-right.svg'
-import Mais from '../../../assets/svgs/plus-svgrepo-com.svg'
-import Search from '../../../assets/svgs/search.svg'
-import Menos from '../../../assets/svgs/menos.svg'
-import Cart from '../../../assets/svgs/cart.svg'
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
+import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
+import Search from './../../assets/svgs/search.svg'
+import Menos from './../../assets/svgs/menos.svg'
+import Cart from './../../assets/svgs/cart.svg'
 //@ts-ignore
 export function Ofertas({navigation}) {
   const { width, height } = Dimensions.get("window")
@@ -95,7 +95,7 @@ export function Ofertas({navigation}) {
         <View style={styles.ofertasItem}>
           <View style={styles.imgProdView}>
             <Image
-              source={require('../../../assets/images/arroz.png')}
+              source={require('./../../assets/images/arroz.png')}
               style={styles.imgProd} />
           </View>
           <View style={styles.detailsProd}>

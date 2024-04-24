@@ -9,7 +9,7 @@ interface Props{
 
 const SecoesListComponent = ({ name, img}: Props) => {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation(); 
  
   return (
     <TouchableOpacity onPress={() => {
