@@ -7,7 +7,8 @@ import {
   TextInput, 
   TouchableOpacity, 
   View,Pressable, PressableProps, Alert,
-  FlatList} from 'react-native'
+  FlatList,
+  Modal} from 'react-native'
 
 import { NavigationProp, useRoute } from '@react-navigation/native'
 
@@ -27,6 +28,9 @@ import Limpeza from './../../assets/images/Produtos-de-Limpeza.png'
 import { useEffect, useState } from 'react'
 import { ItensOferta } from './ItensOferta'
 
+import firestore from '@react-native-firebase/firestore'
+import { useAuth } from '../hooks/auth'
+
 //@ts-ignore
 export function Home({navigation}) {
 
@@ -41,69 +45,32 @@ export function Home({navigation}) {
     { name: 'Limpeza', img: Limpeza },
   ]
 
+  const kitBasico = "https://www.kitranchoescolhacerta.com.br/wp-content/uploads/2018/01/kit-rancho.png"
+  const kitLimpeza = "https://calvo.com.br/wp-content/uploads/2022/08/CESTA-CLEAN-MASTER.png"
+  const kitPremium = "https://calvo.com.br/wp-content/uploads/2022/10/KIT-ESMERALDA.png"
+  const kitMaster = "https://calvo.com.br/wp-content/uploads/2022/10/KIT-ESMERALDA.png"
+
   const ofertas = [
-    {id_: 1, nome: 'Arroz Branco Urbano Kg', preco: '5,85', und: 'Und', caminho: "https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png"},
-    {id_: 2, nome: 'Feijao Preto Camil Kg', preco: '8,85', und: 'Und', caminho: "https://www.camil.com.br/wp-content/uploads/sites/12/2020/06/1582828742-mkp-feijao-preto-1kg-3-768x768.png"},
-    {id_: 3, nome: 'Cerv. Heineken 330 ml', preco: '6,59', und: 'Und', caminho: "https://apoioentrega.vteximg.com.br/arquivos/ids/541936/178415.png?v=638419050718770000"},
-    {id_: 4, nome: 'Caixa de Bombons Nestle', preco: '55,99 ', und: 'Und',  caminho: "https://upside.vteximg.com.br/arquivos/ids/164912-1000-1000/29878.png?v=637594707434230000"},
+    {id_: 1, nome: 'Kit Básico', preco: '50.00', caminho: kitBasico, itens: [{qtd: 3, item: 'Arroz'},{qtd: 2, item: 'Feijão'},{qtd: 5, item: 'Macarrão '},{qtd: 5, item: 'Macarrão '}]},
+    {id_: 2, nome: 'Kit Limpeza', preco: '88.50', caminho: kitLimpeza, itens: [{qtd: 2, item: 'Detergente'}]},
+    {id_: 3, nome: 'Kit Premium', preco: '659.00',caminho: kitPremium, itens: [{qtd: 1, item: 'Feijão'}]},
+    {id_: 4, nome: 'Kit Master', preco: '799.00 ',caminho: kitMaster, itens: [{qtd: 4, item: 'Macarrão'}]},
   ]
 
 
-  const [produtosCarrinho, setProdutosCarrinho] = useState<String[]>([])
-  const [quantidade, setQuantidade] = useState(1)
+  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const limitedData = ofertas.slice(0, 5)
 
   useEffect(()=>{
-    console.log(produtosCarrinho)
-  },[produtosCarrinho])
+    console.log(kitsCarrinho)
+  },[kitsCarrinho])
 
-
-  function handleToggleAddCart (value: any, qtd: number){
-    //@ts-ignore
-    setProdutosCarrinho((state)=>[...state, {...value, qtd}])
-    console.log(produtosCarrinho)
-  }
-
-  function addQtd (idProd: any){
-    setProdutosCarrinho(prevObjetos => 
-      prevObjetos.map(objeto => 
-        //@ts-ignore
-        objeto.id_ === idProd ? { ...objeto, qtd: objeto.qtd+1 } : objeto
-      )
-    )
-  }
-
-  function decQtd(idProd: any) {
-    //@ts-ignore
-    setProdutosCarrinho(prevObjetos =>
-      prevObjetos.map(objeto =>
-        //@ts-ignore
-        objeto && objeto.id_ === idProd ?  { ...objeto, qtd: objeto.qtd - 1 }: objeto
-      )
-    );
-  }
-
-  function delProdCart (value: string){
-    Alert.alert(
-      "Excluir Produto",
-      "Deseja mesmo excluir? ",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          //@ts-ignore
-          onPress: () => setProdutosCarrinho((state)=> state.filter(item => item.id_ !== value)) 
-        }
-      ]
-    );
-                    
-  }
-  
 
   return (
-    <View style={{ width: '100%', flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ width: '100%', flex: 1, backgroundColor: '#F5F5F5' }}>
 
     <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
     
@@ -144,51 +111,7 @@ export function Home({navigation}) {
         </TouchableOpacity>
 
       </View>
-      <ScrollView horizontal contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        {
-          sectionsObj.map((objeto, index)=>(
-            <TouchableOpacity 
-              key={index}
-              onPress={() => {
-                navigation.navigate('ProdutosPorCategoria', { categoria: objeto.name })
-              }} 
-              style={styles.sectionsItens}>
-                <View style={styles.sectionsImg}>
-                  <Image source={objeto.img} style={styles.imageStyle}/>
-                </View>
-                <View>
-                  <Text style={{
-                    color: '#3E423F',
-                    fontFamily: 'Manrope-SemiBold', 
-                    fontSize: 14
-                  }}>{objeto.name}</Text>
-                </View>
-              </TouchableOpacity>
-          ))
-        }
-
-        <TouchableOpacity 
-          onPress={()=>{
-            navigation.navigate('SecoesList')
-          }}
-          style={styles.sectionsItens}
-        >
-          <View style={styles.sectionsImg}>
-            <More/>
-          </View>
-          <View>
-            <Text style={{
-              color: '#000',
-              fontWeight: '500',
-              fontFamily: 'Manrope-SemiBold', 
-            }}>Mais
-            </Text>
-          </View>
-        </TouchableOpacity>
-
-      </ScrollView>
-
-
+      
       <View style={styles.ofertas}>
         <View style={styles.ofertasInfo}>
           <Text style={{
@@ -197,7 +120,7 @@ export function Home({navigation}) {
             paddingVertical: 10,
             fontFamily: 'Manrope-Medium',
           }}>
-            Ofertas do dia
+            Destaques do dia
             </Text>
           <TouchableOpacity 
             onPress={()=>{
@@ -214,40 +137,29 @@ export function Home({navigation}) {
 
         </View>
         </View>
+
         <FlatList
         contentContainerStyle={{paddingHorizontal: 20}}
-        data={ofertas}
+        data={limitedData}
         //  @ts-ignore
-        keyExtractor={item=> item.id}
+        keyExtractor={item=> item.id_}
         horizontal={true}
-        renderItem={({item,index}) => {
-        
-          //@ts-ignore
-          let qtdProdutoSelecionado = produtosCarrinho.find(objeto => objeto.id_ === item.id_)
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item}) => {
 
           return(
               <ItensOferta 
-                key={index}
+                //@ts-ignore
                 name={item.nome} 
+                //@ts-ignore
                 price={item.preco} 
+                //@ts-ignore
                 imagem={item.caminho}
-                und={item.und}
                 //@ts-ignore
-                selected={produtosCarrinho.length <= 0 ? false :  produtosCarrinho.some(objeto => objeto.id_ === item.id_)}
-                addToCart={()=>{
-                  handleToggleAddCart(item, 1)
-
-                  }
-                }
-                addProd={()=>{
-                  addQtd(item.id_)
+                navTo={()=>{
+                  navigation.navigate('DetalhesKit', {nome: item.nome, preco: item.preco, imagem: item.caminho, itens: item.itens, kit: item})
                 }}
-                decProd={()=>{
-                  //@ts-ignore
-                  qtdProdutoSelecionado.qtd <= 1 ?  delProdCart (item.id_) : decQtd(item.id_)
-                }}
-                //@ts-ignore
-                quantidade={qtdProdutoSelecionado}
+                
                 />
               )
             }}
@@ -279,6 +191,9 @@ export function Home({navigation}) {
         </ScrollView>
       </View>
     </ScrollView>
+
+    
+
   </View>
   );
 }
@@ -339,21 +254,20 @@ export const styles = StyleSheet.create({
     height: 108,
     marginRight: 6,
     alignItems: 'center',
+    
   },
   sectionsImg: {
-    backgroundColor: '#fff',
-    width: '80%',
-    height: '70%',
+    backgroundColor: '#FFF',
+    width: 73,
+    height: 73,
     marginBottom:10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
-    borderColor:'#d2d2d2',
-    borderWidth: .5,
+    borderRadius: 37,
   },
   imageStyle: {
-    width: '90%', 
-    height: '90%',
+    width: 45, 
+    height: 45,
     resizeMode: 'contain',
   },
   menuIcon: {
@@ -364,7 +278,7 @@ export const styles = StyleSheet.create({
   },
   ofertas: {
     paddingTop: 20,
-    
+    marginBottom: 15
   },
   ofertasInfo: {
     flexDirection: 'row',
@@ -435,4 +349,5 @@ export const styles = StyleSheet.create({
     borderColor:'#d2d2d2',
     borderWidth: .5,
   },
+  
 });

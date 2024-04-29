@@ -150,9 +150,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   optionText: {
-    color: '#000', 
+    color: '#181725', 
     fontFamily: 'Manrope-SemiBold', 
-    fontSize: 15,
+    fontSize: 16,
     paddingLeft: 8
   },
   btnSair: {

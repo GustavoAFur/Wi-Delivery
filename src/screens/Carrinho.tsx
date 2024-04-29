@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, Dimensions, StyleSheet,  Image, StatusBar} from 'react-native'
+import { View, Text, Dimensions, StyleSheet,  Image, StatusBar, FlatList, Alert, Modal, Pressable} from 'react-native'
 
 import Menos from './../../assets/svgs/menos.svg'
 import Close from './../../assets/svgs/close.svg'
 import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
+import { useAuth } from '../hooks/auth'
+import ItensCarrinho from './ItensCarrinho'
 
 
 //@ts-ignore
@@ -13,8 +15,37 @@ export function Carrinho({navigation}) {
 
   const { width, height } = Dimensions.get("window")
 
+  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const [idItemRef, setIdItemRef] = useState(0)
   const [quantidade, setQuantidade] = useState(1)
-  const preco = 3.49
+
+
+  function addQtd (idProd: any){
+    setKitsCarrinho(prevObjetos => 
+      prevObjetos.map(objeto => 
+        //@ts-ignore
+        objeto.id_ === idProd ? { ...objeto, quantidade: objeto.quantidade+1 } : objeto
+      )
+    )
+  }
+
+  function decQtd(idProd: any) {
+    //@ts-ignore
+    setKitsCarrinho(prevObjetos =>
+      prevObjetos.map(objeto =>
+        //@ts-ignore
+        objeto && objeto.id_ === idProd ?  { ...objeto, quantidade: objeto.quantidade - 1 }: objeto
+      )
+    );
+  }
+
+  function delProdCart (value: string){
+    //@ts-ignore
+    setKitsCarrinho((state)=> state.filter(item => item.id_ !== value)) 
+                        
+  }
 
   return (
     <View style={{ 
@@ -49,176 +80,56 @@ export function Carrinho({navigation}) {
           </Text>
         </View>
       </View>
-      <ScrollView style={{backgroundColor:'#fff'}}>
-        <View style={styles.prodsCar}>
-            <View style={{
-              width: '72%', 
-              height:'84%', 
-              flexDirection:'row', 
-              alignItems: 'center'
-            }}>
-              <View style={{
-                width: '30%', 
-                height:'100%', 
-                alignItems: 'center', 
-                justifyContent: 'center'
-              }}>
-                <Image 
-                  source={{uri: 'https://lojacentraldealimentos.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/embalagem-2020-leve-arroz-tio-urbano.png'}}
-                  style={styles.imageStyle}
-                />
-              </View>
-              <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
-                <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#1A1926', fontFamily: 'Manrope-Bold'}}>Arroz Branco Camil</Text>
-                  <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-ExtraLight'}}>1 Kg</Text>
-                </View>
-                <View style={{ 
-                  width: '100%', 
-                  height:'50%', 
-                  flexDirection: 'row',
-                  alignItems: 'center', 
-                  gap: 14, 
-                  paddingLeft: 6,
-                }}>
-
-                  <TouchableOpacity onPress={()=>{
-                    setQuantidade(quantidade-1)
-                  }}>
-                    <View style={styles.menosMais}>
-                      <Menos  width={15} height={15}/>
-                    </View>
-                  </TouchableOpacity>
-                  
-                    <View>
-                      <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
-                    </View>
-                  
-                  <TouchableOpacity onPress={()=>{
-                    setQuantidade(quantidade+1)
-                  }}>
-                    <View style={styles.menosMais}>
-                      <Mais  width={15} height={15} fill="#333"/>
-                    </View>
-                  </TouchableOpacity>
-                  
-                </View>
-              </View>
-              
-            </View>
-
-            <View style={{
-              width: '22%', 
-              height:'50%', 
-              justifyContent: 'space-between', 
-              alignItems: 'flex-end',
-              paddingRight: 5
-            }}>
-              <View >
-                <TouchableOpacity>
-                  <Close  width={15} height={15}/> 
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text style={{
-                  color: '#000',
-                  fontFamily: 'Manrope-SemiBold', 
-                  fontSize: 15
-                  }}>
-                    R$ {parseFloat((quantidade*preco).toFixed(2))}
-                </Text>
-              </View>
-            </View>
-            
-        </View>
-        
-        <View style={styles.prodsCar}>
-            <View style={{
-              width: '72%', 
-              height:'84%', 
-              flexDirection:'row', 
-              alignItems: 'center'
-            }}>
-              <View style={{
-                width: '30%', 
-                height:'100%', 
-                alignItems: 'center', 
-                justifyContent: 'center'
-              }}>
-                <Image 
-                  source={{uri: 'https://apoioentrega.vteximg.com.br/arquivos/ids/541936/178415.png?v=638419050718770000'}}
-                  style={styles.imageStyle}
-                />
-              </View>
-              <View style={{width: '70%', height:'80%',justifyContent: 'center' }}>
-                <View style={{ width: '100%', height:'50%', padding: 6}}>
-                  <Text style={{color: '#1A1926', fontFamily: 'Manrope-Bold'}}>Cerv. Heineken</Text>
-                  <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-ExtraLight'}}>350 ml</Text>
-                </View>
-                <View style={{ 
-                  width: '100%', 
-                  height:'50%', 
-                  flexDirection: 'row',
-                  alignItems: 'center', 
-                  gap: 14, 
-                  paddingLeft: 6,
-                }}>
-
-                  <TouchableOpacity onPress={()=>{
-                    setQuantidade(quantidade-1)
-                  }}>
-                    <View style={styles.menosMais}>
-                      <Menos  width={15} height={15}/>
-                    </View>
-                  </TouchableOpacity>
-                  
-                    <View>
-                      <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
-                    </View>
-                  
-                  <TouchableOpacity onPress={()=>{
-                    setQuantidade(quantidade+1)
-                  }}>
-                    <View style={styles.menosMais}>
-                      <Mais  width={15} height={15} fill="#333"/>
-                    </View>
-                  </TouchableOpacity>
-                  
-                </View>
-              </View>
-              
-            </View>
-
-            <View style={{
-              width: '22%', 
-              height:'50%', 
-              justifyContent: 'space-between', 
-              alignItems: 'flex-end',
-              paddingRight: 5
-            }}>
-              <View >
-                <TouchableOpacity>
-                  <Close  width={15} height={15}/> 
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text style={{
-                  color: '#1A1926',
-                  fontFamily: 'Manrope-SemiBold', 
-                  fontSize: 15
-                  }}>
-                    R$ {parseFloat((quantidade*preco).toFixed(2))}
-                </Text>
-              </View>
-            </View>
-            
-        </View>
-      </ScrollView>
       
+
+      <FlatList
+        contentContainerStyle={{paddingHorizontal: 10, }}
+        style={{
+          marginBottom: 140
+        }}
+        data={kitsCarrinho}
+        //  @ts-ignore
+        keyExtractor={item=> item.id_}
+
+        renderItem={({item}) => {
+          //@ts-ignore
+          let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id_ === item.id_)
+
+          return(
+            <ItensCarrinho
+            //@ts-ignore
+            name={item.nome} 
+            //@ts-ignore
+            price={parseFloat(item.preco)} 
+            //@ts-ignore
+            imagem={item.caminho}
+            //@ts-ignore
+            und={item.und}
+            //@ts-ignore
+            quantidade={qtdProdutoSelecionado}
+
+            addProd={()=>{
+              //@ts-ignore
+              addQtd(item.id_)
+            }}
+            decProd={()=>{
+              //@ts-ignore
+              qtdProdutoSelecionado.quantidade <= 1 ?  delProdCart (item.id_) : decQtd(item.id_)
+            }}
+            delProd={()=>{
+              //@ts-ignore
+              setIdItemRef(item.id_)
+              setModalVisible(!modalVisible)
+              
+            }}
+            />
+          )
+        }}/>
+
       <TouchableOpacity 
-          onPress={()=>{
-            navigation.navigate('InfosDadosPessoais')
-          }}
+        onPress={()=>{
+          navigation.navigate('InfosDadosPessoais')
+        }}
       >
         <View style={{
           position: 'absolute',
@@ -230,7 +141,7 @@ export function Carrinho({navigation}) {
           height: 55,
           alignSelf: 'center',
           borderRadius: 10,
-          bottom: 100
+          bottom: 80
         }}>
           <Text style={{
             fontSize: 18,
@@ -239,6 +150,48 @@ export function Carrinho({navigation}) {
           }}>Finalizar Compra</Text>
         </View> 
       </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Deseja mesmo Excluir item?</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '85%',
+              }}
+            >
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  setModalVisible(!modalVisible)
+                }
+                }>
+                <Text style={styles.textStyle}>Cancelar</Text>
+              </Pressable>
+
+              <Pressable
+                style={[styles.button, styles.buttonExcluir]}
+                onPress={() => {
+                  //@ts-ignore
+                  delProdCart (idItemRef)
+                  setModalVisible(!modalVisible)
+                }
+                }>
+                <Text style={styles.textStyle}>Excluir</Text>
+            </Pressable>
+            </View>
+            
+          </View>
+        </View>
+      </Modal>
 
     </View>
   );
@@ -274,5 +227,54 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#d2d2d2',
     borderBottomWidth: .5,
     paddingBottom: 6
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    width: '80%',
+    margin: 20,
+    backgroundColor: 'white',
+    gap: 20,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    width: 80,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#c6c6c6',
+  },
+  buttonExcluir: {
+    backgroundColor: '#D9042B',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: 16,
+    alignSelf:'center',
+    color: '#323232',
+    fontFamily: 'Manrope-SemiBold'
+  },
 })

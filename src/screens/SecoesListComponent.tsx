@@ -22,8 +22,7 @@ const SecoesListComponent = ({ name, img}: Props) => {
         </View>
         <View>
             <Text style={{
-              color: '#000',
-              fontWeight: '500',
+              color: '#181725',
               fontFamily: 'Manrope-SemiBold', 
             }}>{name}</Text>
           </View>

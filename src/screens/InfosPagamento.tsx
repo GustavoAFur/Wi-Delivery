@@ -48,19 +48,31 @@ export function InfosPagamento({navigation}) {
       <View style={{flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center'}}>
         <View style={{ 
             width: '86%',
-            marginTop: 25
+            marginTop: 25,
+            gap: 10
         }}>
-          <View style={{marginBottom: 30}}>
-            <Text style={styles.textos}>Nome</Text>
-            <TextInput
-              placeholder='Digite aqui...'
-              placeholderTextColor={'#f1f1f1'}
-              style={styles.inputs}
-            />
-          </View>
+          <TouchableOpacity style={styles.formasPag}>
+            <Text style={styles.textos}>Dinheiro</Text>
+          </TouchableOpacity>
 
-          <View style={{
+          <TouchableOpacity style={styles.formasPag}>
+            <Text style={styles.textos}>Pix</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.formasPag}>
+            <Text style={styles.textos}>Crédito</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.formasPag}>
+            <Text style={styles.textos}>Débito</Text>
+          </TouchableOpacity>
+
+          
+        </View>
+
+        <View style={{
             marginTop: 15,
+            width: '90%'
           }}>
             <TouchableOpacity  
               style={{
@@ -81,19 +93,16 @@ export function InfosPagamento({navigation}) {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+
       </View>
     </View>
   );
 }
 export const styles = StyleSheet.create({
   textos: {
-    position: 'absolute',
     fontSize: 14,
     fontFamily: 'Manrope-SemiBold',
     color: '#323232',
-    marginLeft: 10,
-    marginTop: -12,
     zIndex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 8
@@ -108,5 +117,15 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 18,
     fontSize: 16,
     fontFamily: 'Manrope-SemiBold',
+  },
+  formasPag: {
+    width: '90%',
+    paddingVertical: 15,
+    borderColor: '#F2F2F2',
+    borderWidth: 1,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center'
   }
 })

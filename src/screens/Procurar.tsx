@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Manrope-Semibold',
     borderRadius: 16,
     paddingLeft: 20,
-    
+    color: '#7C7C7C'
 
   },
   btnAdicionar: {

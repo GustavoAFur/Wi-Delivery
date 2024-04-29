@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846958454",
+    "project_id": "wi-delivery",
+    "storage_bucket": "wi-delivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846958454:android:dad27b3eb29f6cc9a97457",
+        "android_client_info": {
+          "package_name": "com.wideliveryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChqoDIrTpPDuFMnpM_lx2XSXg1ww_buH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
