@@ -20,6 +20,7 @@ import SecoesList from '../screens/SecoesList'
 import ProdutosPorCategoria from '../screens/ProdutosPorCategoria'
 import DestalhesKit from '../screens/DetalhesKit'
 import { useAuth } from '../hooks/auth'
+import { SelecionarKit } from '../screens/SelecionarKit'
 
 
 export function AppRoutes() {
@@ -283,13 +284,14 @@ export function AppRoutes() {
 
   return (
     <Navigator
-      initialRouteName="TabNavigation"
+      initialRouteName="SelecionarKit"
       screenOptions={{
         headerShown: false,
       }}>
 
       <Screen name="TabNavigation" component={TabNavigation} />
       <Screen name="Home" component={Home} />
+      <Screen name="SelecionarKit" component={SelecionarKit}/>
       <Screen
         name="Ofertas"
         component={Ofertas}
