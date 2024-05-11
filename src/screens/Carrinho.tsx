@@ -80,51 +80,69 @@ export function Carrinho({navigation}) {
           </Text>
         </View>
       </View>
-      
-
-      <FlatList
-        contentContainerStyle={{paddingHorizontal: 10, }}
-        style={{
-          marginBottom: 140
-        }}
-        data={kitsCarrinho}
-        //  @ts-ignore
-        keyExtractor={item=> item.id_}
-
-        renderItem={({item}) => {
-          //@ts-ignore
-          let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id_ === item.id_)
-
-          return(
-            <ItensCarrinho
+      {
+        kitsCarrinho.length<= 0 ?
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+            <Text style={{
+              fontSize: 18,
+              color: '#c6c6c6',
+              fontFamily: 'Manrope-SemiBold',
+            }}>
+              Não há nenhum ítem no seu carinho
+            </Text>
+          </View>:
+          <FlatList
+          contentContainerStyle={{paddingHorizontal: 10, }}
+          style={{
+            marginBottom: 140
+          }}
+          data={kitsCarrinho}
+          //  @ts-ignore
+          keyExtractor={item=> item.id_}
+  
+          renderItem={({item}) => {
             //@ts-ignore
-            name={item.nome} 
-            //@ts-ignore
-            price={parseFloat(item.preco)} 
-            //@ts-ignore
-            imagem={item.caminho}
-            //@ts-ignore
-            und={item.und}
-            //@ts-ignore
-            quantidade={qtdProdutoSelecionado}
-
-            addProd={()=>{
+            let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id_ === item.id_)
+  
+            return(
+              <ItensCarrinho
               //@ts-ignore
-              addQtd(item.id_)
-            }}
-            decProd={()=>{
+              name={item.nome} 
               //@ts-ignore
-              qtdProdutoSelecionado.quantidade <= 1 ?  delProdCart (item.id_) : decQtd(item.id_)
-            }}
-            delProd={()=>{
+              price={parseFloat(item.preco)} 
               //@ts-ignore
-              setIdItemRef(item.id_)
-              setModalVisible(!modalVisible)
-              
-            }}
-            />
-          )
-        }}/>
+              imagem={item.caminho}
+              //@ts-ignore
+              und={item.und}
+              //@ts-ignore
+              quantidade={qtdProdutoSelecionado}
+  
+              addProd={()=>{
+                //@ts-ignore
+                addQtd(item.id_)
+              }}
+              decProd={()=>{
+                //@ts-ignore
+                if(qtdProdutoSelecionado.quantidade <= 1){
+                  //@ts-ignore
+                  setIdItemRef(item.id_)
+                  setModalVisible(!modalVisible)
+                }else{
+                  //@ts-ignore
+                  decQtd(item.id_)
+                }
+              }}
+              delProd={()=>{
+                //@ts-ignore
+                setIdItemRef(item.id_)
+                setModalVisible(!modalVisible)
+                
+              }}
+              />
+            )
+          }}/>
+      }
+
 
       <TouchableOpacity 
         onPress={()=>{

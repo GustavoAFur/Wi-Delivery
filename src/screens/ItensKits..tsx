@@ -19,7 +19,19 @@ export  function ItensKits({name, imagem, price,selected = false, selecionar}: I
   return (
     <Pressable 
       onPress={selecionar}
-      style={[styles.ofertasItem,{borderColor: selected ? '#f00' : '#000'}]}
+      style={{
+        width: '95%',
+        height: 140,
+        flexDirection: 'row',
+        alignSelf: 'center',
+        borderRadius: 10,
+        marginBottom: 10,
+        marginRight: 10,
+        backgroundColor: selected ? 'rgba(4, 217, 43, 0.1)' :'#FFF',
+        borderColor: selected ? 'rgba(4, 217, 43, 0.1)' : '#c6c6c6',
+        borderWidth: .5,
+        alignItems: 'center',
+      }}
     >
       <View style={styles.imgProdView}>
         <Image
@@ -28,11 +40,11 @@ export  function ItensKits({name, imagem, price,selected = false, selecionar}: I
       </View>
       <View style={styles.detailsProd}>
         <View>
-          <Text style={{ color: '#000', fontSize: 15, fontFamily: 'Manrope-SemiBold', }}>{name}</Text>
+          <Text style={{ color: '#323232', fontSize: 20, fontFamily: 'Manrope-Bold', }}>{name}</Text>
         </View>
 
         <View style={{ flexDirection: 'row',}}>
-          <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Manrope-SemiBold', }}>R$ {price}</Text>
+          <Text style={{ color: '#c6c6c6', fontSize: 16, fontFamily: 'Manrope-SemiBold', }}>R$ {price}</Text>
         </View>
 
         </View>
@@ -59,9 +71,9 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     marginRight: 10,
     backgroundColor: '#FFF',
-    overflow: 'hidden',
     borderWidth: .3,
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   
   btnAdicionar: {
@@ -73,7 +85,10 @@ export const styles = StyleSheet.create({
     borderRadius: 10
   },
   imgProdView: {
-    height: '50%',
+    maxHeight: '100%',
+    minHeight: '100%',
+    maxWidth: '40%',
+    minWidth: '40%',
     alignItems: 'center', 
     justifyContent: 'center',
   },
@@ -83,18 +98,9 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   detailsProd: {
-    width: '86%', 
+    width: '60%', 
     height:'45%', 
-    alignSelf: 'center', 
-    gap: 12
-  },
-  menosMais: {
-    width: 25, 
-    height:25, 
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    borderColor:'#d2d2d2',
-    borderWidth: .5,
-  },
+    alignSelf: 'center',
+    justifyContent: 'space-between'
+  }
 });

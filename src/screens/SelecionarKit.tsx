@@ -27,19 +27,24 @@ export function SelecionarKit({navigation}) {
   function handleToggleAddCart(value: any, quantidade: number) {
     setKitsCarrinho(prevObjetos => {
       //@ts-ignore
-      const objetoExistente = prevObjetos.find(objeto => objeto.id_ === value.id_)
+      const objetoExistenteIndex = prevObjetos.findIndex(objeto => objeto.id_ === value.id_);
   
-      if (objetoExistente) {
-        // Se o objeto já existir, atualize a quantidade
-        return prevObjetos.map(objeto =>
-          //@ts-ignore
-          objeto.id_ === value.id_ ? { ...objeto, quantidade: objeto.quantidade + quantidade } : objeto
-        )
+      if (objetoExistenteIndex !== -1) {
+        // Se o objeto já existir, exclua-o do array
+        const newObjects = [...prevObjetos];
+        newObjects.splice(objetoExistenteIndex, 1);
+        return newObjects;
       } else {
         // Se o objeto não existir, adicione-o com a quantidade especificada
-        return [...prevObjetos, { ...value, quantidade }]
+        return [...prevObjetos, { ...value, quantidade }];
       }
-    })
+    });
+  }
+
+  function delProdCart (value: string){
+    //@ts-ignore
+    setKitsCarrinho((state)=> state.filter(item => item.id_ !== value)) 
+                        
   }
 
   return (
@@ -109,6 +114,7 @@ export function SelecionarKit({navigation}) {
         }}
       >
         <TouchableOpacity
+          disabled={kitsCarrinho.length <= 0 ? true : false}
           onPress={()=>{
             navigation.navigate('TabNavigation')
           }}
@@ -119,6 +125,7 @@ export function SelecionarKit({navigation}) {
             backgroundColor: '#F2B705',
             alignSelf: 'center',
             borderRadius: 10,
+            opacity: kitsCarrinho.length <= 0 ? .5 : 1
           }}
         >
           <Text style={{
