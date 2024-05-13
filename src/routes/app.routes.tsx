@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
@@ -9,6 +9,9 @@ import { Ofertas } from '../screens/Ofertas'
 import { Procurar } from '../screens/Procurar'
 import { Carrinho } from '../screens/Carrinho'
 import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
+
+import IconShop from '../../assets/images/shop-icon.png'
+import IconShopSelected from '../../assets/images/selected-shop-icon.png'
 
 import Cart from '../../assets/svgs/cart.svg'
 import HomeIcon from '../../assets/svgs/Home-m.svg'
@@ -44,13 +47,12 @@ export function AppRoutes() {
             height: 65,
             borderRadius: 20,
             backgroundColor: '#FFFFFF', //F6F6F7
-  
             bottom: 10,
             alignItems: 'center',
             justifyContent: 'center',
             borderTopColor: '#F1F1F1',
             borderTopWidth: 0.8,
-            shadowColor: "#000000",
+            shadowColor: "#0005",
             shadowOffset: {
               width: 0,
               height: 11,
@@ -72,14 +74,20 @@ export function AppRoutes() {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <View style={{
-                  width: '100%',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                  height: '100%',
+                  paddingVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}>
-                  <HomeIcon />
+                                    <Image
+                    source={IconShopSelected}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                   <Text style={{
-                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#2A4BA0'
                   }}>
                     Inicío
                   </Text>
@@ -87,14 +95,20 @@ export function AppRoutes() {
               ) :
                 (
                   <View style={{
-                    width: '100%',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                    height: '100%',
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                   }}>
-                    <HomeIcon />
+                    <Image
+                    source={IconShop}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                     <Text style={{
-                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
                       Inicío
@@ -111,14 +125,14 @@ export function AppRoutes() {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <View style={{
-                  width: '100%',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                  height: '100%',
+                  paddingVertical: 14,
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}>
                   <Search />
                   <Text style={{
-                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
                     Procurar
                   </Text>
@@ -126,14 +140,14 @@ export function AppRoutes() {
               ) :
                 (
                   <View style={{
-                    width: '100%',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                    height: '100%',
+                    paddingVertical: 14,
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                   }}>
                     <Search />
                     <Text style={{
-                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
                       Procurar
@@ -151,9 +165,9 @@ export function AppRoutes() {
               focused ? (
                 <View style={{
                   width: '100%',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                  height: '100%', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between'
                 }}>
                   {
                     kitsCarrinho.length > 0 &&(
@@ -176,7 +190,7 @@ export function AppRoutes() {
                         <Text style={{
                           fontSize: 10,
                           color: '#fff',
-                          fontFamily: 'Manrope-ExtraBold',
+                          fontFamily: 'GeneralSans-Semibold',
                         }}>
                           {kitsCarrinho.length}
                         </Text>
@@ -185,7 +199,7 @@ export function AppRoutes() {
                   }
                   <Cart />
                   <Text style={{
-                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
                     Carrinho
                   </Text>
@@ -194,9 +208,9 @@ export function AppRoutes() {
                 (
                   <View style={{
                     width: '100%',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                    height: '100%', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between'
                   }}>
                     {
                     kitsCarrinho.length > 0 &&(
@@ -219,7 +233,7 @@ export function AppRoutes() {
                         <Text style={{
                           fontSize: 10,
                           color: '#fff',
-                          fontFamily: 'Manrope-ExtraBold',
+                          fontFamily: 'GeneralSans-Semibold',
                         }}>
                           {kitsCarrinho.length}
                         </Text>
@@ -228,7 +242,7 @@ export function AppRoutes() {
                   }
                     <Cart />
                     <Text style={{
-                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
                       Carrinho
@@ -246,9 +260,9 @@ export function AppRoutes() {
               focused ? (
                 <View style={{
                   width: '100%',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  height: '100%', alignItems: 'center', justifyContent: 'center'
+                  height: '100%', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between'
                 }}>
                   <PerfilIcon />
                   <Text style={{
@@ -261,9 +275,9 @@ export function AppRoutes() {
                 (
                   <View style={{
                     width: '100%',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    height: '100%', alignItems: 'center', justifyContent: 'center'
+                    height: '100%', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between'
                   }}>
                     <PerfilIcon />
                     <Text style={{
