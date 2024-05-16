@@ -192,7 +192,7 @@ export const styles = StyleSheet.create({
   },
   ofertasItem: {
     width: 260,
-    height: 400,
+    height: 460,
     borderRadius: 10,
     marginRight: 20,
     overflow: 'hidden',
@@ -200,8 +200,8 @@ export const styles = StyleSheet.create({
 
   btnAdicionar: {
     backgroundColor: '#D9042B',
-    width: '100%',
-    height: 28,
+    marginHorizontal: 10,
+    height: 38,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10
@@ -223,6 +223,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '45%',
     alignSelf: 'center',
+    gap: 6
   },
   menosMais: {
     width: 25,

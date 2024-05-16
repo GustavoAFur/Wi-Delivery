@@ -1,26 +1,19 @@
 import {
-  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View, Pressable, PressableProps, Alert,
+  View, Pressable, 
   FlatList,
-  Modal
 } from 'react-native'
 
 import { NavigationProp, useRoute } from '@react-navigation/native'
 
-import More from './../../assets/svgs/more.svg'
-import auth from '@react-native-firebase/auth'
-import Search from './../../assets/svgs/search.svg'
 import ArrowRight from './../../assets/svgs/arrow-p.svg'
 import IconNotification from '../../assets/svgs/notification.svg'
-import Notification from './../../assets/svgs/notification.svg'
 
-import { useEffect, useState } from 'react'
 import { ItensOferta } from './ItensOferta'
 
 import firestore from '@react-native-firebase/firestore'
@@ -58,9 +51,17 @@ export function Home({ navigation }: { navigation: any }) {
   
   return (
 
-    <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false} style={{
-      backgroundColor: '#ffff',
-    }}>
+    <ScrollView 
+      keyboardShouldPersistTaps="always" 
+      showsVerticalScrollIndicator={false} 
+      contentContainerStyle={{
+        paddingBottom: 100
+      }}
+      style={{
+        backgroundColor: '#ffff',
+        
+      }}
+    >
 
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
@@ -130,12 +131,13 @@ export function Home({ navigation }: { navigation: any }) {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 24,
+        marginBottom: 15,
+        paddingHorizontal: 20,
       }}>
         <Text style={{
-          fontSize: 16,
+          color: '#030303',
+          fontSize: 18,
           fontFamily: 'GeneralSans-Semibold',
-          color: '#0F1121',
-          marginLeft: 30
         }}>
           Novidades
         </Text>
@@ -143,13 +145,11 @@ export function Home({ navigation }: { navigation: any }) {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginRight: 30
         }}>
           <Text style={{
             fontSize: 16,
             fontFamily: 'GeneralSans-Semibold',
             color: '#D9042B',
-            marginLeft: 30
           }}>Ver mais</Text>
 
         </TouchableOpacity>
@@ -182,8 +182,13 @@ export function Home({ navigation }: { navigation: any }) {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{ color: '#D9042B', paddingRight: 5, fontFamily: 'GeneralSans-Semibold' }}>Ver mais</Text>
-            <ArrowRight width={10} height={10} />
+            <Text style={{ 
+              fontSize: 16,
+              fontFamily: 'GeneralSans-Semibold',
+              color: '#D9042B',
+            }}>
+              Ver mais
+            </Text>
           </TouchableOpacity>
 
         </View>

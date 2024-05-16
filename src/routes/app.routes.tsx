@@ -11,6 +11,8 @@ import { Carrinho } from '../screens/Carrinho'
 import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
 
 import IconShop from '../../assets/images/shop-icon.png'
+import IconSearch from '../../assets/images/icons8-search-100.png'
+
 import IconShopSelected from '../../assets/images/selected-shop-icon.png'
 
 import Cart from '../../assets/svgs/cart.svg'
@@ -79,7 +81,7 @@ export function AppRoutes() {
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                                    <Image
+                    <Image
                     source={IconShopSelected}
                     resizeMode='contain'
                     style={{
@@ -126,11 +128,17 @@ export function AppRoutes() {
               focused ? (
                 <View style={{
                   height: '100%',
-                  paddingVertical: 14,
+                  paddingVertical: 10,
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                  <Search />
+                  <Image
+                    source={IconSearch}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
@@ -141,11 +149,17 @@ export function AppRoutes() {
                 (
                   <View style={{
                     height: '100%',
-                    paddingVertical: 14,
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+                  paddingVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                   }}>
-                    <Search />
+                     <Image
+                    source={IconSearch}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                     <Text style={{
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
@@ -164,10 +178,10 @@ export function AppRoutes() {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <View style={{
-                  width: '100%',
-                  height: '100%', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between'
+                  height: '100%',
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                 }}>
                   {
                     kitsCarrinho.length > 0 &&(
@@ -179,8 +193,8 @@ export function AppRoutes() {
                           borderRadius: 10,
                           zIndex: 3,
                           position: 'absolute',
-                          top: 5,
-                          right: 20,
+                          top: -1,
+                          right: -1,
                           borderColor: '#fff',
                           borderWidth: 2,
                           justifyContent: 'center',
@@ -207,9 +221,9 @@ export function AppRoutes() {
               ) :
                 (
                   <View style={{
-                    width: '100%',
-                    height: '100%', 
-                    alignItems: 'center', 
+                    height: '100%',
+                    paddingVertical: 10,
+                    alignItems: 'center',
                     justifyContent: 'space-between'
                   }}>
                     {
@@ -222,8 +236,8 @@ export function AppRoutes() {
                           borderRadius: 10,
                           zIndex: 3,
                           position: 'absolute',
-                          top: 5,
-                          right: 20,
+                          top: -1,
+                          right: -1,
                           borderColor: '#fff',
                           borderWidth: 2,
                           justifyContent: 'center',
@@ -259,10 +273,10 @@ export function AppRoutes() {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <View style={{
-                  width: '100%',
-                  height: '100%', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between'
+                  height: '100%',
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                 }}>
                   <PerfilIcon />
                   <Text style={{
@@ -274,9 +288,9 @@ export function AppRoutes() {
               ) :
                 (
                   <View style={{
-                    width: '100%',
-                    height: '100%', 
-                    alignItems: 'center', 
+                    height: '100%',
+                    paddingVertical: 10,
+                    alignItems: 'center',
                     justifyContent: 'space-between'
                   }}>
                     <PerfilIcon />
