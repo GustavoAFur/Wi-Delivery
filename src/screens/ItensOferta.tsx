@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import { View, Text, PressableProps, StyleSheet, Image, Pressable } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react'
 
+import IconStarN from './../../assets/images/star-n.png'
 import IconFav from './../../assets/images/favorit.png'
 import IconStar from './../../assets/images/star.png'
-import IconStarN from './../../assets/images/star-n.png'
-import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 
 export type ItensProps = {
   name: string,
@@ -200,7 +198,6 @@ export const styles = StyleSheet.create({
 
   btnAdicionar: {
     backgroundColor: '#D9042B',
-    marginHorizontal: 10,
     height: 38,
     alignItems: 'center',
     justifyContent: 'center',

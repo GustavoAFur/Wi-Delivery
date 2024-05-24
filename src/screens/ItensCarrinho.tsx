@@ -1,9 +1,9 @@
-import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, PressableProps, Pressable } from 'react-native';
+import React from 'react'
 
+import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 import Menos from './../../assets/svgs/menos.svg'
 import Close from './../../assets/svgs/close.svg'
-import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 
 interface Props{
   name: string,
@@ -29,7 +29,16 @@ export default function ItensCarrinho ({
 
 
   return (
-    <View style={styles.prodsCar}>
+    <View style={{
+      width: '92%',
+      height: 135,
+      borderBottomColor: '#E2E2E2',
+      borderBottomWidth: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      flexDirection: 'row'
+    }}>
       <View style={{
         width: '72%', 
         height:'84%', 
@@ -48,10 +57,29 @@ export default function ItensCarrinho ({
             style={styles.imageStyle}
           />
         </View>
-        <View style={{width: '65%', height:'80%',justifyContent: 'center'}}>
-          <View style={{ width: '100%', height:'50%', padding: 6,justifyContent: 'flex-end'}}>
-            {/*@ts-ignore*/}
-            <Text style={{color: '#1A1926', fontFamily: 'Manrope-Bold'}}>{name}</Text>
+        <View 
+          style={{
+            width: '65%', 
+            height:'80%',
+            justifyContent: 'center'
+          }}
+        >
+          <View 
+            style={{ 
+              width: '100%', 
+              height:'50%', 
+              padding: 6,
+            }}
+          >
+            {/*@ts-ignore*/}      
+            <Text 
+              style={{
+                color: '#1A1926', 
+                fontFamily: 'GeneralSans-Semibold'
+              }}
+            >
+              {name}
+            </Text>
           </View>
           <View style={{ 
             width: '100%', 
@@ -104,7 +132,7 @@ export default function ItensCarrinho ({
         >
           <Text style={{
             color: '#000',
-            fontFamily: 'Manrope-SemiBold', 
+            fontFamily: 'GeneralSans-Semibold',
             fontSize: 15
             }}>
               {/*@ts-ignore*/}

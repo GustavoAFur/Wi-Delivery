@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
+import { View, Text,TouchableOpacity, Dimensions, StyleSheet,  Image, StatusBar, FlatList, Alert, Modal, Pressable} from 'react-native'
+import { ScrollView,  } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, Dimensions, StyleSheet,  Image, StatusBar, FlatList, Alert, Modal, Pressable} from 'react-native'
+import React, { useState } from 'react'
 
-import Menos from './../../assets/svgs/menos.svg'
-import Close from './../../assets/svgs/close.svg'
-import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
-import { useAuth } from '../hooks/auth'
 import ItensCarrinho from './ItensCarrinho'
+import { useAuth } from '../hooks/auth'
 
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
 export function Carrinho({navigation}) {
@@ -19,14 +17,12 @@ export function Carrinho({navigation}) {
 
   const [modalVisible, setModalVisible] = useState(false)
   const [idItemRef, setIdItemRef] = useState(0)
-  const [quantidade, setQuantidade] = useState(1)
-
 
   function addQtd (idProd: any){
     setKitsCarrinho(prevObjetos => 
       prevObjetos.map(objeto => 
         //@ts-ignore
-        objeto.id_ === idProd ? { ...objeto, quantidade: objeto.quantidade+1 } : objeto
+        objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade+1 } : objeto
       )
     )
   }
@@ -36,15 +32,14 @@ export function Carrinho({navigation}) {
     setKitsCarrinho(prevObjetos =>
       prevObjetos.map(objeto =>
         //@ts-ignore
-        objeto && objeto.id_ === idProd ?  { ...objeto, quantidade: objeto.quantidade - 1 }: objeto
+        objeto && objeto.id === idProd ?  { ...objeto, quantidade: objeto.quantidade - 1 }: objeto
       )
     );
   }
 
   function delProdCart (value: string){
     //@ts-ignore
-    setKitsCarrinho((state)=> state.filter(item => item.id_ !== value)) 
-                        
+    setKitsCarrinho((state)=> state.filter(item => item.id !== value)) 
   }
 
   return (
@@ -59,8 +54,7 @@ export function Carrinho({navigation}) {
      <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
       <View style={{
-        width: width,
-        paddingHorizontal: 20,
+        width: '100%',
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
@@ -69,7 +63,22 @@ export function Carrinho({navigation}) {
         borderBottomColor: '#E2E2E2',
         borderBottomWidth: .5
       }}>
-        <View style={{alignItems: 'center'}}>
+        <TouchableOpacity
+          style={{
+            width: 20,
+            height: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            left: 20
+          }}
+            onPress={()=>{
+              //@ts-ignore
+              navigation.goBack()
+            }}
+          >
+            <ScreenBack  width={20} height={20}/>
+          </TouchableOpacity>
           <Text style={{
             fontSize: 18,
             alignSelf:'center',
@@ -78,7 +87,7 @@ export function Carrinho({navigation}) {
           }}>
             Meu Carrinho
           </Text>
-        </View>
+        
       </View>
       {
         kitsCarrinho.length<= 0 ?
@@ -98,11 +107,11 @@ export function Carrinho({navigation}) {
           }}
           data={kitsCarrinho}
           //  @ts-ignore
-          keyExtractor={item=> item.id_}
+          keyExtractor={item=> item.id}
   
           renderItem={({item}) => {
             //@ts-ignore
-            let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id_ === item.id_)
+            let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id === item.id)
   
             return(
               <ItensCarrinho
@@ -111,7 +120,7 @@ export function Carrinho({navigation}) {
               //@ts-ignore
               price={parseFloat(item.preco)} 
               //@ts-ignore
-              imagem={item.caminho}
+              imagem={item.imagem}
               //@ts-ignore
               und={item.und}
               //@ts-ignore
@@ -119,22 +128,22 @@ export function Carrinho({navigation}) {
   
               addProd={()=>{
                 //@ts-ignore
-                addQtd(item.id_)
+                addQtd(item.id)
               }}
               decProd={()=>{
                 //@ts-ignore
                 if(qtdProdutoSelecionado.quantidade <= 1){
                   //@ts-ignore
-                  setIdItemRef(item.id_)
+                  setIdItemRef(item.id)
                   setModalVisible(!modalVisible)
                 }else{
                   //@ts-ignore
-                  decQtd(item.id_)
+                  decQtd(item.id)
                 }
               }}
               delProd={()=>{
                 //@ts-ignore
-                setIdItemRef(item.id_)
+                setIdItemRef(item.id)
                 setModalVisible(!modalVisible)
                 
               }}

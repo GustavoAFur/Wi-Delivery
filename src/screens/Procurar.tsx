@@ -1,7 +1,7 @@
-import React from 'react'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
+import React from 'react'
 
 import Search from './../../assets/svgs/search-b.svg'
 //@ts-ignore
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     width:'88%',
     height: 45,
     alignSelf:'center',
-    fontFamily: 'Manrope-Semibold',
+    fontFamily: 'GeneralSans-Semibold',
     borderRadius: 16,
     paddingLeft: 20,
     color: '#7C7C7C'

@@ -1,5 +1,5 @@
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
@@ -44,15 +44,14 @@ export function Perfil({navigation}) {
           <View style={styles.perfilInfos}>
             <Text style={{
               color: '#000',
-              fontFamily: 'Manrope-SemiBold', 
+              fontFamily: 'GeneralSans-Bold', 
               fontSize: 15,
-              fontWeight: 'bold'
             }}>
               Gustavo A. Furtado
             </Text>
             <Text style={{
               color: '#c6c6c6',
-              fontFamily: 'Manrope-SemiBold', 
+              fontFamily: 'GeneralSans-SemiBold', 
               fontSize: 15
             }}>
               gustavoaragaof@gmail.com
@@ -104,7 +103,15 @@ export function Perfil({navigation}) {
           <TouchableOpacity>
             <View style={styles.btnSair}>
               <Logout width={20} height={20} style={{position: 'absolute', left: 20}}/>
-              <Text style={{color: '#fff', fontFamily: 'Manrope-SemiBold', fontSize: 18, }}>Sair</Text>
+              <Text 
+                style={{
+                  color: '#fff', 
+                  fontFamily: 'GeneralSans-Bold', 
+                  fontSize: 18, 
+                }}
+              >
+                Sair
+              </Text>
             </View>
           </TouchableOpacity>
           
@@ -151,7 +158,7 @@ export const styles = StyleSheet.create({
   },
   optionText: {
     color: '#181725', 
-    fontFamily: 'Manrope-SemiBold', 
+    fontFamily: 'GeneralSans-SemiBold', 
     fontSize: 16,
     paddingLeft: 8
   },

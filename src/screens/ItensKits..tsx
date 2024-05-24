@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { View, Text, PressableProps, StyleSheet, Image, Pressable } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
-import Menos from './../../assets/svgs/menos.svg'
-import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
+import React, { useEffect, useState } from 'react'
 
 export type ItensProps = {
   name: string,

@@ -23,16 +23,17 @@ import { InfosEndereco } from '../screens/InfosEndereco'
 import { InfosPagamento } from '../screens/InfosPagamento'
 import SecoesList from '../screens/SecoesList'
 import ProdutosPorCategoria from '../screens/ProdutosPorCategoria'
-import DestalhesKit from '../screens/DetalhesKit'
 import { useAuth } from '../hooks/auth'
 import { SelecionarKit } from '../screens/SelecionarKit'
+import DetalhesProduto from '../screens/DetalhesProduto'
+import DetalhesKit from '../screens/DetalhesKit'
 
 
 export function AppRoutes() {
 
   const { Navigator, Screen } = createStackNavigator()
 
-  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+  const { kitsCarrinho, setKitsCarrinho } = useAuth()
 
   function TabNavigation() {
 
@@ -59,10 +60,10 @@ export function AppRoutes() {
               width: 0,
               height: 11,
             },
-            shadowOpacity:  0.23,
+            shadowOpacity: 0.23,
             shadowRadius: 11.78,
             elevation: 15
-            },
+          },
 
           headerShown: false,
           tabBarShowLabel: false,
@@ -81,7 +82,7 @@ export function AppRoutes() {
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                    <Image
+                  <Image
                     source={IconShopSelected}
                     resizeMode='contain'
                     style={{
@@ -103,12 +104,12 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     <Image
-                    source={IconShop}
-                    resizeMode='contain'
-                    style={{
-                      width: 32,
-                      height: 32,
-                    }} />
+                      source={IconShop}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                     <Text style={{
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
@@ -149,17 +150,17 @@ export function AppRoutes() {
                 (
                   <View style={{
                     height: '100%',
-                  paddingVertical: 10,
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                   }}>
-                     <Image
-                    source={IconSearch}
-                    resizeMode='contain'
-                    style={{
-                      width: 32,
-                      height: 32,
-                    }} />
+                    <Image
+                      source={IconSearch}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                     <Text style={{
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
@@ -179,12 +180,12 @@ export function AppRoutes() {
               focused ? (
                 <View style={{
                   height: '100%',
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+                  paddingVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}>
                   {
-                    kitsCarrinho.length > 0 &&(
+                    kitsCarrinho.length > 0 && (
                       <View
                         style={{
                           backgroundColor: '#D9042B',
@@ -227,33 +228,33 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     {
-                    kitsCarrinho.length > 0 &&(
-                      <View
-                        style={{
-                          backgroundColor: '#D9042B',
-                          width: 20,
-                          height: 20,
-                          borderRadius: 10,
-                          zIndex: 3,
-                          position: 'absolute',
-                          top: -1,
-                          right: -1,
-                          borderColor: '#fff',
-                          borderWidth: 2,
-                          justifyContent: 'center',
-                          alignItems: 'center'
-                        }}
-                      >
-                        <Text style={{
-                          fontSize: 10,
-                          color: '#fff',
-                          fontFamily: 'GeneralSans-Semibold',
-                        }}>
-                          {kitsCarrinho.length}
-                        </Text>
-                      </View>
-                    )
-                  }
+                      kitsCarrinho.length > 0 && (
+                        <View
+                          style={{
+                            backgroundColor: '#D9042B',
+                            width: 20,
+                            height: 20,
+                            borderRadius: 10,
+                            zIndex: 3,
+                            position: 'absolute',
+                            top: -1,
+                            right: -1,
+                            borderColor: '#fff',
+                            borderWidth: 2,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <Text style={{
+                            fontSize: 10,
+                            color: '#fff',
+                            fontFamily: 'GeneralSans-Semibold',
+                          }}>
+                            {kitsCarrinho.length}
+                          </Text>
+                        </View>
+                      )
+                    }
                     <Cart />
                     <Text style={{
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
@@ -274,9 +275,9 @@ export function AppRoutes() {
               focused ? (
                 <View style={{
                   height: '100%',
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+                  paddingVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}>
                   <PerfilIcon />
                   <Text style={{
@@ -312,14 +313,14 @@ export function AppRoutes() {
 
   return (
     <Navigator
-      initialRouteName="SelecionarKit"
+      initialRouteName="TabNavigation"
       screenOptions={{
         headerShown: false,
       }}>
 
       <Screen name="TabNavigation" component={TabNavigation} />
       <Screen name="Home" component={Home} />
-      <Screen name="SelecionarKit" component={SelecionarKit}/>
+      <Screen name="SelecionarKit" component={SelecionarKit} />
       <Screen
         name="Ofertas"
         component={Ofertas}
@@ -366,7 +367,15 @@ export function AppRoutes() {
 
       <Screen
         name="DetalhesKit"
-        component={DestalhesKit}
+        component={DetalhesKit}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+
+      <Screen
+        name="DetalhesProduto"
+        component={DetalhesProduto}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

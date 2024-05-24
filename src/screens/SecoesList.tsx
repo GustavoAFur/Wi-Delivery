@@ -1,15 +1,15 @@
-import React from 'react'
 import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
+import React from 'react'
 
 import Search from './../../assets/svgs/search.svg'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import Cereais from './../../assets/images/rice.png'
-import SecoesListComponent from './SecoesListComponent'
-import Acougue from './../../assets/images/meet-fish.png'
-import Hortifruti from './../../assets/images/horti-fruti.png'
-import Perfumaria from './../../assets/images/beauty-product.png'
 import Limpeza from './../../assets/images/Produtos-de-Limpeza.png'
+import Perfumaria from './../../assets/images/beauty-product.png'
+import Hortifruti from './../../assets/images/horti-fruti.png'
+import Acougue from './../../assets/images/meet-fish.png'
+import SecoesListComponent from './SecoesListComponent'
+import Cereais from './../../assets/images/rice.png'
 //@ts-ignore
 export default function SecoesList({navigation}) {
 
@@ -59,7 +59,12 @@ export default function SecoesList({navigation}) {
         }}>
           {
             sectionsObj.map((secoes, index)=>(
-              <SecoesListComponent name={secoes.name} img={secoes.img} key={index}/> 
+              <SecoesListComponent 
+                name={secoes.name} 
+                img={secoes.img} 
+                key={index}
+                navTo={()=>{console.log('oi')}}
+                /> 
             ))
           }
      </View>

@@ -7,36 +7,34 @@ import {
   TouchableOpacity,
   View, Pressable, 
   FlatList,
+  Image,
 } from 'react-native'
 
-import { NavigationProp, useRoute } from '@react-navigation/native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import ArrowRight from './../../assets/svgs/arrow-p.svg'
+import Limpeza from './../../assets/images/beauty-product.png'
+import HortiFruti from './../../assets/images/horti-fruti.png'
+import Acougue from './../../assets/images/meet-fish.png'
+import Bebidas from './../../assets/images/heineken.png'
+import Sereais from './../../assets/images/rice.png'
+
 import IconNotification from '../../assets/svgs/notification.svg'
 
+import SecoesListComponent from './SecoesListComponent'
 import { ItensOferta } from './ItensOferta'
+import { useEffect, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'
-import { useAuth } from '../hooks/auth'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 export function Home({ navigation }: { navigation: any }) {
 
-  const kitBasico = "https://www.kitranchoescolhacerta.com.br/wp-content/uploads/2018/01/kit-rancho.png"
-  const kitLimpeza = "https://calvo.com.br/wp-content/uploads/2022/08/CESTA-CLEAN-MASTER.png"
-  const kitPremium = "https://calvo.com.br/wp-content/uploads/2022/10/KIT-ESMERALDA.png"
-  const kitMaster = "https://calvo.com.br/wp-content/uploads/2022/10/KIT-ESMERALDA.png"
-
-  const ofertas = [
-    { id_: 1, nome: 'Kit Básico', preco: '50.00', caminho: kitBasico, itens: [{ qtd: 3, item: 'Arroz' }, { qtd: 2, item: 'Feijão' }, { qtd: 5, item: 'Macarrão ' }, { qtd: 5, item: 'Macarrão ' }] },
-    { id_: 2, nome: 'Kit Limpeza', preco: '88.50', caminho: kitLimpeza, itens: [{ qtd: 2, item: 'Detergente' }] },
-    { id_: 3, nome: 'Kit Premium', preco: '659.00', caminho: kitPremium, itens: [{ qtd: 1, item: 'Feijão' }] },
-    { id_: 4, nome: 'Kit Master', preco: '799.00 ', caminho: kitMaster, itens: [{ qtd: 4, item: 'Macarrão' }] },
+  const sessoes = [
+    {nome: 'Cereais', value: 'cereais', imagem: Sereais},
+    {nome: 'Limpeza', value: 'limpeza', imagem: Limpeza},
+    {nome: 'Açougue', value: 'acougue', imagem: Acougue},
+    {nome: 'Bebidas', value: 'bebidas', imagem: Bebidas},
+    {nome: 'Horti-Fruti', value: 'horti-fruti', imagem: HortiFruti},
   ]
-
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
-
-  const limitedData = ofertas.slice(0, 5)
 
   const horaAtual = new Date().getHours()
   let saudacaoApp
@@ -49,8 +47,32 @@ export function Home({ navigation }: { navigation: any }) {
     saudacaoApp = 'Boa noite,'
   }
   
-  return (
+  const [kitsList, setKitsList] = useState([])
 
+  useEffect(()=>{
+    const kits = async () =>{
+      try{
+        const produtosSnapShot = await firestore()
+        .collection('kits')
+        .get()
+        //@ts-ignore
+        const arrayKits = []
+        produtosSnapShot.forEach((kits)=>{
+          const id = kits.id
+          const kit = kits.data()
+          arrayKits.push({id,...kit})
+        })
+        //@ts-ignore
+        setKitsList(arrayKits)
+      }catch(error) {
+        console.error("Error fetching produtos: ", error)
+      }
+    }
+    kits()
+    console.log(kitsList)
+  },[])
+
+  return (
     <ScrollView 
       keyboardShouldPersistTaps="always" 
       showsVerticalScrollIndicator={false} 
@@ -83,9 +105,13 @@ export function Home({ navigation }: { navigation: any }) {
               borderRadius: 21,
               borderWidth: 2,
               borderColor: '#FDE933',
-              backgroundColor: '#4A68FF'
+              backgroundColor: '#a0a0f7'
             }}
           >
+            <Image 
+                source={require('./../../assets/images/bolsa-de-compras.png')}
+                style={{width: '100%', height: '100%'}}
+              />
           </View>
 
           <View style={{
@@ -125,12 +151,37 @@ export function Home({ navigation }: { navigation: any }) {
           <IconNotification />
         </Pressable>
       </View>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+            gap: 10
+          }}
+          style={{
+            marginTop: 20,
+            marginBottom: 10
+          }}
+        >
+          {
+            sessoes.map((item,index)=>(
+              <SecoesListComponent 
+                key={index}
+                img={item.imagem} 
+                name={item.nome}
+                navTo={()=>{
+                  navigation.navigate('ProdutosPorCategoria', { categoria: `${item.nome}`, filtroCategoria: `${item.value}`})
+                }}
+              />
+            ))
+          }
+        </ScrollView>
 
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 24,
+        marginTop: 15,
         marginBottom: 15,
         paddingHorizontal: 20,
       }}>
@@ -198,9 +249,9 @@ export function Home({ navigation }: { navigation: any }) {
         contentContainerStyle={{
           paddingHorizontal: 30,
         }}
-        data={limitedData}
+        data={kitsList}
         //  @ts-ignore
-        keyExtractor={item => item.id_}
+        keyExtractor={item => item.id}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -210,10 +261,13 @@ export function Home({ navigation }: { navigation: any }) {
             //@ts-ignore
             price={item.preco}
             //@ts-ignore
-            imagem={item.caminho}
+            imagem={item.imagem}
             //@ts-ignore
             navTo={() => {
-              navigation.navigate('DetalhesKit', { nome: item.nome, preco: item.preco, imagem: item.caminho, itens: item.itens, kit: item })
+              //@ts-ignore
+              navigation.navigate('DetalhesKit', {item: item})
+              //@ts-ignore
+              console.log(item.id)
             }}
 
           />

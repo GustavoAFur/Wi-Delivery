@@ -1,41 +1,66 @@
-import React from 'react';
-import {Image,TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import {Image,TouchableOpacity, View, Text, StyleSheet, Pressable, PressableProps } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import React from 'react'
 
 interface Props{
   name: string,
   img: any,
+  navTo: () => void
 }
 
-const SecoesListComponent = ({ name, img}: Props) => {
+const SecoesListComponent = ({ name, img,navTo}: Props & PressableProps) => {
 
   const navigation = useNavigation(); 
  
   return (
-    <TouchableOpacity onPress={() => {
-      
-    }} >
-      <View style={styles.sectionsItens}>
-        <View style={styles.sectionsImg}>
-          <Image source={img} style={styles.imageStyle}/>
-          
+    
+      <Pressable
+        onPress={navTo} 
+        style={{
+          flexDirection: 'row',
+          height: 50,
+          paddingHorizontal: 20,
+          paddingVertical: 5,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          backgroundColor: '#fff',
+          borderRadius: 30,
+          borderColor:'#d2d2d2',
+          borderWidth: .8,
+      }}>
+        <View style={{
+          backgroundColor: '#fff',
+          width: 30,
+          height: 30,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: 10
+        }}>
+          <Image 
+          source={ img} 
+          style={{
+            width: 30,
+            height: 30,
+            padding: 10,
+            resizeMode: 'contain',
+          }}/>
         </View>
         <View>
             <Text style={{
-              color: '#181725',
-              fontFamily: 'Manrope-SemiBold', 
+              color: '#4F4F4F',
+              fontFamily: 'GeneralSans-Bold', 
             }}>{name}</Text>
           </View>
-      </View>
+      </Pressable>
       
-    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   sectionsItens: {
-    width: 160,
-    height: 190,
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 15,
@@ -45,8 +70,6 @@ const styles = StyleSheet.create({
   },
   sectionsImg: {
     backgroundColor: '#fff',
-    width: '100%',
-    height: '70%',
     marginBottom:10,
     alignItems: 'center',
     justifyContent: 'center',

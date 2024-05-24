@@ -1,10 +1,11 @@
-import React from 'react';
 import { View, Text, Dimensions, TextInput, StyleSheet } from 'react-native'
+import React from 'react'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 //@ts-ignore
 export function InfosPagamento({navigation}) {
   const { width, height } = Dimensions.get("window")

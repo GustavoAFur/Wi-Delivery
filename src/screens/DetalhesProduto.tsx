@@ -9,7 +9,7 @@ import More from './../../assets/svgs/mais-black.svg'
 import Less from './../../assets/svgs/menos.svg'
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
-export default function DetalhesKit({ navigation }: { navigation: any }) {
+export default function DetalhesProduto({ navigation }: { navigation: any }) {
 
   const route = useRoute()
 
@@ -86,7 +86,7 @@ export default function DetalhesKit({ navigation }: { navigation: any }) {
             color: '#323232',
             fontFamily: 'Manrope-SemiBold'
           }}>
-            Detalhes do Kit
+            Detalhes do Produto
           </Text>
       </View>
 

@@ -1,9 +1,8 @@
-import React from 'react';
-import { View, Text, Dimensions,TouchableOpacity } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useAuth } from '../hooks/auth';
-import { FlatList } from 'react-native-gesture-handler';
-import { ItensKits } from './ItensKits.';
+import { View, Text, Dimensions,TouchableOpacity, FlatList } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { ItensKits } from './ItensKits.'
+import { useAuth } from '../hooks/auth'
+import React from 'react'
 
 //@ts-ignore
 export function SelecionarKit({navigation}) {

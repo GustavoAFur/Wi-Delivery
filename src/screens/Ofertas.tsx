@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import React, { useState } from 'react'
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import Mais from './../../assets/svgs/plus-svgrepo-com.svg'

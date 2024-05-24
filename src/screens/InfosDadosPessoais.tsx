@@ -1,7 +1,6 @@
 import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import TextInputMask from 'react-native-text-input-mask'
 import React from 'react'
  
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
