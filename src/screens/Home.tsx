@@ -3,12 +3,14 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View, Pressable, 
+  View, Pressable,
   FlatList,
   Image,
+  Dimensions,
 } from 'react-native'
+import { useEffect, useState } from 'react'
+import firestore from '@react-native-firebase/firestore'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
@@ -18,22 +20,25 @@ import Acougue from './../../assets/images/meet-fish.png'
 import Bebidas from './../../assets/images/heineken.png'
 import Sereais from './../../assets/images/rice.png'
 
+import Mais from './../../assets/images/icons8-mais-100.png'
+
 import IconNotification from '../../assets/svgs/notification.svg'
+import Arrow from '../../assets/svgs/arrow-p.svg'
 
 import SecoesListComponent from './SecoesListComponent'
 import { ItensOferta } from './ItensOferta'
-import { useEffect, useState } from 'react'
 
-import firestore from '@react-native-firebase/firestore'
 
 export function Home({ navigation }: { navigation: any }) {
 
+  const { width, height } = Dimensions.get("window")
+
   const sessoes = [
-    {nome: 'Cereais', value: 'cereais', imagem: Sereais},
-    {nome: 'Limpeza', value: 'limpeza', imagem: Limpeza},
-    {nome: 'Açougue', value: 'acougue', imagem: Acougue},
-    {nome: 'Bebidas', value: 'bebidas', imagem: Bebidas},
-    {nome: 'Horti-Fruti', value: 'horti-fruti', imagem: HortiFruti},
+    { nome: 'Cereais', value: 'cereais', imagem: Sereais },
+    { nome: 'Limpeza', value: 'limpeza', imagem: Limpeza },
+    { nome: 'Açougue', value: 'acougue', imagem: Acougue },
+    { nome: 'Bebidas', value: 'bebidas', imagem: Bebidas },
+    { nome: 'Horti-Fruti', value: 'horti-fruti', imagem: HortiFruti },
   ]
 
   const horaAtual = new Date().getHours()
@@ -46,42 +51,43 @@ export function Home({ navigation }: { navigation: any }) {
   } else {
     saudacaoApp = 'Boa noite,'
   }
-  
+
   const [kitsList, setKitsList] = useState([])
 
-  useEffect(()=>{
-    const kits = async () =>{
-      try{
+  useEffect(() => {
+    const kits = async () => {
+      try {
         const produtosSnapShot = await firestore()
-        .collection('kits')
-        .get()
+          .collection('kits')
+          .get()
         //@ts-ignore
         const arrayKits = []
-        produtosSnapShot.forEach((kits)=>{
+        produtosSnapShot.forEach((kits) => {
           const id = kits.id
           const kit = kits.data()
-          arrayKits.push({id,...kit})
+          arrayKits.push({ id, ...kit })
         })
         //@ts-ignore
         setKitsList(arrayKits)
-      }catch(error) {
+      } catch (error) {
         console.error("Error fetching produtos: ", error)
       }
     }
     kits()
     console.log(kitsList)
-  },[])
+  }, [])
+
 
   return (
-    <ScrollView 
-      keyboardShouldPersistTaps="always" 
-      showsVerticalScrollIndicator={false} 
+    <ScrollView
+      keyboardShouldPersistTaps="always"
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         paddingBottom: 100
       }}
       style={{
         backgroundColor: '#ffff',
-        
+
       }}
     >
 
@@ -108,10 +114,10 @@ export function Home({ navigation }: { navigation: any }) {
               backgroundColor: '#a0a0f7'
             }}
           >
-            <Image 
-                source={require('./../../assets/images/bolsa-de-compras.png')}
-                style={{width: '100%', height: '100%'}}
-              />
+            <Image
+              source={require('./../../assets/images/bolsa-de-compras.png')}
+              style={{ width: '100%', height: '100%' }}
+            />
           </View>
 
           <View style={{
@@ -151,31 +157,77 @@ export function Home({ navigation }: { navigation: any }) {
           <IconNotification />
         </Pressable>
       </View>
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-            gap: 10
+
+      <View
+        style={{
+          marginTop: 20,
+          backgroundColor: '#F2F3F2',
+          width: '90%',
+          alignSelf: 'center',
+          paddingVertical: 10,
+          marginHorizontal: 20,
+          borderRadius: 5,
+          paddingHorizontal: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <View>
+          <Text style={{
+            fontSize: 15,
+            fontFamily: 'GeneralSans-Medium',
+            color: '#0F1121',
+          }}>
+            Nos conte mais!
+          </Text>
+          <Text style={{
+            fontSize: 12,
+            fontFamily: 'GeneralSans-Light',
+            color: '#67697A',
+          }}>
+            Precisamos saber mais sobre você.
+          </Text>
+        </View>
+        
+        <Arrow />
+
+      </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          gap: 10
+        }}
+        style={{
+          marginTop: 20,
+          marginBottom: 10
+        }}
+      >
+        {
+          sessoes.map((item, index) => (
+            <SecoesListComponent
+              key={index}
+              img={item.imagem}
+              name={item.nome}
+              navTo={() => {
+                navigation.navigate('ProdutosPorCategoria', { categoria: `${item.nome}`, filtroCategoria: `${item.value}` })
+              }}
+            />
+          ))
+        }
+
+        <SecoesListComponent
+          img={Mais}
+          name={'Mais'}
+          navTo={() => {
+            navigation.navigate('SecoesList')
           }}
-          style={{
-            marginTop: 20,
-            marginBottom: 10
-          }}
-        >
-          {
-            sessoes.map((item,index)=>(
-              <SecoesListComponent 
-                key={index}
-                img={item.imagem} 
-                name={item.nome}
-                navTo={()=>{
-                  navigation.navigate('ProdutosPorCategoria', { categoria: `${item.nome}`, filtroCategoria: `${item.value}`})
-                }}
-              />
-            ))
-          }
-        </ScrollView>
+        />
+
+      </ScrollView>
 
       <View style={{
         flexDirection: 'row',
@@ -200,19 +252,34 @@ export function Home({ navigation }: { navigation: any }) {
           <Text style={{
             fontSize: 16,
             fontFamily: 'GeneralSans-Semibold',
-            color: '#D9042B',
+            color: '#EE2F2A',
           }}>Ver mais</Text>
 
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false} 
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContentNews}>
-        <View style={styles.novidadesItem}></View>
-        <View style={styles.novidadesItem}></View>
-        <View style={styles.novidadesItem}></View>
+        <View style={styles.novidadesItem}>
+          <Image
+            source={require('./../../assets/images/banner01.jpg')}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </View>
+        <View style={styles.novidadesItem}>
+          <Image
+            source={require('./../../assets/images/banner02.jpg')}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </View>
+        <View style={styles.novidadesItem}>
+          <Image
+            source={require('./../../assets/images/banner03.jpg')}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </View>
       </ScrollView>
 
       <View style={styles.ofertas}>
@@ -233,10 +300,10 @@ export function Home({ navigation }: { navigation: any }) {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{ 
+            <Text style={{
               fontSize: 16,
               fontFamily: 'GeneralSans-Semibold',
-              color: '#D9042B',
+              color: '#EE2F2A',
             }}>
               Ver mais
             </Text>
@@ -265,7 +332,7 @@ export function Home({ navigation }: { navigation: any }) {
             //@ts-ignore
             navTo={() => {
               //@ts-ignore
-              navigation.navigate('DetalhesKit', {item: item})
+              navigation.navigate('DetalhesKit', { item: item })
               //@ts-ignore
               console.log(item.id)
             }}
@@ -389,12 +456,14 @@ export const styles = StyleSheet.create({
     borderColor: '#d2d2d2',
     backgroundColor: '#fff',
     width: 220,
-    height: 130,
+    height: 110,
     borderRadius: 10,
     marginRight: 10,
+    resizeMode: 'contain',
+    overflow: 'hidden'
   },
   btnAdicionar: {
-    backgroundColor: '#D9042B',
+    backgroundColor: '#EE2F2A',
     width: '100%',
     height: 28,
     alignItems: 'center',

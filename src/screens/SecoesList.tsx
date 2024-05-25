@@ -51,10 +51,9 @@ export default function SecoesList({navigation}) {
 
       <View style={{
         flexDirection: 'row', 
-        justifyContent: 'space-between',
         width: '100%',
         paddingHorizontal: 15,
-        rowGap: 8,
+        gap: 8,
         flexWrap: 'wrap',
         }}>
           {

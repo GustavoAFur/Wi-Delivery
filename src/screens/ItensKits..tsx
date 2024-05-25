@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
   },
   
   btnAdicionar: {
-    backgroundColor: '#D9042B',
+    backgroundColor: '#EE2F2A',
     width: '100%',
     height: 28,
     alignItems: 'center',

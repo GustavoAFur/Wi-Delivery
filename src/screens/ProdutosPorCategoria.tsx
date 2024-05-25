@@ -9,6 +9,8 @@ import firestore from '@react-native-firebase/firestore'
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import Search from './../../assets/svgs/search-b.svg'
 import Cart from './../../assets/images/icons8-carrinho-de-compras-carregado-100.png'
+import CartBlack from '../../assets/svgs/cart.svg'
+import { useAuth } from '../hooks/auth';
 
 export default function ProdutosPorCategoria({ navigation }: { navigation: any }) {
 
@@ -17,6 +19,8 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
   const route = useRoute()
   
   const [produtosList, setProdutosList] = useState([])
+
+  const { kitsCarrinho, setKitsCarrinho } = useAuth()
 
   useEffect(()=>{
     const produtos = async () =>{
@@ -54,20 +58,15 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
       <View style={{
         width: width,
-        paddingHorizontal: 20,
+        paddingHorizontal: 30,
         marginTop: 0,
         height: 60,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         backgroundColor: '#fff',
       }}>
-        <View
-          style={{
-            position: 'absolute',
-            left: 20
-          }}
-        >
+        
           <TouchableOpacity
             onPress={()=>{
               //@ts-ignore
@@ -76,8 +75,8 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
           >
             <ScreenBack  width={20} height={20}/>
           </TouchableOpacity>
-        </View>
-        <View style={{alignItems: 'center'}}>
+        
+        
           <Text style={{
             fontSize: 18,
             alignSelf:'center',
@@ -87,7 +86,46 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
             {/* @ts-ignore */}
             {route.params.categoria}
           </Text>
-        </View>
+        
+        <TouchableOpacity
+          onPress={()=>{
+            navigation.navigate('Carrinho')
+          }}
+          style={{
+            width: 24,
+            height: 24,
+          }}
+        >
+        {
+          kitsCarrinho.length > 0 && (
+            <View
+              style={{
+                backgroundColor: '#EE2F2A',
+                width: 20,
+                height: 20,
+                borderRadius: 10,
+                zIndex: 3,
+                position: 'absolute',
+                top: -10,
+                right: -10,
+                borderColor: '#fff',
+                borderWidth: 2,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text style={{
+                fontSize: 10,
+                color: '#fff',
+                fontFamily: 'GeneralSans-Semibold',
+              }}>
+                {kitsCarrinho.length}
+              </Text>
+            </View>
+          )
+        }
+        <CartBlack width={24} height={24}/>
+        </TouchableOpacity>
       </View>
 
       <View style={{

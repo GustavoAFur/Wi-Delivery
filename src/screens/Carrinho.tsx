@@ -160,7 +160,7 @@ export function Carrinho({navigation}) {
       >
         <View style={{
           position: 'absolute',
-          backgroundColor: '#F2B705',
+          backgroundColor: '#EE2F2A',
           flexDirection: 'row',
           alignItems: 'center', 
           justifyContent: 'center',
@@ -291,7 +291,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#c6c6c6',
   },
   buttonExcluir: {
-    backgroundColor: '#D9042B',
+    backgroundColor: '#EE2F2A',
   },
   textStyle: {
     color: 'white',

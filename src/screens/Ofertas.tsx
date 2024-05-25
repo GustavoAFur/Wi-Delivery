@@ -1,5 +1,5 @@
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, StyleSheet,Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
@@ -8,11 +8,15 @@ import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 import Search from './../../assets/svgs/search.svg'
 import Menos from './../../assets/svgs/menos.svg'
 import Cart from './../../assets/svgs/cart.svg'
+import { useAuth } from '../hooks/auth'
 //@ts-ignore
 export function Ofertas({navigation}) {
   const { width, height } = Dimensions.get("window")
   const [modoEditar, setModoEditar] = useState(false)
   const [quantidade, setQuantidade] = useState(1)
+
+  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+
   //@ts-ignore
   const handleAdicionarCarrinho = () => {
     setModoEditar(true);
@@ -23,8 +27,11 @@ export function Ofertas({navigation}) {
       width: width,
       height: height +getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
-      
+      backgroundColor: '#fff',
     }}>
+
+      <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
+
       <View style={{
         width: width,
         paddingHorizontal: 20,
@@ -50,7 +57,7 @@ export function Ofertas({navigation}) {
             fontSize: 20,
             alignSelf:'center',
             color: '#323232',}}>
-              Ofertas
+              Destaques do Dia
           </Text>
         </View>
         <View>
@@ -59,6 +66,34 @@ export function Ofertas({navigation}) {
               navigation.navigate('Carrinho')
             }}
           >
+            {
+          kitsCarrinho.length > 0 && (
+            <View
+              style={{
+                backgroundColor: '#EE2F2A',
+                width: 20,
+                height: 20,
+                borderRadius: 10,
+                zIndex: 3,
+                position: 'absolute',
+                top: -10,
+                right: -10,
+                borderColor: '#fff',
+                borderWidth: 2,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text style={{
+                fontSize: 10,
+                color: '#fff',
+                fontFamily: 'GeneralSans-Semibold',
+              }}>
+                {kitsCarrinho.length}
+              </Text>
+            </View>
+          )
+        }
             <Cart width={25} height={25}/>
           </TouchableOpacity>
         </View>
@@ -66,19 +101,19 @@ export function Ofertas({navigation}) {
       <View style={{
         width: '90%',
         height: 45,
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F3F2',
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 16,
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 30,
         paddingLeft: 10
       }}>
         <Search width={20} height={20} />
         <TextInput
           placeholder='Pesquisar Produto'
-          placeholderTextColor={'#d2d2d2'}
+          placeholderTextColor={'#7C7C7C'}
           style={styles.input} />
       </View>
 
@@ -92,66 +127,7 @@ export function Ofertas({navigation}) {
         justifyContent: 'space-between',
         }}>
 
-        <View style={styles.ofertasItem}>
-          <View style={styles.imgProdView}>
-            <Image
-              source={require('./../../assets/images/arroz.png')}
-              style={styles.imgProd} />
-          </View>
-          <View style={styles.detailsProd}>
-            <View>
-              <Text style={{ color: '#000', fontSize: 15 }}>Arroz Branco Camil Kg</Text>
-            </View>
-            
-            <View>
-              <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                  <Text style={{ color: '#000', fontSize: 14 }}>R$ 5,85</Text>
-                  <Text style={{ color: '#000', fontSize: 8 }}> Und</Text>
-                </View>
-
-                <TouchableOpacity onPress={handleAdicionarCarrinho}>
-                  {
-                    modoEditar ? (
-                      <View style={{
-                        width: '100%',
-                        height: 28,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        borderRadius: 10
-                      }}>
-                        <TouchableOpacity onPress={()=>{
-                          setQuantidade(quantidade-1)
-                        }}>
-                          <View style={styles.menosMais}>
-                            <Menos  width={10} height={10}/>
-                          </View>
-                        </TouchableOpacity>
-                        
-                          <View>
-                            <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade}</Text>
-                          </View>
-                        
-                        <TouchableOpacity onPress={()=>{
-                          setQuantidade(quantidade+1)
-                        }}>
-                          <View style={styles.menosMais}>
-                            <Mais  width={10} height={10} fill="#333"/>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    ): 
-                      <View style={styles.btnAdicionar}>
-                        <Text style={{ color: '#fff', }}>Adicionar</Text>
-                      </View>
-                  }
-                  
-                </TouchableOpacity>
-                
-            </View>
-
-          </View>
-        </View>
+        
 
      </View>
     </View>
@@ -169,18 +145,17 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   input: {
-    backgroundColor:'#fff',
+    backgroundColor:'#F2F3F2',
     width:'88%',
     height: 45,
     alignSelf:'center',
-    
     borderRadius: 16,
     paddingLeft: 20,
-    color: '#000',
-
+    color: '#7C7C7C',
+    fontFamily: 'GeneralSans-Semibold',
   },
   btnAdicionar: {
-    backgroundColor: '#D9042B',
+    backgroundColor: '#EE2F2A',
     width: '100%',
     height: 28,
     alignItems: 'center',

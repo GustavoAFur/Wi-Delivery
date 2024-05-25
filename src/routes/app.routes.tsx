@@ -12,13 +12,18 @@ import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
 
 import IconShop from '../../assets/images/shop-icon.png'
 import IconSearch from '../../assets/images/icons8-search-100.png'
+import PerfilIcon from '../../assets/images/icons8-usuário-100.png'
 
-import IconShopSelected from '../../assets/images/selected-shop-icon.png'
+import HomeFocused from '../../assets/images/home-focused.png'
+import HomeUnfocused from '../../assets/images/home-unfocused.png'
+import SearchFocused from '../../assets/images/search-focused.png'
+import SearchUnfocused from '../../assets/images/search-unfocused.png'
+import CartUnfocused from '../../assets/images/cart-unfocused.png'
+import CartFocused from '../../assets/images/cart-focused.png'
+import ProfileFocused from '../../assets/images/profile-focused.png'
+import ProfileUnfocused from '../../assets/images/profile-unfocused.png'
 
-import Cart from '../../assets/svgs/cart.svg'
 import HomeIcon from '../../assets/svgs/Home-m.svg'
-import PerfilIcon from '../../assets/svgs/perfil.svg'
-import Search from '../../assets/svgs/search-prod.svg'
 import { InfosEndereco } from '../screens/InfosEndereco'
 import { InfosPagamento } from '../screens/InfosPagamento'
 import SecoesList from '../screens/SecoesList'
@@ -83,14 +88,14 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   <Image
-                    source={IconShopSelected}
+                    source={HomeFocused}
                     resizeMode='contain'
                     style={{
                       width: 32,
                       height: 32,
                     }} />
                   <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#2A4BA0'
+                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
                     Inicío
                   </Text>
@@ -104,7 +109,7 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     <Image
-                      source={IconShop}
+                      source={HomeUnfocused}
                       resizeMode='contain'
                       style={{
                         width: 32,
@@ -134,7 +139,7 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   <Image
-                    source={IconSearch}
+                    source={SearchFocused}
                     resizeMode='contain'
                     style={{
                       width: 32,
@@ -155,7 +160,7 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     <Image
-                      source={IconSearch}
+                      source={SearchUnfocused}
                       resizeMode='contain'
                       style={{
                         width: 32,
@@ -194,8 +199,8 @@ export function AppRoutes() {
                           borderRadius: 10,
                           zIndex: 3,
                           position: 'absolute',
-                          top: -1,
-                          right: -1,
+                          top: 5,
+                          right: 0,
                           borderColor: '#fff',
                           borderWidth: 2,
                           justifyContent: 'center',
@@ -212,7 +217,13 @@ export function AppRoutes() {
                       </View>
                     )
                   }
-                  <Cart />
+                  <Image
+                      source={CartFocused}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
@@ -237,8 +248,8 @@ export function AppRoutes() {
                             borderRadius: 10,
                             zIndex: 3,
                             position: 'absolute',
-                            top: -1,
-                            right: -1,
+                            top: 5,
+                            right: 0,
                             borderColor: '#fff',
                             borderWidth: 2,
                             justifyContent: 'center',
@@ -255,7 +266,13 @@ export function AppRoutes() {
                         </View>
                       )
                     }
-                    <Cart />
+                    <Image
+                      source={CartUnfocused}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                     <Text style={{
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
@@ -279,9 +296,15 @@ export function AppRoutes() {
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                  <PerfilIcon />
+                  <Image
+                      source={ProfileFocused}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                   <Text style={{
-                    fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#000'
+                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
                     Perfil
                   </Text>
@@ -294,9 +317,15 @@ export function AppRoutes() {
                     alignItems: 'center',
                     justifyContent: 'space-between'
                   }}>
-                    <PerfilIcon />
+                    <Image
+                      source={ProfileUnfocused}
+                      resizeMode='contain'
+                      style={{
+                        width: 32,
+                        height: 32,
+                      }} />
                     <Text style={{
-                      fontFamily: 'Manrope-SemiBold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
                       Perfil

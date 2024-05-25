@@ -51,7 +51,7 @@ export function ItensOferta({ name, imagem, price, navTo }: ItensProps & Pressab
                 marginVertical: 7,
                 marginHorizontal: 10,
                 fontFamily: 'GeneralSans-Medium',
-                color: '#D9042B',
+                color: '#EE2F2A',
               }}>Destaque</Text>
             </View>
 
@@ -197,7 +197,7 @@ export const styles = StyleSheet.create({
   },
 
   btnAdicionar: {
-    backgroundColor: '#D9042B',
+    backgroundColor: '#EE2F2A',
     height: 38,
     alignItems: 'center',
     justifyContent: 'center',

@@ -51,7 +51,7 @@ export function Perfil({navigation}) {
             </Text>
             <Text style={{
               color: '#c6c6c6',
-              fontFamily: 'GeneralSans-SemiBold', 
+              fontFamily: 'GeneralSans-Semibold', 
               fontSize: 15
             }}>
               gustavoaragaof@gmail.com
@@ -158,12 +158,12 @@ export const styles = StyleSheet.create({
   },
   optionText: {
     color: '#181725', 
-    fontFamily: 'GeneralSans-SemiBold', 
+    fontFamily: 'GeneralSans-Semibold', 
     fontSize: 16,
     paddingLeft: 8
   },
   btnSair: {
-    backgroundColor: '#F2B705',
+    backgroundColor: '#EE2F2A',
     flexDirection: 'row',
     alignItems: 'center', 
     justifyContent: 'center',

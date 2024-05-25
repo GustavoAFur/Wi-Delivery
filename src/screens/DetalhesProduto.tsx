@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { NavigationProp, useRoute } from '@react-navigation/native'
 import { useAuth } from '../hooks/auth'
 
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import More from './../../assets/svgs/mais-black.svg'
 import Less from './../../assets/svgs/menos.svg'
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 export default function DetalhesProduto({ navigation }: { navigation: any }) {
 
@@ -20,22 +20,29 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
   const [qtsItens, setQtdItens] = useState(1)
 
   function handleToggleAddCart(value: any, quantidade: number) {
-    setKitsCarrinho(prevObjetos => {
-      //@ts-ignore
-      const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
-  
-      if (objetoExistente) {
-        // Se o objeto já existir, atualize a quantidade
-        return prevObjetos.map(objeto =>
-          //@ts-ignore
-          objeto.id === value.id ? { ...objeto, quantidade: objeto.quantidade + quantidade } : objeto
-        )
-      } else {
-        // Se o objeto não existir, adicione-o com a quantidade especificada
-        return [...prevObjetos, { ...value, quantidade }]
-      }
-    })
-  
+    //@ts-ignore
+    const hasKit = kitsCarrinho.some(item => item.categoria === 'kit')
+
+    if(value.categoria === 'kit' || hasKit){
+      setKitsCarrinho(prevObjetos => {
+        //@ts-ignore
+        const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
+    
+        if (objetoExistente) {
+          // Se o objeto já existir, atualize a quantidade
+          return prevObjetos.map(objeto =>
+            //@ts-ignore
+            objeto.id === value.id ? { ...objeto, quantidade: objeto.quantidade + quantidade } : objeto
+          )
+        } else {
+          // Se o objeto não existir, adicione-o com a quantidade especificada
+          return [...prevObjetos, { ...value, quantidade }]
+        }
+      })
+    }else{
+      Alert.alert("Adicione um kit antes")
+    }
+
     navigation.goBack();
   }
 
@@ -84,7 +91,7 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
             fontSize: 18,
             alignSelf: 'center',
             color: '#323232',
-            fontFamily: 'Manrope-SemiBold'
+            fontFamily: 'GeneralSans-Semibold',
           }}>
             Detalhes do Produto
           </Text>
@@ -97,16 +104,16 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
-          borderRadius: 8,
+          borderRadius: 10,
           backgroundColor: '#fff',
-          shadowColor: "#a6a6a6",
+          shadowColor: "#9c9a9a",
           shadowOffset: {
             width: 0,
-            height: 5,
+            height: 12,
           },
-          shadowOpacity:  0.1,
-          shadowRadius: 5.19,
-          elevation: 5
+          shadowOpacity:  0.24,
+          shadowRadius: 15.84,
+          elevation: 10
           }}
       >
         <Image
@@ -231,7 +238,7 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
         style={{
           paddingHorizontal: 20,
           paddingVertical: 15,
-          backgroundColor:'#F2B705',
+          backgroundColor:'#EE2F2A',
           borderRadius: 30,
           justifyContent: 'center',
           alignItems: 'center'

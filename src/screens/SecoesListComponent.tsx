@@ -23,13 +23,12 @@ const SecoesListComponent = ({ name, img,navTo}: Props & PressableProps) => {
           paddingVertical: 5,
           alignItems: 'center',
           justifyContent: 'flex-start',
-          backgroundColor: '#fff',
+          backgroundColor: '#F2F3F2',
           borderRadius: 30,
-          borderColor:'#d2d2d2',
+          borderColor:'#F2F3F2',
           borderWidth: .8,
       }}>
         <View style={{
-          backgroundColor: '#fff',
           width: 30,
           height: 30,
           alignItems: 'center',

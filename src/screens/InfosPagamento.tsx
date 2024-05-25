@@ -81,7 +81,7 @@ export function InfosPagamento({navigation}) {
               height: 55,
               paddingHorizontal: 20,
               justifyContent: 'center',
-              backgroundColor: '#F2B705',
+              backgroundColor: '#EE2F2A',
               borderRadius: 10,
               alignItems: 'center'
             }}>

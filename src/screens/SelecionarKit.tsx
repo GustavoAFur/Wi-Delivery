@@ -67,7 +67,7 @@ export function SelecionarKit({navigation}) {
           fontFamily: 'Manrope-SemiBold'
         }}>
           Selecione
-          <Text style={{color: '#D9042B',}}>
+          <Text style={{color: '#EE2F2A',}}>
           {' '}pelo menos{' '}
           </Text>
           um Kit para prosseguir

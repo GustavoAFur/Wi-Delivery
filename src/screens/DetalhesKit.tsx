@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { NavigationProp, useRoute } from '@react-navigation/native'
 import { useAuth } from '../hooks/auth'
 
+import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import More from './../../assets/svgs/mais-black.svg'
 import Less from './../../assets/svgs/menos.svg'
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 export default function DetalhesKit({ navigation }: { navigation: any }) {
 
@@ -99,14 +99,14 @@ export default function DetalhesKit({ navigation }: { navigation: any }) {
           alignSelf: 'center',
           borderRadius: 8,
           backgroundColor: '#fff',
-          shadowColor: "#a6a6a6",
+          shadowColor: "#9c9a9a",
           shadowOffset: {
             width: 0,
-            height: 5,
+            height: 12,
           },
-          shadowOpacity:  0.1,
-          shadowRadius: 5.19,
-          elevation: 5
+          shadowOpacity:  0.24,
+          shadowRadius: 15.84,
+          elevation: 10
           }}
       >
         <Image
@@ -231,7 +231,7 @@ export default function DetalhesKit({ navigation }: { navigation: any }) {
         style={{
           paddingHorizontal: 20,
           paddingVertical: 15,
-          backgroundColor:'#F2B705',
+          backgroundColor:'#EE2F2A',
           borderRadius: 30,
           justifyContent: 'center',
           alignItems: 'center'
