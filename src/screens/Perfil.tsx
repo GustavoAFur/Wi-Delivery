@@ -3,6 +3,8 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
+import auth from '@react-native-firebase/auth'
+
 import DetliveryAdress from './../../assets/svgs/delivery-address.svg'
 import Detalhes from './../../assets/svgs/details.svg'
 import Arrow from './../../assets/svgs/back-arrow.svg'
@@ -100,7 +102,13 @@ export function Perfil({navigation}) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={()=>{
+              auth()
+              .signOut()
+              .then(() => console.log('User signed out!'))
+            }}
+          >
             <View style={styles.btnSair}>
               <Logout width={20} height={20} style={{position: 'absolute', left: 20}}/>
               <Text 

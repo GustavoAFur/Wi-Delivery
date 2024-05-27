@@ -1681,18 +1681,18 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-firebase/app@^19.2.2":
-  version "19.2.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-19.2.2.tgz#71db0afdfaa41fff1fc75ce9f5c249eeeec393e3"
-  integrity sha512-yucIZT/n567XH+gU8Qf/Z8Awtrc0dadu0LYDJU/dq228DwoQa8xyCoDqXqVM2Ppj9R8csQ+ga4VdMYBSHblYQw==
+"@react-native-firebase/app@^20.0.0":
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.0.0.tgz#0aae0fdaaa0db48f6b248fb410e18687e285f2e1"
+  integrity sha512-h9Xgmj0Z0ga1ponhDnQ63yqkX288LOW+ZvstDWHDo2rgPu58nbAmdzs73MTmPjYdgm5Elm71puG1NRJX5n7wRw==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
-"@react-native-firebase/auth@^19.2.2":
-  version "19.2.2"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-19.2.2.tgz#ec44f29c8a4427048db19a1c61df1415139d74fe"
-  integrity sha512-2TbbieNAmZSR3wqJZdQyFAT4vISESfvB3I3j/ll+3SS91fV2h0/H4xnBapoOEeXBGxioBGKXBOP3C4ySRXNV6g==
+"@react-native-firebase/auth@^20.0.0":
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-20.0.0.tgz#104f0a692153f4d0cd9c0c42854d7bf1521bd271"
+  integrity sha512-/3cjoSjF6U27orj0qPxrqHs1/CNvEBjIK2Kv01aBNSKhGlxxMBXq4Dctolnx6hYuDA83td8SmTtFZM6C17G3Ug==
   dependencies:
     plist "^3.1.0"
 
