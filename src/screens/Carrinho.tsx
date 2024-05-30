@@ -8,8 +8,7 @@ import { useAuth } from '../hooks/auth'
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
-//@ts-ignore
-export function Carrinho({navigation}) {
+export function Carrinho({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -83,7 +82,7 @@ export function Carrinho({navigation}) {
             fontSize: 18,
             alignSelf:'center',
             color: '#323232',
-            fontFamily: 'Manrope-SemiBold'
+            fontFamily: 'GeneralSans-SemiBold'
           }}>
             Meu Carrinho
           </Text>
@@ -95,7 +94,7 @@ export function Carrinho({navigation}) {
             <Text style={{
               fontSize: 18,
               color: '#c6c6c6',
-              fontFamily: 'Manrope-SemiBold',
+              fontFamily: 'GeneralSans-SemiBold',
             }}>
               Não há nenhum ítem no seu carinho
             </Text>

@@ -28,6 +28,12 @@ import Arrow from '../../assets/svgs/arrow-p.svg'
 import SecoesListComponent from './SecoesListComponent'
 import { ItensOferta } from './ItensOferta'
 
+interface Kit {
+  id: string;
+  nome: string;
+  preco: string;
+  imagem: string;
+}
 
 export function Home({ navigation }: { navigation: any }) {
 
@@ -52,7 +58,7 @@ export function Home({ navigation }: { navigation: any }) {
     saudacaoApp = 'Boa noite,'
   }
 
-  const [kitsList, setKitsList] = useState([])
+  const [kitsList, setKitsList] = useState<Kit[]>([])
 
   useEffect(() => {
     const kits = async () => {
@@ -315,26 +321,19 @@ export function Home({ navigation }: { navigation: any }) {
       <FlatList
         contentContainerStyle={{
           paddingHorizontal: 30,
+          gap: 20
         }}
         data={kitsList}
-        //  @ts-ignore
         keyExtractor={item => item.id}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <ItensOferta
-            //@ts-ignore
             name={item.nome}
-            //@ts-ignore
             price={item.preco}
-            //@ts-ignore
             imagem={item.imagem}
-            //@ts-ignore
             navTo={() => {
-              //@ts-ignore
               navigation.navigate('DetalhesKit', { item: item })
-              //@ts-ignore
-              console.log(item.id)
             }}
 
           />
@@ -392,6 +391,7 @@ export const styles = StyleSheet.create({
   },
   scrollViewContentNews: {
     paddingHorizontal: 30,
+    gap: 10
   },
   scrollViewMain: {
     backgroundColor: '#FFFFFF'
@@ -458,7 +458,6 @@ export const styles = StyleSheet.create({
     width: 220,
     height: 110,
     borderRadius: 10,
-    marginRight: 10,
     resizeMode: 'contain',
     overflow: 'hidden'
   },

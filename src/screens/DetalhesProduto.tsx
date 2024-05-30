@@ -15,7 +15,7 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+  const { kitsCarrinho, setKitsCarrinho } = useAuth()
 
   const [qtsItens, setQtdItens] = useState(1)
 
@@ -23,11 +23,11 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
     //@ts-ignore
     const hasKit = kitsCarrinho.some(item => item.categoria === 'kit')
 
-    if(value.categoria === 'kit' || hasKit){
+    if (value.categoria === 'kit' || hasKit) {
       setKitsCarrinho(prevObjetos => {
         //@ts-ignore
         const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
-    
+
         if (objetoExistente) {
           // Se o objeto já existir, atualize a quantidade
           return prevObjetos.map(objeto =>
@@ -39,21 +39,21 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
           return [...prevObjetos, { ...value, quantidade }]
         }
       })
-    }else{
+    } else {
       Alert.alert("Adicione um kit antes")
     }
 
     navigation.goBack();
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     //@ts-ignore
     console.log(route.params.item.nome)
-  },[])
+  }, [])
 
   return (
-    
-    <ScrollView 
+
+    <ScrollView
       style={{
         width: width,
         paddingTop: getStatusBarHeight(),
@@ -80,21 +80,21 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
             position: 'absolute',
             left: 20
           }}
-            onPress={()=>{
-              //@ts-ignore
-              navigation.goBack()
-            }}
-          >
-            <ScreenBack  width={20} height={20}/>
-          </TouchableOpacity>
-          <Text style={{
-            fontSize: 18,
-            alignSelf: 'center',
-            color: '#323232',
-            fontFamily: 'GeneralSans-Semibold',
-          }}>
-            Detalhes do Produto
-          </Text>
+          onPress={() => {
+            //@ts-ignore
+            navigation.goBack()
+          }}
+        >
+          <ScreenBack width={20} height={20} />
+        </TouchableOpacity>
+        <Text style={{
+          fontSize: 18,
+          alignSelf: 'center',
+          color: '#323232',
+          fontFamily: 'GeneralSans-Semibold',
+        }}>
+          Detalhes do Produto
+        </Text>
       </View>
 
       <View
@@ -104,29 +104,29 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
-          borderRadius: 10,
+          borderRadius: 20,
           backgroundColor: '#fff',
           shadowColor: "#9c9a9a",
           shadowOffset: {
             width: 0,
             height: 12,
           },
-          shadowOpacity:  0.24,
+          shadowOpacity: 0.24,
           shadowRadius: 15.84,
           elevation: 10
-          }}
+        }}
       >
         <Image
-        //@ts-ignore
-        source={{uri: route.params.item.imagem}}
-        style={{
-          width: '80%',
-          height: '80%',
-          resizeMode: 'contain'
-        }}
+          //@ts-ignore
+          source={{ uri: route.params.item.imagem }}
+          style={{
+            width: '80%',
+            height: '80%',
+            resizeMode: 'contain'
+          }}
         />
       </View>
-      
+
       <View
         style={{
           width: width,
@@ -146,13 +146,13 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
         </Text>
 
         <Text style={{
-            fontSize: 18,
-            color: '#A9A9A9',
-            fontFamily: 'GeneralSans-Medium'
-          }}>
-            {/*@ts-ignore*/}
-            R$ {route.params.item.preco}
-          </Text>
+          fontSize: 18,
+          color: '#A9A9A9',
+          fontFamily: 'GeneralSans-Medium'
+        }}>
+          {/*@ts-ignore*/}
+          R$ {route.params.item.preco}
+        </Text>
       </View>
 
       <View
@@ -166,7 +166,7 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
           justifyContent: 'space-between'
         }}
       >
-        
+
         <View
           style={{
             flexDirection: 'row',
@@ -176,9 +176,9 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
           }}
         >
           <TouchableOpacity
-            onPress={()=>{
-              if(qtsItens > 1)
-                setQtdItens(qtsItens-1)
+            onPress={() => {
+              if (qtsItens > 1)
+                setQtdItens(qtsItens - 1)
             }}
             style={{
               width: 40,
@@ -190,9 +190,9 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
               justifyContent: 'center'
             }}
           >
-            <Less width={15} height={15}/>
+            <Less width={15} height={15} />
           </TouchableOpacity>
-          
+
           <View
             style={{
               width: 20,
@@ -209,10 +209,10 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
               {qtsItens}
             </Text>
           </View>
-          
+
           <TouchableOpacity
-            onPress={()=>{
-              setQtdItens(qtsItens+1)
+            onPress={() => {
+              setQtdItens(qtsItens + 1)
             }}
             style={{
               width: 40,
@@ -224,34 +224,34 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
               justifyContent: 'center'
             }}
           >
-            <More width={15} height={15}/>
+            <More width={15} height={15} />
           </TouchableOpacity>
-          
+
         </View>
 
         <Pressable
-        onPress={()=>{
-          //@ts-ignore
-          handleToggleAddCart(route.params.item, qtsItens )
+          onPress={() => {
+            //@ts-ignore
+            handleToggleAddCart(route.params.item, qtsItens)
 
-        }}
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 15,
-          backgroundColor:'#EE2F2A',
-          borderRadius: 30,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text style={{
-          fontSize: 18,
-          color: '#fff',
-          fontFamily: 'GeneralSans-Bold'
-        }}>
-          Adicionar
-        </Text>
-      </Pressable>
+          }}
+          style={{
+            paddingHorizontal: 20,
+            paddingVertical: 15,
+            backgroundColor: '#EE2F2A',
+            borderRadius: 30,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{
+            fontSize: 18,
+            color: '#fff',
+            fontFamily: 'GeneralSans-Bold'
+          }}>
+            Adicionar
+          </Text>
+        </Pressable>
 
       </View>
 

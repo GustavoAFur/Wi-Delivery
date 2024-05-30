@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import auth from '@react-native-firebase/auth'
+import LottieView from 'lottie-react-native';
 //@ts-ignore
 export function Login({ navigation }: { navigation: any }) {
-  const { width, height } = Dimensions.get("window");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const { width, height } = Dimensions.get("window")
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isCreating, setIsCreating] = useState(false)
 
   return (
     <KeyboardAvoidingView
@@ -25,11 +30,13 @@ export function Login({ navigation }: { navigation: any }) {
       >
         <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
-        <View style={{
-          width: width,
-          height: height * 0.4, // Ajuste de altura
-          alignItems: 'center',
-          justifyContent: 'center',
+        <View 
+          style={{
+            width: width,
+            height: height * 0.4, // Ajuste de altura
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf: 'center'
         }}>
           <Image
             source={require('./../../assets/images/Product-hunt-bro.png')}
@@ -89,48 +96,60 @@ export function Login({ navigation }: { navigation: any }) {
         />
 
         <TouchableOpacity
+          disabled={!email || !password ? true : false}
           onPress={()=>{
-            auth()
+            setIsLoading(true)
+            
+              auth()
               .signInWithEmailAndPassword(`${email}`, `${password}`)
-              .then(() => {
-                navigation.navigate('TabNavigation')
-              })
               .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                  console.log('That email address is already in use!');
+                  Alert.alert('That email address is already in use!');
                 }
 
                 if (error.code === 'auth/invalid-email') {
-                  console.log('That email address is invalid!');
+                  Alert.alert('That email address is invalid!');
                 }
 
                 console.error(error);
-              });
+              }).finally(()=>{
+                setIsLoading(false)
+                navigation.navigate('TabNavigation')
+              })
           }}
           style={{
             backgroundColor: '#EE2F2A',
             borderRadius: 8,
             width: '95%',
+            height: 50,
             alignSelf: 'center',
-            paddingHorizontal: 20,
-            paddingVertical: 12,
             alignItems: 'center',
             justifyContent: 'center',
-            flexDirection: 'row',
             marginBottom: 20,
           }}
         >
-          <Text style={{
-            fontSize: 16,
-            fontFamily: 'GeneralSans-Bold',
-            color: '#fff',
-          }}>
-            Entrar
-          </Text>
+          {
+            isLoading ?
+            <LottieView 
+              autoPlay
+              loop
+              source={require('../../assets/json/Animation-Red.json')}
+              style={{width: 60, height: 60}}
+            /> :
+            <Text style={{
+              fontSize: 16,
+              fontFamily: 'GeneralSans-Semibold',
+              color: '#fff',
+            }}>
+              Entrar
+            </Text>
+          }
         </TouchableOpacity>
 
         <TouchableOpacity
+          disabled={!email || !password ? true : false}
           onPress={() => {
+            setIsCreating(true)
             auth()
               .createUserWithEmailAndPassword(`${email}`, `${password}`)
               .then(() => {
@@ -138,37 +157,48 @@ export function Login({ navigation }: { navigation: any }) {
               })
               .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                  console.log('That email address is already in use!');
+                  Alert.alert('That email address is already in use!');
                 }
 
                 if (error.code === 'auth/invalid-email') {
-                  console.log('That email address is invalid!');
+                  Alert.alert('That email address is invalid!');
                 }
 
                 console.error(error);
-              });
+              }).finally(()=>{
+                setIsCreating(false)
+              })
           }}
           style={{
             borderWidth: .6,
             borderColor: '#EE2F2A',
             borderRadius: 8,
             width: '95%',
+            height: 50,
             alignSelf: 'center',
-            paddingHorizontal: 20,
-            paddingVertical: 12,
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'row',
             marginBottom: 20,
           }}
         >
-          <Text style={{
-            fontSize: 16,
-            fontFamily: 'GeneralSans-Semibold',
-            color: '#EE2F2A',
-          }}>
-            Criar conta
-          </Text>
+          {
+            isCreating ? 
+            <LottieView 
+              autoPlay
+              loop
+              source={require('../../assets/json/Animation-Red.json')}
+              style={{width: 60, height: 60}}
+            /> :
+            <Text style={{
+              fontSize: 16,
+              fontFamily: 'GeneralSans-Semibold',
+              color: '#EE2F2A',
+            }}>
+              Criar conta
+            </Text>
+          }
+          
         </TouchableOpacity>
 
         <Text style={{

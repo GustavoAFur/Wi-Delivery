@@ -1,16 +1,16 @@
-import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React from 'react'
 
 import Search from './../../assets/svgs/search-b.svg'
-//@ts-ignore
-export function Procurar({navigation}) {
+
+export function Procurar({ navigation }: { navigation: any }) {
   const { width, height } = Dimensions.get("window")
   return (
-    <View style={{ 
+    <View style={{
       width: width,
-      height: height +getStatusBarHeight(),
+      height: height + getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
       backgroundColor: '#fff'
     }}>
@@ -36,21 +36,27 @@ export function Procurar({navigation}) {
 
       <View style={{
         alignItems: 'center',
-        alignSelf: 'center', 
+        alignSelf: 'center',
         justifyContent: 'center',
         width: '98%',
         height: '80%',
+      }}>
+        <Text style={{
+          fontSize: 18,
+          color: '#c6c6c6',
+          fontFamily: 'GeneralSans-SemiBold',
         }}>
-          <Text style={{color: '#7C7C7C', fontFamily: 'Manrope-SemiBold'}}>Procure por um produto da loja.</Text>
-     </View>
+          Procure por um produto da loja.
+        </Text>
+      </View>
     </View>
-    
+
   );
 }
 export const styles = StyleSheet.create({
   ofertasItem: {
     borderWidth: 1,
-    borderColor:'#d2d2d2',
+    borderColor: '#d2d2d2',
     width: 110,
     height: 198,
     borderRadius: 10,
@@ -58,10 +64,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   input: {
-    backgroundColor:'#F2F3F2',
-    width:'88%',
+    backgroundColor: '#F2F3F2',
+    width: '88%',
     height: 45,
-    alignSelf:'center',
+    alignSelf: 'center',
     fontFamily: 'GeneralSans-Semibold',
     borderRadius: 16,
     paddingLeft: 20,
@@ -78,7 +84,7 @@ export const styles = StyleSheet.create({
   },
   imgProdView: {
     height: '50%',
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center'
   },
   imgProd: {
@@ -86,9 +92,9 @@ export const styles = StyleSheet.create({
     height: 80
   },
   detailsProd: {
-    width: '86%', 
-    height:'45%', 
-    alignSelf: 'center', 
+    width: '86%',
+    height: '45%',
+    alignSelf: 'center',
     justifyContent: 'space-between'
   }
 })

@@ -221,7 +221,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
               style={{
                 width: 44,
                 height: 44,
-                backgroundColor:'#F2B705',
+                backgroundColor:'#EE2F2A',
                 borderRadius: 22,
                 justifyContent: 'center',
                 alignItems: 'center'

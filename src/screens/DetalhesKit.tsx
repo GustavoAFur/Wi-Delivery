@@ -97,7 +97,7 @@ export default function DetalhesKit({ navigation }: { navigation: any }) {
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
-          borderRadius: 8,
+          borderRadius: 20,
           backgroundColor: '#fff',
           shadowColor: "#9c9a9a",
           shadowOffset: {

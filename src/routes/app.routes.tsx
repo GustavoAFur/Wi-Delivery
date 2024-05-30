@@ -32,6 +32,7 @@ import { useAuth } from '../hooks/auth'
 import { SelecionarKit } from '../screens/SelecionarKit'
 import DetalhesProduto from '../screens/DetalhesProduto'
 import DetalhesKit from '../screens/DetalhesKit'
+import { Login } from '../screens/Login'
 
 
 export function AppRoutes() {
@@ -405,6 +406,13 @@ export function AppRoutes() {
       <Screen
         name="DetalhesProduto"
         component={DetalhesProduto}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Screen
+        name="Login"
+        component={Login}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

@@ -152,7 +152,8 @@ export function ItensOferta({ name, imagem, price, navTo }: ItensProps & Pressab
           <Text style={{
             color: '#67697A',
             fontSize: 12,
-            fontFamily: 'GeneralSans-Regular'
+            fontFamily: 'GeneralSans-Regular',
+            textDecorationLine: 'line-through'
           }}>
             R$ {price}
           </Text>
@@ -192,7 +193,6 @@ export const styles = StyleSheet.create({
     width: 260,
     height: 460,
     borderRadius: 10,
-    marginRight: 20,
     overflow: 'hidden',
   },
 

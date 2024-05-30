@@ -26,7 +26,6 @@ export function Routes() {
         //@ts-ignore
         user ? <AppRoutes /> : <Login/>
       }
-      
     </NavigationContainer>
   )
 }
