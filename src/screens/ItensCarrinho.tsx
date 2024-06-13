@@ -68,7 +68,9 @@ export default function ItensCarrinho ({
             style={{ 
               width: '100%', 
               height:'50%', 
-              padding: 6,
+              paddingVertical: 4,
+              justifyContent: 'center',
+              paddingLeft: 6
             }}
           >
             {/*@ts-ignore*/}      

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
+
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 import { Home } from '../screens/Home'
 import { Perfil } from '../screens/Perfil'
@@ -9,10 +12,6 @@ import { Ofertas } from '../screens/Ofertas'
 import { Procurar } from '../screens/Procurar'
 import { Carrinho } from '../screens/Carrinho'
 import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
-
-import IconShop from '../../assets/images/shop-icon.png'
-import IconSearch from '../../assets/images/icons8-search-100.png'
-import PerfilIcon from '../../assets/images/icons8-usuário-100.png'
 
 import HomeFocused from '../../assets/images/home-focused.png'
 import HomeUnfocused from '../../assets/images/home-unfocused.png'
@@ -23,7 +22,6 @@ import CartFocused from '../../assets/images/cart-focused.png'
 import ProfileFocused from '../../assets/images/profile-focused.png'
 import ProfileUnfocused from '../../assets/images/profile-unfocused.png'
 
-import HomeIcon from '../../assets/svgs/Home-m.svg'
 import { InfosEndereco } from '../screens/InfosEndereco'
 import { InfosPagamento } from '../screens/InfosPagamento'
 import SecoesList from '../screens/SecoesList'
@@ -33,13 +31,51 @@ import { SelecionarKit } from '../screens/SelecionarKit'
 import DetalhesProduto from '../screens/DetalhesProduto'
 import DetalhesKit from '../screens/DetalhesKit'
 import { Login } from '../screens/Login'
-
+import { InserirDadosInfo } from '../screens/InserirDadosInfo'
 
 export function AppRoutes() {
 
   const { Navigator, Screen } = createStackNavigator()
 
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+  const { kitsCarrinho } = useAuth()
+
+  const [isComplete, setIsComplete] = useState<boolean | null>(true)
+
+  useEffect(() => {
+    const currentUser = auth().currentUser;
+    let unsubscribe: (() => void) | null = null;
+
+    if (currentUser) {
+      const userDocRef = firestore()
+        .collection('users')
+        .doc(currentUser.uid);
+
+      unsubscribe = userDocRef.onSnapshot(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          const userData = documentSnapshot.data();
+          console.log('Dados do usuário:', userData)
+
+          if (userData?.completo === false) {
+            setIsComplete(false)
+            console.log('Usuário incompleto:', userData)
+          } else {
+            setIsComplete(true)
+            console.log('Usuário completo')
+          }
+        } else {
+          console.log('Documento do usuário não encontrado')
+        }
+      }, error => {
+        console.error('Erro ao obter documento do usuário:', error)
+      })
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   function TabNavigation() {
 
@@ -341,82 +377,104 @@ export function AppRoutes() {
     )
   }
 
-  return (
-    <Navigator
-      initialRouteName="TabNavigation"
-      screenOptions={{
-        headerShown: false,
-      }}>
+  if(isComplete){
+    return (
+      <Navigator
+        initialRouteName="TabNavigation"
+        screenOptions={{
+          headerShown: false,
+        }}>
+  
+        <Screen name="TabNavigation" component={TabNavigation} />
+        <Screen name="Home" component={Home} />
+        <Screen name="SelecionarKit" component={SelecionarKit} />
+        <Screen
+          name="Ofertas"
+          component={Ofertas}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        
+        <Screen
+          name="SecoesList"
+          component={SecoesList}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+  
+        <Screen
+          name="ProdutosPorCategoria"
+          component={ProdutosPorCategoria}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+  
+        <Screen
+          name="DetalhesKit"
+          component={DetalhesKit}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+  
+        <Screen
+          name="DetalhesProduto"
+          component={DetalhesProduto}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="Login"
+          component={Login}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+      </Navigator>
+    )
+    
+  }else{
+    return(
+      <Navigator
+        initialRouteName="InfosDadosPessoais"
+        screenOptions={{
+          headerShown: false,
+        }}>
+          <Screen
+          name="InserirDadosInfo"
+          component={InserirDadosInfo}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+          <Screen
+          name="InfosDadosPessoais"
+          component={InfosDadosPessoais}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="InfosEndereco"
+          component={InfosEndereco}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="InfosPagamento"
+          component={InfosPagamento}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        </Navigator>
+    )
+  }
 
-      <Screen name="TabNavigation" component={TabNavigation} />
-      <Screen name="Home" component={Home} />
-      <Screen name="SelecionarKit" component={SelecionarKit} />
-      <Screen
-        name="Ofertas"
-        component={Ofertas}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Screen
-        name="InfosDadosPessoais"
-        component={InfosDadosPessoais}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Screen
-        name="InfosEndereco"
-        component={InfosEndereco}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Screen
-        name="InfosPagamento"
-        component={InfosPagamento}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Screen
-        name="SecoesList"
-        component={SecoesList}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-
-      <Screen
-        name="ProdutosPorCategoria"
-        component={ProdutosPorCategoria}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-
-      <Screen
-        name="DetalhesKit"
-        component={DetalhesKit}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-
-      <Screen
-        name="DetalhesProduto"
-        component={DetalhesProduto}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Screen
-        name="Login"
-        component={Login}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-    </Navigator>
-  )
+ 
 }

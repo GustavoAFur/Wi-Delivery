@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useNavigation } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore'
 
 import auth from '@react-native-firebase/auth'
 import LottieView from 'lottie-react-native';
@@ -114,7 +116,6 @@ export function Login({ navigation }: { navigation: any }) {
                 console.error(error);
               }).finally(()=>{
                 setIsLoading(false)
-                navigation.navigate('TabNavigation')
               })
           }}
           style={{
@@ -152,8 +153,15 @@ export function Login({ navigation }: { navigation: any }) {
             setIsCreating(true)
             auth()
               .createUserWithEmailAndPassword(`${email}`, `${password}`)
-              .then(() => {
-                navigation.navigate('TabNavigation')
+              .then(userCredential => {
+                // Cria um documento no Firestore com o mesmo ID do usuário
+                return firestore()
+                  .collection('users')
+                  .doc(userCredential.user.uid)
+                  .set({
+                    completo: false,
+                    email: userCredential.user.email,
+                  });
               })
               .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {

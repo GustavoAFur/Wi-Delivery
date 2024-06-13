@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
 import DetliveryAdress from './../../assets/svgs/delivery-address.svg'
@@ -18,6 +19,36 @@ export function Perfil({ navigation }) {
 
   const { width, height } = Dimensions.get("window")
   const [isSingOut, setIsSingOut] = useState(false)
+
+  const [dadosUsuario, setDadosUsuario] = useState({})
+
+  useEffect(()=>{
+    const fetchUserData = async () => {
+      try {
+        const currentUser = auth().currentUser;
+
+        if (currentUser) {
+          const documentSnapshot = await firestore()
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+          if (documentSnapshot.exists) {
+            const id = documentSnapshot.id
+            const data = documentSnapshot.data()
+            //@ts-ignore
+            setDadosUsuario({id, ...data});
+          }
+        } else {
+          console.log('No user is signed in');
+        }
+      } catch (error) {
+        console.error('Error fetching user data: ', error);
+      }
+    };
+
+    fetchUserData()
+  },[])
 
   return (
     <View style={{
@@ -52,14 +83,16 @@ export function Perfil({ navigation }) {
               fontFamily: 'GeneralSans-Bold',
               fontSize: 15,
             }}>
-              Gustavo A. Furtado
+              {/*@ts-ignore*/}
+              {dadosUsuario.nome} {dadosUsuario.sobrenome}
             </Text>
             <Text style={{
               color: '#c6c6c6',
               fontFamily: 'GeneralSans-Semibold',
               fontSize: 15
             }}>
-              gustavoaragaof@gmail.com
+              {/*@ts-ignore*/}
+              {dadosUsuario.email}
             </Text>
           </View>
         </View>

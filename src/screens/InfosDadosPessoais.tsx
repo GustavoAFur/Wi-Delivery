@@ -1,84 +1,119 @@
-import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import React from 'react'
- 
+import React, { useEffect, useRef, useState } from 'react'
+
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
-export function InfosDadosPessoais({navigation}) {
+export function InfosDadosPessoais({ navigation }) {
   const { width, height } = Dimensions.get("window")
+
+  const [userId, setUserId] = useState('')
+  const [nome, setNome] = useState('')
+  const [sobrenome, setSobrenome] = useState('')
+  const [telefone, setTelefone] = useState('')
+
+  const inputRef1 = useRef(null)
+  const inputRef2 = useRef(null)
+
+  useEffect(() => {
+    const currentUser = auth().currentUser
+    //@ts-ignore
+    setUserId(currentUser.uid)
+  }, [])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1, backgroundColor: '#fff',}}>
-     
-      <View style={{
-        paddingTop: getStatusBarHeight(),
-        width: width,
-        paddingHorizontal: 20,
-        height: 60+getStatusBarHeight(),
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        backgroundColor: '#fff'
-      }}>
-        <View>
-          <TouchableOpacity
-            onPress={()=>{
-              //@ts-ignore
-              navigation.goBack()
-            }}
-          >
-            <ScreenBack  width={20} height={20}/>
-          </TouchableOpacity>
-        </View>
-        
-        <View style={{alignItems: 'center'}}>
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingVertical: getStatusBarHeight(),
+          paddingTop: getStatusBarHeight(),
+          paddingHorizontal: 20,
+          backgroundColor: '#fff',
+          alignItems: 'center'
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
+
+        <View style={{ alignItems: 'center' }}>
           <Text style={{
             fontSize: 20,
-            alignSelf:'center',
-            color: '#323232',}}>
-              Dados Pessoais
+            alignSelf: 'center',
+            color: '#323232',
+            fontFamily: 'GeneralSans-Semibold'
+          }}>
+            Dados Pessoais
           </Text>
         </View>
-        <View style={{width: 20, height: 20}}></View>
-      </View>
-      <View style={{flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center'}}>
-        
-          <View style={{ 
-              width: '86%',
-              height: '82%',
-              justifyContent: 'space-between',
-              marginTop: 25,
-              
+        <View style={{ width: 20, height: 20 }}></View>
+        <View style={{ flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center' }}>
+
+          <View style={{
+            width: '86%',
+            height: '82%',
+            justifyContent: 'space-between',
+            marginTop: 25,
+
           }}>
             <View>
-              <View style={{marginBottom: 30}}>
-                <Text style={styles.textos}>Nome</Text>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>Primeiro nome</Text>
                 <TextInput
+                  returnKeyType="next"
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef1.current.focus()}
+                  value={nome}
+                  onChangeText={setNome}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
                 />
               </View>
 
-              <View style={{marginBottom: 30}}>
-                <Text style={styles.textos}>Telefone</Text>
-                <TextInput 
+              <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>Sobrenome</Text>
+                <TextInput
+                  ref={inputRef1}
+                  returnKeyType="next"
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef2.current.focus()}
+                  value={sobrenome}
+                  onChangeText={setSobrenome}
                   placeholder='Digite aqui...'
-                  keyboardType="numeric" 
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
-                /> 
+                />
+              </View>
+
+              <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>Telefone</Text>
+                <TextInput
+                  ref={inputRef2}
+                  value={telefone}
+                  onChangeText={setTelefone}
+                  placeholder='Digite aqui...'
+                  keyboardType="numeric"
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                  returnKeyType="done"
+                />
               </View>
             </View>
-            
-            
+
+
             <View style={{
               marginTop: 15,
             }}>
-              <TouchableOpacity  
+              <TouchableOpacity
                 style={{
                   width: '100%',
                   height: 55,
@@ -88,8 +123,18 @@ export function InfosDadosPessoais({navigation}) {
                   borderRadius: 10,
                   alignItems: 'center'
                 }}
-                onPress={()=>{
-                  navigation.navigate('InfosEndereco')
+                onPress={() => {
+                  firestore()
+                    .collection('users')
+                    .doc(`${userId}`)
+                    .update({
+                      nome: nome,
+                      sobrenome: sobrenome,
+                      telefone: telefone,
+                    })
+                    .then(() => {
+                      navigation.navigate('InfosEndereco')
+                    })
                 }}
               >
                 <Text style={{
@@ -101,14 +146,14 @@ export function InfosDadosPessoais({navigation}) {
                 </Text>
               </TouchableOpacity>
             </View>
-            
-            
+
+
           </View>
-        
-      </View>
-    
-      </KeyboardAvoidingView>
-    
+
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+
   );
 }
 export const styles = StyleSheet.create({

@@ -10,7 +10,9 @@ import {
   Dimensions,
 } from 'react-native'
 import { useEffect, useState } from 'react'
+
 import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
@@ -59,6 +61,35 @@ export function Home({ navigation }: { navigation: any }) {
   }
 
   const [kitsList, setKitsList] = useState<Kit[]>([])
+  const [dadosUsuario, setDadosUsuario] = useState({})
+
+  useEffect(()=>{
+    const fetchUserData = async () => {
+      try {
+        const currentUser = auth().currentUser;
+
+        if (currentUser) {
+          const documentSnapshot = await firestore()
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+          if (documentSnapshot.exists) {
+            const id = documentSnapshot.id
+            const data = documentSnapshot.data()
+            //@ts-ignore
+            setDadosUsuario({id, ...data});
+          }
+        } else {
+          console.log('No user is signed in');
+        }
+      } catch (error) {
+        console.error('Error fetching user data: ', error);
+      }
+    };
+
+    fetchUserData()
+  },[])
 
   useEffect(() => {
     const kits = async () => {
@@ -80,7 +111,6 @@ export function Home({ navigation }: { navigation: any }) {
       }
     }
     kits()
-    console.log(kitsList)
   }, [])
 
 
@@ -144,7 +174,8 @@ export function Home({ navigation }: { navigation: any }) {
               fontFamily: 'GeneralSans-Semibold',
               color: '#0F1121',
             }}>
-              Gustavo
+              {/*@ts-ignore*/}
+              {dadosUsuario.nome}
             </Text>
 
 
@@ -164,41 +195,7 @@ export function Home({ navigation }: { navigation: any }) {
         </Pressable>
       </View>
 
-      <View
-        style={{
-          marginTop: 20,
-          backgroundColor: '#F2F3F2',
-          width: '90%',
-          alignSelf: 'center',
-          paddingVertical: 10,
-          marginHorizontal: 20,
-          borderRadius: 5,
-          paddingHorizontal: 20,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
-        <View>
-          <Text style={{
-            fontSize: 15,
-            fontFamily: 'GeneralSans-Medium',
-            color: '#0F1121',
-          }}>
-            Nos conte mais!
-          </Text>
-          <Text style={{
-            fontSize: 12,
-            fontFamily: 'GeneralSans-Light',
-            color: '#67697A',
-          }}>
-            Precisamos saber mais sobre você.
-          </Text>
-        </View>
-        
-        <Arrow />
-
-      </View>
+      
 
       <ScrollView
         horizontal
