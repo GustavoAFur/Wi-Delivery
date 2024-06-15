@@ -5,10 +5,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth'
 import { Login } from '../screens/Login'
 import { SplashScreen } from '../screens/SplashScreen'
+import { useAuth } from '../hooks/auth'
 
 export function Routes() {
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState('')
+
   const [splashScreen, setSplashScreen] = useState(true)
   // Handle user state changes
   //@ts-ignore

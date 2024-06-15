@@ -12,6 +12,7 @@ export function InfosEndereco({ navigation }) {
 
   const { width, height } = Dimensions.get("window")
   const [userId, setUserId] = useState('')
+  
   const [bairro, setBairro] = useState('')
   const [rua, setRua] = useState('')
   const [numero, setNumero] = useState('')

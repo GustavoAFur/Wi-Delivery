@@ -32,6 +32,8 @@ import DetalhesProduto from '../screens/DetalhesProduto'
 import DetalhesKit from '../screens/DetalhesKit'
 import { Login } from '../screens/Login'
 import { InserirDadosInfo } from '../screens/InserirDadosInfo'
+import { MeusDetalhes } from '../screens/MeusDetalhes'
+import { DetalhesEndereco } from '../screens/DetalhesEndereco'
 
 export function AppRoutes() {
 
@@ -430,6 +432,20 @@ export function AppRoutes() {
         <Screen
           name="Login"
           component={Login}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="MeusDetalhes"
+          component={MeusDetalhes}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="DetalhesEndereco"
+          component={DetalhesEndereco}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

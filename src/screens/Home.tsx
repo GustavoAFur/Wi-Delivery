@@ -89,7 +89,7 @@ export function Home({ navigation }: { navigation: any }) {
     };
 
     fetchUserData()
-  },[])
+  },[dadosUsuario])
 
   useEffect(() => {
     const kits = async () => {

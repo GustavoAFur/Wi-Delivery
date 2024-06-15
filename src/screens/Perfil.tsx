@@ -48,7 +48,7 @@ export function Perfil({ navigation }) {
     };
 
     fetchUserData()
-  },[])
+  },[dadosUsuario])
 
   return (
     <View style={{
@@ -98,24 +98,30 @@ export function Perfil({ navigation }) {
         </View>
 
         <View style={{ width: '88%', alignSelf: 'center' }}>
-          <TouchableOpacity>
-            <View style={styles.optionsPerfil}>
+          <TouchableOpacity 
+            onPress={()=>{
+              navigation.navigate('MeusDetalhes')
+            }}
+            style={styles.optionsPerfil}
+          >
               <View style={styles.iconText}>
                 <Detalhes width={20} height={20} />
                 <Text style={styles.optionText}>Meus Detalhes</Text>
               </View>
               <Arrow width={15} height={15} />
-            </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={styles.optionsPerfil}>
+          <TouchableOpacity 
+            style={styles.optionsPerfil}
+            onPress={()=>{
+              navigation.navigate('DetalhesEndereco')
+            }}
+          >
               <View style={styles.iconText}>
                 <DetliveryAdress width={20} height={20} />
                 <Text style={styles.optionText}>Detalhes Endereço</Text>
               </View>
               <Arrow width={15} height={15} />
-            </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
@@ -139,6 +145,7 @@ export function Perfil({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
+            style={styles.btnSair}
             onPress={() => {
               setIsSingOut(true)
               auth()
@@ -150,24 +157,34 @@ export function Perfil({ navigation }) {
           >
             {
               isSingOut ?
-                <LottieView
+              <LottieView
                   autoPlay
                   loop
                   source={require('../../assets/json/Animation-Red.json')}
                   style={{ width: 60, height: 60, alignSelf: 'center' }}
                 /> :
-                <View style={styles.btnSair}>
-                  <Logout width={20} height={20} style={{ position: 'absolute', left: 20 }} />
-                  <Text
+                <View
+                  style={{
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Logout
                     style={{
-                      color: '#fff',
-                      fontFamily: 'GeneralSans-Bold',
-                      fontSize: 18,
+                      position: 'absolute',
+                      left: 20
                     }}
-                  >
+                  />
+                  <Text style={{
+                    fontSize: 16,
+                    fontFamily: 'GeneralSans-Semibold',
+                    color: '#fff',
+                  }}>
                     Sair
                   </Text>
                 </View>
+                
             }
           </TouchableOpacity>
 

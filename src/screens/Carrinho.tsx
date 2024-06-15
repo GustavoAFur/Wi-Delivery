@@ -131,6 +131,8 @@ export function Carrinho({ navigation }: { navigation: any }) {
             nome: itens.nome,
             //@ts-ignore
             preco: itens.preco,
+            //@ts-ignore
+            quantidade: itens.quantidade
           })
       }))
 
@@ -258,7 +260,12 @@ export function Carrinho({ navigation }: { navigation: any }) {
       <TouchableOpacity
         disabled={kitsCarrinho.length <= 0 ? true : false}
         onPress={() => {
-          setModalFinalizarVisible(!modalFinalizarVisible)
+          //@ts-ignore
+          const hasKit = kitsCarrinho.some(item => item.categoria === 'kit')
+          if(hasKit)
+            setModalFinalizarVisible(!modalFinalizarVisible)
+          else
+            Alert.alert('Você precisa ter pelo menos um KIT no seu carrino')
         }}
         style={{
           position: 'absolute',

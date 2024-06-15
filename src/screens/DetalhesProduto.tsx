@@ -195,7 +195,7 @@ export default function DetalhesProduto({ navigation }: { navigation: any }) {
 
           <View
             style={{
-              width: 20,
+              paddingHorizontal: 10,
               height: 30,
               alignItems: 'center',
               justifyContent: 'center'
