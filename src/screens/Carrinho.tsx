@@ -27,6 +27,8 @@ export function Carrinho({ navigation }: { navigation: any }) {
   const [totalCompra, setTotalCompra] = useState(0)
   const [finalizando, setFinalizando] = useState(false)
 
+  const [troco, setTroco] = useState('')
+
   const [idItemRef, setIdItemRef] = useState(0)
   const [dadosUsuario, setDadosUsuario] = useState({})
 
@@ -119,7 +121,8 @@ export function Carrinho({ navigation }: { navigation: any }) {
           status: 'aberto',
           usuario: usuario.id,
           data: dataAtual,
-          valor: totalCompra.toFixed(2)
+          valor: totalCompra.toFixed(2),
+          troco: troco !== '' ? parseFloat(troco) - totalCompra : 'Finalizadora sem troco'
         })
       await Promise.all(kitsCarrinho.map(async (itens) => {
         await firestore()
@@ -540,6 +543,8 @@ export function Carrinho({ navigation }: { navigation: any }) {
                 Troco para:
               </Text>
               <TextInput
+                value={troco }
+                onChangeText={setTroco}
                 placeholder='Ex: R$ 100,00'
                 placeholderTextColor={'#7C7C7C'}
                 keyboardType='numeric'

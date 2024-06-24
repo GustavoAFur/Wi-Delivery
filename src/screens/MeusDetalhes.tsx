@@ -1,4 +1,4 @@
-import { Alert, Dimensions, Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import { getStatusBarHeight } from "react-native-status-bar-height";
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-export function MeusDetalhes({navigation} : {navigation : any}){
+export function MeusDetalhes({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -18,30 +18,30 @@ export function MeusDetalhes({navigation} : {navigation : any}){
   const [sobrenome, setSobrenome] = useState('')
   const [telefone, setTelefone] = useState('')
 
-  const atualizarDados = async () =>{
-    try{
+  const atualizarDados = async () => {
+    try {
       const currentUser = auth().currentUser;
 
-        if (currentUser) {
-          await firestore()
-            .collection('users')
-            .doc(currentUser.uid)
-            .update({
-              nome: nome,
-              sobrenome: sobrenome,
-              telefone: telefone
-            })
+      if (currentUser) {
+        await firestore()
+          .collection('users')
+          .doc(currentUser.uid)
+          .update({
+            nome: nome,
+            sobrenome: sobrenome,
+            telefone: telefone
+          })
 
-            Alert.alert('Usuário atualizado')
-            navigation.goBack()
-        }
-    }catch(error){
+        Alert.alert('Usuário atualizado')
+        navigation.goBack()
+      }
+    } catch (error) {
       Alert.alert('Erro ao atualizar usuario')
-      
+
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const currentUser = auth().currentUser;
@@ -71,18 +71,22 @@ export function MeusDetalhes({navigation} : {navigation : any}){
     };
 
     fetchUserData()
-  },[])
+  }, [])
 
-  return(
-    <View
-      style={{
-        width: width,
-        height: height + getStatusBarHeight(),
-        paddingTop: getStatusBarHeight(),
-        flex: 1,
-        backgroundColor: '#fff'
-      }}
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingVertical: getStatusBarHeight(),
+          paddingHorizontal: 20,
+          backgroundColor: '#fff',
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
       <View style={{
         width: '100%',
@@ -90,7 +94,6 @@ export function MeusDetalhes({navigation} : {navigation : any}){
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        backgroundColor: '#fff',
       }}>
         <TouchableOpacity
           style={{
@@ -120,7 +123,8 @@ export function MeusDetalhes({navigation} : {navigation : any}){
 
       <View
         style={{
-          flex: 1
+          flex: 1,
+          alignItems: 'center'
         }}
       >
         <View
@@ -173,7 +177,7 @@ export function MeusDetalhes({navigation} : {navigation : any}){
             paddingHorizontal: 30,
             paddingVertical: 20,
             marginTop: 40,
-            gap: 20
+            gap: 10
           }}
         >
           <View>
@@ -189,14 +193,10 @@ export function MeusDetalhes({navigation} : {navigation : any}){
               onChangeText={setNome}
               placeholder="Seu nome"
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
-          
+
           <View>
             <Text style={{
               fontSize: 18,
@@ -210,11 +210,7 @@ export function MeusDetalhes({navigation} : {navigation : any}){
               onChangeText={setSobrenome}
               placeholder="Seu nome"
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
@@ -231,38 +227,53 @@ export function MeusDetalhes({navigation} : {navigation : any}){
               onChangeText={setTelefone}
               placeholder="Seu telefone"
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
-          
+
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              atualizarDados()
+            }}
+            style={{
+              backgroundColor: '#EE2F2A',
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+              borderRadius: 40,
+            }}
+          >
+            <Text style={{
+              fontSize: 18,
+              color: '#fff',
+              fontFamily: 'GeneralSans-Semibold',
+            }}>
+              Atualizar
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-        onPress={()=>{
-          atualizarDados()
-        }}
-        style={{
-          backgroundColor: '#EE2F2A',
-          paddingHorizontal: 40,
-          paddingVertical: 10,
-          alignSelf: 'center',
-          borderRadius: 40,
-          marginTop: 60
-        }}
-      >
-        <Text style={{
-          fontSize: 18,
-          color: '#fff',
-          fontFamily: 'GeneralSans-Semibold',
-        }}>
-          Atualizar
-        </Text>
-      </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
+export const styles = StyleSheet.create({
+  inputs: {
+    borderColor: '#0008',
+    borderWidth: 0.6,
+    borderRadius: 8,
+    fontSize: 16,
+    fontFamily: 'GeneralSans-Light',
+    paddingLeft: 10,
+    marginVertical: 10,
+    color: '#0008',
+  }
+})

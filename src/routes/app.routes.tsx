@@ -34,6 +34,7 @@ import { Login } from '../screens/Login'
 import { InserirDadosInfo } from '../screens/InserirDadosInfo'
 import { MeusDetalhes } from '../screens/MeusDetalhes'
 import { DetalhesEndereco } from '../screens/DetalhesEndereco'
+import { CriarConta } from '../screens/CriarConta'
 
 export function AppRoutes() {
 
@@ -54,8 +55,7 @@ export function AppRoutes() {
 
       unsubscribe = userDocRef.onSnapshot(documentSnapshot => {
         if (documentSnapshot.exists) {
-          const userData = documentSnapshot.data();
-          console.log('Dados do usuário:', userData)
+          const userData = documentSnapshot.data()
 
           if (userData?.completo === false) {
             setIsComplete(false)
@@ -257,12 +257,12 @@ export function AppRoutes() {
                     )
                   }
                   <Image
-                      source={CartFocused}
-                      resizeMode='contain'
-                      style={{
-                        width: 32,
-                        height: 32,
-                      }} />
+                    source={CartFocused}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
@@ -336,12 +336,12 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   <Image
-                      source={ProfileFocused}
-                      resizeMode='contain'
-                      style={{
-                        width: 32,
-                        height: 32,
-                      }} />
+                    source={ProfileFocused}
+                    resizeMode='contain'
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }} />
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
@@ -379,14 +379,14 @@ export function AppRoutes() {
     )
   }
 
-  if(isComplete){
+  if (isComplete) {
     return (
       <Navigator
         initialRouteName="TabNavigation"
         screenOptions={{
           headerShown: false,
         }}>
-  
+
         <Screen name="TabNavigation" component={TabNavigation} />
         <Screen name="Home" component={Home} />
         <Screen name="SelecionarKit" component={SelecionarKit} />
@@ -397,7 +397,7 @@ export function AppRoutes() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-        
+
         <Screen
           name="SecoesList"
           component={SecoesList}
@@ -405,7 +405,7 @@ export function AppRoutes() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-  
+
         <Screen
           name="ProdutosPorCategoria"
           component={ProdutosPorCategoria}
@@ -413,7 +413,7 @@ export function AppRoutes() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-  
+
         <Screen
           name="DetalhesKit"
           component={DetalhesKit}
@@ -421,7 +421,7 @@ export function AppRoutes() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-  
+
         <Screen
           name="DetalhesProduto"
           component={DetalhesProduto}
@@ -430,8 +430,8 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="Login"
-          component={Login}
+          name="CriarConta"
+          component={CriarConta}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
@@ -452,22 +452,22 @@ export function AppRoutes() {
         />
       </Navigator>
     )
-    
-  }else{
-    return(
+
+  } else {
+    return (
       <Navigator
         initialRouteName="InfosDadosPessoais"
         screenOptions={{
           headerShown: false,
         }}>
-          <Screen
+        <Screen
           name="InserirDadosInfo"
           component={InserirDadosInfo}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-          <Screen
+        <Screen
           name="InfosDadosPessoais"
           component={InfosDadosPessoais}
           options={{
@@ -488,9 +488,9 @@ export function AppRoutes() {
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
-        </Navigator>
+      </Navigator>
     )
   }
 
- 
+
 }

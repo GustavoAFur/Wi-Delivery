@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import LottieView from 'lottie-react-native';
 //@ts-ignore
-export function Login({ navigation }: { navigation: any }) {
+export function CriarConta({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -41,7 +41,7 @@ export function Login({ navigation }: { navigation: any }) {
             alignSelf: 'center'
           }}>
           <Image
-            source={require('./../../assets/images/Product-hunt-bro.png')}
+            source={require('./../../assets/images/Mobile-login-bro.png')}
             resizeMode='contain'
             style={{
               width: '100%',
@@ -54,10 +54,10 @@ export function Login({ navigation }: { navigation: any }) {
           fontSize: 24,
           fontFamily: 'GeneralSans-Light',
           color: '#0F1121',
-          textAlign: 'left',
+          textAlign: 'center',
           marginVertical: 20,
         }}>
-          Faça Login para uma melhor experiência
+          Crie sua conta!
         </Text>
 
         <TextInput
@@ -97,23 +97,41 @@ export function Login({ navigation }: { navigation: any }) {
           }}
         />
 
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
         <TouchableOpacity
           disabled={!email || !password ? true : false}
           onPress={() => {
-            setIsLoading(true)
-
+            setIsCreating(true)
             auth()
-              .signInWithEmailAndPassword(`${email}`, `${password}`)
+              .createUserWithEmailAndPassword(`${email}`, `${password}`)
+              .then(userCredential => {
+                // Cria um documento no Firestore com o mesmo ID do usuário
+                return firestore()
+                  .collection('users')
+                  .doc(userCredential.user.uid)
+                  .set({
+                    completo: false,
+                    email: userCredential.user.email,
+                  });
+              })
               .catch(error => {
-                if (error.code === 'auth/email-already-in-use') 
-                  Alert.alert('That email address is already in use!')
-                
-                if (error.code === 'auth/invalid-email') 
-                  Alert.alert('That email address is invalid!')
-                
-                console.error(error)
+                if (error.code === 'auth/email-already-in-use') {
+                  Alert.alert('Este e-mail já está em uso!');
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                  Alert.alert('E-mail inválido!');
+                }
+
+                console.error(error);
               }).finally(() => {
-                setIsLoading(false)
+                setIsCreating(false)
               })
           }}
           style={{
@@ -128,7 +146,7 @@ export function Login({ navigation }: { navigation: any }) {
           }}
         >
           {
-            isLoading ?
+            isCreating ?
               <LottieView
                 autoPlay
                 loop
@@ -140,44 +158,14 @@ export function Login({ navigation }: { navigation: any }) {
                 fontFamily: 'GeneralSans-Semibold',
                 color: '#fff',
               }}>
-                Entrar
+                Criar conta
               </Text>
           }
-        </TouchableOpacity>
 
-        <View
-          style={{
-            width: '95%',
-            height: 50,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 20,
-            flexDirection: 'row',
-            gap: 5
-          }}
-        >
-          <Text style={{
-            fontSize: 16,
-            fontFamily: 'GeneralSans-Medium',
-            color: '#7C7C7C',
-          }}>
-            Ainda não tem conta?
-          </Text>
-          <TouchableOpacity
-            onPress={()=>{
-              navigation.navigate('CriarConta')
-            }}
-          >
-            <Text style={{
-              fontSize: 16,
-              fontFamily: 'GeneralSans-Semibold',
-              color: '#7C7C7C',
-            }}>
-              Criar conta
-            </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
         </View>
+        
+
       </ScrollView>
     </KeyboardAvoidingView>
   );

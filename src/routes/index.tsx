@@ -6,6 +6,7 @@ import auth from '@react-native-firebase/auth'
 import { Login } from '../screens/Login'
 import { SplashScreen } from '../screens/SplashScreen'
 import { useAuth } from '../hooks/auth'
+import { AccountUser } from './AccountUser.routes'
 
 export function Routes() {
 
@@ -31,7 +32,7 @@ export function Routes() {
     <NavigationContainer>
       {
         //@ts-ignore
-      splashScreen ? <SplashScreen/> : ( user ? <AppRoutes /> : <Login/>)
+      splashScreen ? <SplashScreen/> : ( user ? <AppRoutes /> : <AccountUser/>)
       }
     </NavigationContainer>
   )

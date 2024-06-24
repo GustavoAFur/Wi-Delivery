@@ -1,4 +1,4 @@
-import { Alert, Dimensions, Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import { getStatusBarHeight } from "react-native-status-bar-height";
@@ -79,15 +79,19 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
   }, [])
 
   return (
-    <View
-      style={{
-        width: width,
-        height: height + getStatusBarHeight(),
-        paddingTop: getStatusBarHeight(),
-        flex: 1,
-        backgroundColor: '#fff'
-      }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingVertical: getStatusBarHeight(),
+          paddingHorizontal: 20,
+          backgroundColor: '#fff',
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
       <View style={{
         width: '100%',
@@ -125,16 +129,16 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
 
       <View
         style={{
-          flex: 1
+          flex: 1,
+          alignItems: 'center'
         }}
       >
         <View
           style={{
             width: width,
             paddingHorizontal: 30,
-            paddingVertical: 20,
             marginTop: 40,
-            gap: 20
+            gap: 10
           }}
         >
           <View>
@@ -150,11 +154,7 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               onChangeText={setBairro}
               placeholder="Ex: Centro"
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
@@ -171,11 +171,7 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               onChangeText={setRua}
               placeholder="Digite aqui..."
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
@@ -192,11 +188,7 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               onChangeText={setNumero}
               placeholder="Digite aqui..."
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
@@ -213,11 +205,7 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               onChangeText={setComplemento}
               placeholder="Ex: Apto 03..."
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
@@ -234,17 +222,11 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               onChangeText={setReferencia}
               placeholder="Perto de..."
               placeholderTextColor={'#0008'}
-              style={{
-                borderBottomColor: '#0008',
-                borderBottomWidth: .5,
-                color: '#0008',
-              }}
+              style={styles.inputs}
             />
           </View>
 
-        </View>
-
-        <TouchableOpacity
+          <TouchableOpacity
           onPress={() => {
             atualizarDados()
           }}
@@ -254,7 +236,6 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
             paddingVertical: 10,
             alignSelf: 'center',
             borderRadius: 40,
-            marginTop: 40
           }}
         >
           <Text style={{
@@ -265,7 +246,25 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
             Atualizar
           </Text>
         </TouchableOpacity>
+
+        </View>
+        
+        
+        
       </View>
-    </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
+export const styles = StyleSheet.create({
+  inputs: {
+    borderColor: '#0008',
+    borderWidth: 0.6,
+    borderRadius: 8,
+    fontSize: 16,
+    fontFamily: 'GeneralSans-Light',
+    paddingLeft: 10,
+    marginVertical: 10,
+    color: '#0008',
+  }
+})
