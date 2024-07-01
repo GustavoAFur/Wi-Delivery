@@ -118,6 +118,7 @@ export function CriarConta({ navigation }: { navigation: any }) {
                   .set({
                     completo: false,
                     email: userCredential.user.email,
+                    dataCriacao: new Date()
                   });
               })
               .catch(error => {
