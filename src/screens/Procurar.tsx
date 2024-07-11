@@ -54,7 +54,7 @@ export function Procurar({ navigation }: { navigation: any }) {
   );
 }
 export const styles = StyleSheet.create({
-  ofertasItem: {
+  OrffersItem: {
     borderWidth: 1,
     borderColor: '#d2d2d2',
     width: 110,

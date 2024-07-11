@@ -16,7 +16,7 @@ interface Props{
   delProd: () => void
 }
 
-export default function ItensCarrinho ({
+export default function ItensCart ({
   name, 
   imagem, 
   quantidade,

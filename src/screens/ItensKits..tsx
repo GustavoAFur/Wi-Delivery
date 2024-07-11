@@ -49,16 +49,16 @@ export  function ItensKits({name, imagem, price,selected = false, selecionar}: I
   );
 }
 export const styles = StyleSheet.create({
-  ofertas: {
+  Orffers: {
     paddingTop: 20,
   },
-  ofertasInfo: {
+  OrffersInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  ofertasItem: {
+  OrffersItem: {
     width: '95%',
     height: 140,
     flexDirection: 'row',

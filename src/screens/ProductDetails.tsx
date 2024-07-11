@@ -9,22 +9,22 @@ import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import More from './../../assets/svgs/mais-black.svg'
 import Less from './../../assets/svgs/menos.svg'
 
-export default function DetalhesProduto({ navigation }: { navigation: any }) {
+export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const route = useRoute()
 
   const { width, height } = Dimensions.get("window")
 
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+  const { kitsCart, setKitsCart } = useAuth()
 
   const [qtsItens, setQtdItens] = useState(1)
 
   function handleToggleAddCart(value: any, quantidade: number) {
     //@ts-ignore
-    const hasKit = kitsCarrinho.some(item => item.categoria === 'kit')
+    const hasKit = kitsCart.some(item => item.categoria === 'kit')
 
     if (value.categoria === 'kit' || hasKit) {
-      setKitsCarrinho(prevObjetos => {
+      setKitsCart(prevObjetos => {
         //@ts-ignore
         const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
 

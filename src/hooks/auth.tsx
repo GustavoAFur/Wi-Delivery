@@ -10,21 +10,21 @@ type AuthProviderProps = {
 }
 
 type AuthContextData = {
-  kitsCarrinho: Array<Object>
-  setKitsCarrinho: React.Dispatch<React.SetStateAction<Array<Object>>>
+  kitsCart: Array<Object>
+  setKitsCart: React.Dispatch<React.SetStateAction<Array<Object>>>
 }
 
 export const AuthContext = createContext({} as AuthContextData)
 
 function AuthProvider({ children }: AuthProviderProps) {
 
-  const [kitsCarrinho, setKitsCarrinho] = useState([])
+  const [kitsCart, setKitsCart] = useState([])
 
   return (
     <AuthContext.Provider value={{
-      kitsCarrinho,
+      kitsCart,
       //@ts-ignore
-      setKitsCarrinho,
+      setKitsCart,
     }}>
       {children}
     </AuthContext.Provider>

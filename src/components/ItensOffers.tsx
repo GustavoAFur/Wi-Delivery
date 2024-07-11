@@ -12,10 +12,10 @@ export type ItensProps = {
   navTo: () => void,
 }
 
-export function ItensOferta({ name, imagem, price, navTo }: ItensProps & PressableProps) {
+export function ItensOffers({ name, imagem, price, navTo }: ItensProps & PressableProps) {
 
   return (
-    <View style={styles.ofertasItem}>
+    <View style={styles.OrffersItem}>
 
       <View style={{
         width: 260,
@@ -181,15 +181,15 @@ export function ItensOferta({ name, imagem, price, navTo }: ItensProps & Pressab
   );
 }
 export const styles = StyleSheet.create({
-  ofertas: {
+  Orffers: {
   },
-  ofertasInfo: {
+  OrffersInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  ofertasItem: {
+  OrffersItem: {
     width: 260,
     height: 460,
     borderRadius: 10,

@@ -39,7 +39,7 @@ export function SplashScreen(){
           
           fontFamily: 'GeneralSans-SemiboldItalic'
         }}>
-          Dantas
+          Dantos
         </Text>
       </View>
      

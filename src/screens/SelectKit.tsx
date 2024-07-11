@@ -5,11 +5,11 @@ import { useAuth } from '../hooks/auth'
 import React from 'react'
 
 //@ts-ignore
-export function SelecionarKit({navigation}) {
+export function SelectKit({navigation}) {
 
   const { width, height } = Dimensions.get("window")
 
-  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+  const {kitsCart, setKitsCart} = useAuth()
 
   const kitBasico = "https://www.kitranchoescolhacerta.com.br/wp-content/uploads/2018/01/kit-rancho.png"
   const kitLimpeza = "https://calvo.com.br/wp-content/uploads/2022/08/CESTA-CLEAN-MASTER.png"
@@ -24,7 +24,7 @@ export function SelecionarKit({navigation}) {
   ]
 
   function handleToggleAddCart(value: any, quantidade: number) {
-    setKitsCarrinho(prevObjetos => {
+    setKitsCart(prevObjetos => {
       //@ts-ignore
       const objetoExistenteIndex = prevObjetos.findIndex(objeto => objeto.id_ === value.id_);
   
@@ -42,7 +42,7 @@ export function SelecionarKit({navigation}) {
 
   function delProdCart (value: string){
     //@ts-ignore
-    setKitsCarrinho((state)=> state.filter(item => item.id_ !== value)) 
+    setKitsCart((state)=> state.filter(item => item.id_ !== value)) 
                         
   }
 
@@ -92,7 +92,7 @@ export function SelecionarKit({navigation}) {
               name={item.nome}
               price={item.preco}
               //@ts-ignore
-              selected={kitsCarrinho.length <= 0 ? false :  kitsCarrinho.some(objeto => objeto.id_ === item.id_)}
+              selected={kitsCart.length <= 0 ? false :  kitsCart.some(objeto => objeto.id_ === item.id_)}
               selecionar={()=>{
                 handleToggleAddCart(item, 1 )
               }}
@@ -113,7 +113,7 @@ export function SelecionarKit({navigation}) {
         }}
       >
         <TouchableOpacity
-          disabled={kitsCarrinho.length <= 0 ? true : false}
+          disabled={kitsCart.length <= 0 ? true : false}
           onPress={()=>{
             navigation.navigate('TabNavigation')
           }}
@@ -124,7 +124,7 @@ export function SelecionarKit({navigation}) {
             backgroundColor: '#F2B705',
             alignSelf: 'center',
             borderRadius: 10,
-            opacity: kitsCarrinho.length <= 0 ? .5 : 1
+            opacity: kitsCart.length <= 0 ? .5 : 1
           }}
         >
           <Text style={{

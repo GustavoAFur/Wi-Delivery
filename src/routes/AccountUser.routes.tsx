@@ -1,26 +1,26 @@
 import { createStackNavigator,TransitionPresets } from "@react-navigation/stack"
-import { Login } from "../screens/Login"
-import { CriarConta } from "../screens/CriarConta"
+import { SingIn } from "../screens/SingIn"
+import { SignUp } from "../screens/SignUp"
 
 export function AccountUser(){
   const { Navigator, Screen } = createStackNavigator()
   return(
     <Navigator
-      initialRouteName="Login"
+      initialRouteName="SingIn"
       screenOptions={{
         headerShown: false,
       }}
     >
       <Screen 
-        name="Login" 
-        component={Login}
+        name="SingIn" 
+        component={SingIn}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
       <Screen 
-        name="CriarConta" 
-        component={CriarConta}
+        name="SignUp" 
+        component={SignUp}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}

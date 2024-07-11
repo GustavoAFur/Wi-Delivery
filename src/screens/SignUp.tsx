@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import LottieView from 'lottie-react-native';
 //@ts-ignore
-export function CriarConta({ navigation }: { navigation: any }) {
+export function SignUp({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -41,7 +41,7 @@ export function CriarConta({ navigation }: { navigation: any }) {
             alignSelf: 'center'
           }}>
           <Image
-            source={require('./../../assets/images/Mobile-login-bro.png')}
+            source={require('./../../assets/images/Mobile-SingIn-bro.png')}
             resizeMode='contain'
             style={{
               width: '100%',

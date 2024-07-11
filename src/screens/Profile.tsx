@@ -15,7 +15,7 @@ import Logout from './../../assets/svgs/logoutw.svg'
 import LottieView from 'lottie-react-native'
 
 //@ts-ignore
-export function Perfil({ navigation }) {
+export function Profile({ navigation }) {
 
   const { width, height } = Dimensions.get("window")
   const [isSingOut, setIsSingOut] = useState(false)
@@ -64,7 +64,7 @@ export function Perfil({ navigation }) {
         alignItems: 'center',
       }}>
         <View style={styles.header}>
-          <View style={styles.perfilFoto}>
+          <View style={styles.ProfileFoto}>
             <View style={{
               width: 75,
               height: 75,
@@ -77,7 +77,7 @@ export function Perfil({ navigation }) {
               />
             </View>
           </View>
-          <View style={styles.perfilInfos}>
+          <View style={styles.ProfileInfos}>
             <Text style={{
               color: '#000',
               fontFamily: 'GeneralSans-Bold',
@@ -100,9 +100,9 @@ export function Perfil({ navigation }) {
         <View style={{ width: '88%', alignSelf: 'center' }}>
           <TouchableOpacity 
             onPress={()=>{
-              navigation.navigate('MeusDetalhes')
+              navigation.navigate('MyDetails')
             }}
-            style={styles.optionsPerfil}
+            style={styles.optionsProfile}
           >
               <View style={styles.iconText}>
                 <Detalhes width={20} height={20} />
@@ -112,9 +112,9 @@ export function Perfil({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style={styles.optionsPerfil}
+            style={styles.optionsProfile}
             onPress={()=>{
-              navigation.navigate('DetalhesEndereco')
+              navigation.navigate('AdressDetails')
             }}
           >
               <View style={styles.iconText}>
@@ -125,7 +125,7 @@ export function Perfil({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <View style={styles.optionsPerfil}>
+            <View style={styles.optionsProfile}>
               <View style={styles.iconText}>
                 <About width={20} height={20} />
                 <Text style={styles.optionText}>Sobre</Text>
@@ -135,7 +135,7 @@ export function Perfil({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <View style={styles.optionsPerfil}>
+            <View style={styles.optionsProfile}>
               <View style={styles.iconText}>
                 <Help width={20} height={20} />
                 <Text style={styles.optionText}>Ajuda</Text>
@@ -204,20 +204,20 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#E2E2E2',
     borderBottomWidth: .5
   },
-  perfilFoto: {
+  ProfileFoto: {
     width: '35%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
 
   },
-  perfilInfos: {
+  ProfileInfos: {
     width: '65%',
     height: '100%',
     justifyContent: 'center',
 
   },
-  optionsPerfil: {
+  optionsProfile: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 25,

@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
-export function InfosPagamento({navigation}) {
+export function InfoPayment({navigation}) {
   const { width, height } = Dimensions.get("window")
   return (
     <View style={{

@@ -8,11 +8,11 @@ import firestore from '@react-native-firebase/firestore'
 
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import Search from './../../assets/svgs/search-b.svg'
-import Cart from './../../assets/images/icons8-carrinho-de-compras-carregado-100.png'
+import Cart from './../../assets/images/icons8-Cart-de-compras-carregado-100.png'
 import CartBlack from '../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth';
 
-export default function ProdutosPorCategoria({ navigation }: { navigation: any }) {
+export default function ProductsByCategory({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
   
@@ -20,7 +20,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
   
   const [produtosList, setProdutosList] = useState([])
 
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+  const { kitsCart, setKitsCart } = useAuth()
 
   useEffect(()=>{
     const produtos = async () =>{
@@ -30,14 +30,14 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
         //@ts-ignore
         .where('categoria', '==',`${route.params.filtroCategoria}`)
         .get()
-        //@ts-ignore
-        const arrayProd = []
+
+        const arrayProd: any = []
         produtosSnapShot.forEach((produtos)=>{
           const id = produtos.id
           const produto = produtos.data()
           arrayProd.push({id,...produto})
         })
-        //@ts-ignore
+
         setProdutosList(arrayProd)
       }catch(error) {
         console.error("Error fetching produtos: ", error)
@@ -89,7 +89,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
         
         <TouchableOpacity
           onPress={()=>{
-            navigation.navigate('Carrinho')
+            navigation.navigate('Cart')
           }}
           style={{
             width: 24,
@@ -97,7 +97,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
           }}
         >
         {
-          kitsCarrinho.length > 0 && (
+          kitsCart.length > 0 && (
             <View
               style={{
                 backgroundColor: '#EE2F2A',
@@ -119,7 +119,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
                 color: '#fff',
                 fontFamily: 'GeneralSans-Semibold',
               }}>
-                {kitsCarrinho.length}
+                {kitsCart.length}
               </Text>
             </View>
           )
@@ -216,7 +216,7 @@ export default function ProdutosPorCategoria({ navigation }: { navigation: any }
             </Text>
             <Pressable
               onPress={()=>{
-                navigation.navigate('DetalhesProduto', {item: item})
+                navigation.navigate('ProductDetails', {item: item})
               }}
               style={{
                 width: 44,

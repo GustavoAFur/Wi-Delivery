@@ -8,15 +8,15 @@ import { useEffect, useState } from "react"
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-export function MeusDetalhes({ navigation }: { navigation: any }) {
+export function AdressDetails({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const [dadosUsuario, setDadosUsuario] = useState({})
-  //@ts-ignore
-  const [nome, setNome] = useState('')
-  const [sobrenome, setSobrenome] = useState('')
-  const [telefone, setTelefone] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [rua, setRua] = useState('')
+  const [numero, setNumero] = useState('')
+  const [complemento, setComplemento] = useState('')
+  const [referencia, setReferencia] = useState('')
 
   const atualizarDados = async () => {
     try {
@@ -27,9 +27,11 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
           .collection('users')
           .doc(currentUser.uid)
           .update({
-            nome: nome,
-            sobrenome: sobrenome,
-            telefone: telefone
+            bairro: bairro,
+            rua: rua,
+            numero: numero,
+            complemento: complemento,
+            referencia: referencia
           })
 
         Alert.alert('Usuário atualizado')
@@ -53,14 +55,17 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
             .get();
 
           if (documentSnapshot.exists) {
-            const id = documentSnapshot.id
             const data = documentSnapshot.data()
             //@ts-ignore
-            setNome(data.nome)
+            setBairro(data.bairro)
             //@ts-ignore
-            setSobrenome(data.sobrenome)
+            setRua(data.rua)
             //@ts-ignore
-            setTelefone(data.telefone)
+            setNumero(data.numero)
+            //@ts-ignore
+            setComplemento(data.complemento)
+            //@ts-ignore
+            setReferencia(data.referencia)
           }
         } else {
           console.log('No user is signed in');
@@ -94,6 +99,7 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
+        backgroundColor: '#fff',
       }}>
         <TouchableOpacity
           style={{
@@ -117,7 +123,7 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
           color: '#323232',
           fontFamily: 'GeneralSans-Semibold'
         }}>
-          Meus Detalhes
+          Detalhes Endereço
         </Text>
       </View>
 
@@ -129,53 +135,8 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
       >
         <View
           style={{
-            width: 120,
-            height: 120,
-            alignSelf: 'center',
-            marginTop: 20
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: '#a0a0f7',
-              opacity: .3,
-              width: 120,
-              height: 120,
-              borderRadius: 60
-            }}
-          >
-
-          </View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#00f',
-              width: 30,
-              height: 30,
-              borderRadius: 15,
-              position: 'absolute',
-              bottom: 5,
-              right: 5,
-              borderColor: '#fff',
-              borderWidth: 2,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <Image
-              source={require('../../assets/images/icon-mais.png')}
-              style={{
-                width: 15,
-                height: 15
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
             width: width,
             paddingHorizontal: 30,
-            paddingVertical: 20,
             marginTop: 40,
             gap: 10
           }}
@@ -186,12 +147,12 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Nome:
+              Bairro:
             </Text>
             <TextInput
-              value={nome}
-              onChangeText={setNome}
-              placeholder="Seu nome"
+              value={bairro}
+              onChangeText={setBairro}
+              placeholder="Ex: Centro"
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
@@ -203,12 +164,12 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Sobrenome:
+              Rua:
             </Text>
             <TextInput
-              value={sobrenome}
-              onChangeText={setSobrenome}
-              placeholder="Seu nome"
+              value={rua}
+              onChangeText={setRua}
+              placeholder="Digite aqui..."
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
@@ -220,46 +181,76 @@ export function MeusDetalhes({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Telefone:
+              Número:
             </Text>
             <TextInput
-              value={telefone}
-              onChangeText={setTelefone}
-              placeholder="Seu telefone"
+              value={numero}
+              onChangeText={setNumero}
+              placeholder="Digite aqui..."
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
           </View>
 
-        </View>
-        <View
+          <View>
+            <Text style={{
+              fontSize: 18,
+              color: '#000',
+              fontFamily: 'GeneralSans-Semibold',
+            }}>
+              Complemento:
+            </Text>
+            <TextInput
+              value={complemento}
+              onChangeText={setComplemento}
+              placeholder="Ex: Apto 03..."
+              placeholderTextColor={'#0008'}
+              style={styles.inputs}
+            />
+          </View>
+
+          <View>
+            <Text style={{
+              fontSize: 18,
+              color: '#000',
+              fontFamily: 'GeneralSans-Semibold',
+            }}>
+              Referência:
+            </Text>
+            <TextInput
+              value={referencia}
+              onChangeText={setReferencia}
+              placeholder="Perto de..."
+              placeholderTextColor={'#0008'}
+              style={styles.inputs}
+            />
+          </View>
+
+          <TouchableOpacity
+          onPress={() => {
+            atualizarDados()
+          }}
           style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
+            backgroundColor: '#EE2F2A',
+            paddingHorizontal: 40,
+            paddingVertical: 10,
+            alignSelf: 'center',
+            borderRadius: 40,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              atualizarDados()
-            }}
-            style={{
-              backgroundColor: '#EE2F2A',
-              paddingHorizontal: 40,
-              paddingVertical: 10,
-              borderRadius: 40,
-            }}
-          >
-            <Text style={{
-              fontSize: 18,
-              color: '#fff',
-              fontFamily: 'GeneralSans-Semibold',
-            }}>
-              Atualizar
-            </Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{
+            fontSize: 18,
+            color: '#fff',
+            fontFamily: 'GeneralSans-Semibold',
+          }}>
+            Atualizar
+          </Text>
+        </TouchableOpacity>
 
+        </View>
+        
+        
+        
       </View>
     </ScrollView>
     </KeyboardAvoidingView>

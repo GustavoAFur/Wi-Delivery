@@ -31,7 +31,7 @@ export function SignInGoogle(){
             fontFamily: 'GeneralSans-Light',
             color: '#0F1121',
           }}>
-            Login com Google
+            SingIn com Google
           </Text>
         </TouchableOpacity>
   )

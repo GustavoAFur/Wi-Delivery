@@ -27,8 +27,8 @@ import Mais from './../../assets/images/icons8-mais-100.png'
 import IconNotification from '../../assets/svgs/notification.svg'
 import Arrow from '../../assets/svgs/arrow-p.svg'
 
-import SecoesListComponent from './SecoesListComponent'
-import { ItensOferta } from './ItensOferta'
+import SecoesListComponent from '../components/SecoesListComponent'
+import { ItensOffers } from '../components/ItensOffers'
 
 interface Kit {
   id: string;
@@ -97,14 +97,14 @@ export function Home({ navigation }: { navigation: any }) {
         const produtosSnapShot = await firestore()
           .collection('kits')
           .get()
-        //@ts-ignore
-        const arrayKits = []
+
+        const arrayKits: any = []
         produtosSnapShot.forEach((kits) => {
           const id = kits.id
           const kit = kits.data()
           arrayKits.push({ id, ...kit })
         })
-        //@ts-ignore
+        
         setKitsList(arrayKits)
       } catch (error) {
         console.error("Error fetching produtos: ", error)
@@ -216,7 +216,7 @@ export function Home({ navigation }: { navigation: any }) {
               img={item.imagem}
               name={item.nome}
               navTo={() => {
-                navigation.navigate('ProdutosPorCategoria', { categoria: `${item.nome}`, filtroCategoria: `${item.value}` })
+                navigation.navigate('ProductsByCategory', { categoria: `${item.nome}`, filtroCategoria: `${item.value}` })
               }}
             />
           ))
@@ -285,8 +285,8 @@ export function Home({ navigation }: { navigation: any }) {
         </View>
       </ScrollView>
 
-      <View style={styles.ofertas}>
-        <View style={styles.ofertasInfo}>
+      <View style={styles.Orffers}>
+        <View style={styles.OrffersInfo}>
           <Text style={{
             color: '#030303',
             fontSize: 18,
@@ -296,7 +296,7 @@ export function Home({ navigation }: { navigation: any }) {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Ofertas')
+              navigation.navigate('Orffers')
             }}
             style={{
               display: 'flex',
@@ -325,12 +325,12 @@ export function Home({ navigation }: { navigation: any }) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <ItensOferta
+          <ItensOffers
             name={item.nome}
             price={item.preco}
             imagem={item.imagem}
             navTo={() => {
-              navigation.navigate('DetalhesKit', { item: item })
+              navigation.navigate('KitDetails', { item: item })
             }}
 
           />
@@ -382,7 +382,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 30,
   },
-  scrollViewContentOfertasNews: {
+  scrollViewContentOrffersNews: {
     paddingHorizontal: 20,
 
   },
@@ -420,17 +420,17 @@ export const styles = StyleSheet.create({
     height: 46,
     borderRadius: 23
   },
-  ofertas: {
+  Orffers: {
     marginTop: 16,
     marginBottom: 15
   },
-  ofertasInfo: {
+  OrffersInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  ofertasItem: {
+  OrffersItem: {
     borderWidth: 0.5,
     borderColor: '#d2d2d2',
     width: 140,

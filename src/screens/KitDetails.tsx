@@ -9,18 +9,18 @@ import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import More from './../../assets/svgs/mais-black.svg'
 import Less from './../../assets/svgs/menos.svg'
 
-export default function DetalhesKit({ navigation }: { navigation: any }) {
+export default function KitDetails({ navigation }: { navigation: any }) {
 
   const route = useRoute()
 
   const { width, height } = Dimensions.get("window")
 
-  const {kitsCarrinho, setKitsCarrinho} = useAuth()
+  const {kitsCart, setKitsCart} = useAuth()
 
   const [qtsItens, setQtdItens] = useState(1)
 
   function handleToggleAddCart(value: any, quantidade: number) {
-    setKitsCarrinho(prevObjetos => {
+    setKitsCart(prevObjetos => {
       //@ts-ignore
       const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
   

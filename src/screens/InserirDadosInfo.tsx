@@ -70,7 +70,7 @@ export function InserirDadosInfo({ navigation }: { navigation: any }) {
 
         <TouchableOpacity
           onPress={()=>{
-            navigation.navigate('InfosDadosPessoais')
+            navigation.navigate('InfoPersonalDetails')
           }}
           style={{
             width: '100%',

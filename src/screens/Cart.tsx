@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import DropDownPicker from 'react-native-dropdown-picker'
 
-import ItensCarrinho from './ItensCarrinho'
+import ItensCart from '../components/ItensCart'
 import { useAuth } from '../hooks/auth'
 
 import firestore from '@react-native-firebase/firestore'
@@ -14,13 +14,13 @@ import ScreenBack from './../../assets/svgs/arrow-right.svg'
 import Close from './../../assets/svgs/close.svg'
 import LottieView from 'lottie-react-native'
 
-export function Carrinho({ navigation }: { navigation: any }) {
+export function Cart({ navigation }: { navigation: any }) {
 
   const dataAtual = new Date()
 
   const { width, height } = Dimensions.get("window")
 
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+  const { kitsCart, setKitsCart } = useAuth()
 
   const [modalVisible, setModalVisible] = useState(false)
   const [modalFinalizarVisible, setModalFinalizarVisible] = useState(false)
@@ -76,18 +76,18 @@ export function Carrinho({ navigation }: { navigation: any }) {
   }, [])
 
   useEffect(() => {
-    const dataArray = kitsCarrinho.map((item) => {
+    const dataArray = kitsCart.map((item) => {
       //@ts-ignore
-      const valorItem = parseFloat(item.preco) * parseFloat(item.quantidade);
-      return { valorItem };
-    });
+      const valorItem = parseFloat(item.preco) * parseFloat(item.quantidade)
+      return { valorItem }
+    })
 
-    const valorTotal = dataArray.reduce((total, item) => total + item.valorItem, 0);
-    setTotalCompra(valorTotal);
-  }, [kitsCarrinho]);
+    const valorTotal = dataArray.reduce((total, item) => total + item.valorItem, 0)
+    setTotalCompra(valorTotal)
+  }, [kitsCart])
 
   function addQtd(idProd: any) {
-    setKitsCarrinho(prevObjetos =>
+    setKitsCart(prevObjetos =>
       prevObjetos.map(objeto =>
         //@ts-ignore
         objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade + 1 } : objeto
@@ -97,7 +97,7 @@ export function Carrinho({ navigation }: { navigation: any }) {
 
   function decQtd(idProd: any) {
     //@ts-ignore
-    setKitsCarrinho(prevObjetos =>
+    setKitsCart(prevObjetos =>
       prevObjetos.map(objeto =>
         //@ts-ignore
         objeto && objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade - 1 } : objeto
@@ -107,7 +107,7 @@ export function Carrinho({ navigation }: { navigation: any }) {
 
   function delProdCart(value: string) {
     //@ts-ignore
-    setKitsCarrinho((state) => state.filter(item => item.id !== value))
+    setKitsCart((state) => state.filter(item => item.id !== value))
   }
 
   async function finalizarPedido(usuario: any) {
@@ -124,7 +124,7 @@ export function Carrinho({ navigation }: { navigation: any }) {
           valor: totalCompra.toFixed(2),
           troco: troco !== '' ? parseFloat(troco) - totalCompra : 'Finalizadora sem troco'
         })
-      await Promise.all(kitsCarrinho.map(async (itens) => {
+      await Promise.all(kitsCart.map(async (itens) => {
         await firestore()
           .collection('pedidos')
           .doc(idSnapshot.id)
@@ -140,7 +140,7 @@ export function Carrinho({ navigation }: { navigation: any }) {
       }))
 
       Alert.alert("Pedido Cadastrado")
-      setKitsCarrinho([])
+      setKitsCart([])
       navigation.goBack()
 
     } catch (error) {
@@ -193,19 +193,19 @@ export function Carrinho({ navigation }: { navigation: any }) {
           color: '#323232',
           fontFamily: 'GeneralSans-Semibold'
         }}>
-          Meu Carrinho
+          Meu carrinho
         </Text>
 
       </View>
       {
-        kitsCarrinho.length <= 0 ?
+        kitsCart.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <Text style={{
               fontSize: 18,
               color: '#c6c6c6',
               fontFamily: 'GeneralSans-SemiBold',
             }}>
-              Não há nenhum ítem no seu carinho
+              Não há nenhum ítem no seu carrinho
             </Text>
           </View> :
           <FlatList
@@ -213,16 +213,16 @@ export function Carrinho({ navigation }: { navigation: any }) {
             style={{
               marginBottom: 140
             }}
-            data={kitsCarrinho}
+            data={kitsCart}
             //  @ts-ignore
             keyExtractor={item => item.id}
 
             renderItem={({ item }) => {
               //@ts-ignore
-              let qtdProdutoSelecionado = kitsCarrinho.find(objeto => objeto.id === item.id)
+              let qtdProdutoSelecionado = kitsCart.find(objeto => objeto.id === item.id)
 
               return (
-                <ItensCarrinho
+                <ItensCart
                   //@ts-ignore
                   name={item.nome}
                   //@ts-ignore
@@ -261,10 +261,10 @@ export function Carrinho({ navigation }: { navigation: any }) {
       }
 
       <TouchableOpacity
-        disabled={kitsCarrinho.length <= 0 ? true : false}
+        disabled={kitsCart.length <= 0 ? true : false}
         onPress={() => {
           //@ts-ignore
-          const hasKit = kitsCarrinho.some(item => item.categoria === 'kit')
+          const hasKit = kitsCart.some(item => item.categoria === 'kit')
           if(hasKit)
             setModalFinalizarVisible(!modalFinalizarVisible)
           else
@@ -273,7 +273,7 @@ export function Carrinho({ navigation }: { navigation: any }) {
         style={{
           position: 'absolute',
           backgroundColor: '#EE2F2A',
-          opacity: kitsCarrinho.length <= 0 ? .5 : 1,
+          opacity: kitsCart.length <= 0 ? .5 : 1,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',

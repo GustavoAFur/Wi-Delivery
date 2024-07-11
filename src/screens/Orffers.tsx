@@ -10,15 +10,15 @@ import Menos from './../../assets/svgs/menos.svg'
 import Cart from './../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth'
 //@ts-ignore
-export function Ofertas({navigation}) {
+export function Orffers({navigation}) {
   const { width, height } = Dimensions.get("window")
   const [modoEditar, setModoEditar] = useState(false)
   const [quantidade, setQuantidade] = useState(1)
 
-  const { kitsCarrinho, setKitsCarrinho } = useAuth()
+  const { kitsCart, setKitsCart } = useAuth()
 
   //@ts-ignore
-  const handleAdicionarCarrinho = () => {
+  const handleAdicionarCart = () => {
     setModoEditar(true);
   };
 
@@ -63,11 +63,11 @@ export function Ofertas({navigation}) {
         <View>
           <TouchableOpacity
             onPress={()=>{
-              navigation.navigate('Carrinho')
+              navigation.navigate('Cart')
             }}
           >
             {
-          kitsCarrinho.length > 0 && (
+          kitsCart.length > 0 && (
             <View
               style={{
                 backgroundColor: '#EE2F2A',
@@ -89,7 +89,7 @@ export function Ofertas({navigation}) {
                 color: '#fff',
                 fontFamily: 'GeneralSans-Semibold',
               }}>
-                {kitsCarrinho.length}
+                {kitsCart.length}
               </Text>
             </View>
           )
@@ -135,7 +135,7 @@ export function Ofertas({navigation}) {
   );
 }
 export const styles = StyleSheet.create({
-  ofertasItem: {
+  OrffersItem: {
     borderWidth: 1,
     borderColor:'#d2d2d2',
     width: 140,

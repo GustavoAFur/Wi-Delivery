@@ -8,15 +8,15 @@ import { useEffect, useState } from "react"
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-export function DetalhesEndereco({ navigation }: { navigation: any }) {
+export function MyDetails({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const [bairro, setBairro] = useState('')
-  const [rua, setRua] = useState('')
-  const [numero, setNumero] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [referencia, setReferencia] = useState('')
+  const [dadosUsuario, setDadosUsuario] = useState({})
+  //@ts-ignore
+  const [nome, setNome] = useState('')
+  const [sobrenome, setSobrenome] = useState('')
+  const [telefone, setTelefone] = useState('')
 
   const atualizarDados = async () => {
     try {
@@ -27,11 +27,9 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
           .collection('users')
           .doc(currentUser.uid)
           .update({
-            bairro: bairro,
-            rua: rua,
-            numero: numero,
-            complemento: complemento,
-            referencia: referencia
+            nome: nome,
+            sobrenome: sobrenome,
+            telefone: telefone
           })
 
         Alert.alert('Usuário atualizado')
@@ -55,17 +53,14 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
             .get();
 
           if (documentSnapshot.exists) {
+            const id = documentSnapshot.id
             const data = documentSnapshot.data()
             //@ts-ignore
-            setBairro(data.bairro)
+            setNome(data.nome)
             //@ts-ignore
-            setRua(data.rua)
+            setSobrenome(data.sobrenome)
             //@ts-ignore
-            setNumero(data.numero)
-            //@ts-ignore
-            setComplemento(data.complemento)
-            //@ts-ignore
-            setReferencia(data.referencia)
+            setTelefone(data.telefone)
           }
         } else {
           console.log('No user is signed in');
@@ -99,7 +94,6 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        backgroundColor: '#fff',
       }}>
         <TouchableOpacity
           style={{
@@ -123,7 +117,7 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
           color: '#323232',
           fontFamily: 'GeneralSans-Semibold'
         }}>
-          Detalhes Endereço
+          Meus Detalhes
         </Text>
       </View>
 
@@ -135,8 +129,53 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
       >
         <View
           style={{
+            width: 120,
+            height: 120,
+            alignSelf: 'center',
+            marginTop: 20
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: '#a0a0f7',
+              opacity: .3,
+              width: 120,
+              height: 120,
+              borderRadius: 60
+            }}
+          >
+
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#00f',
+              width: 30,
+              height: 30,
+              borderRadius: 15,
+              position: 'absolute',
+              bottom: 5,
+              right: 5,
+              borderColor: '#fff',
+              borderWidth: 2,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Image
+              source={require('../../assets/images/icon-mais.png')}
+              style={{
+                width: 15,
+                height: 15
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
             width: width,
             paddingHorizontal: 30,
+            paddingVertical: 20,
             marginTop: 40,
             gap: 10
           }}
@@ -147,12 +186,12 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Bairro:
+              Nome:
             </Text>
             <TextInput
-              value={bairro}
-              onChangeText={setBairro}
-              placeholder="Ex: Centro"
+              value={nome}
+              onChangeText={setNome}
+              placeholder="Seu nome"
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
@@ -164,12 +203,12 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Rua:
+              Sobrenome:
             </Text>
             <TextInput
-              value={rua}
-              onChangeText={setRua}
-              placeholder="Digite aqui..."
+              value={sobrenome}
+              onChangeText={setSobrenome}
+              placeholder="Seu nome"
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
@@ -181,76 +220,46 @@ export function DetalhesEndereco({ navigation }: { navigation: any }) {
               color: '#000',
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              Número:
+              Telefone:
             </Text>
             <TextInput
-              value={numero}
-              onChangeText={setNumero}
-              placeholder="Digite aqui..."
+              value={telefone}
+              onChangeText={setTelefone}
+              placeholder="Seu telefone"
               placeholderTextColor={'#0008'}
               style={styles.inputs}
             />
           </View>
-
-          <View>
-            <Text style={{
-              fontSize: 18,
-              color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
-            }}>
-              Complemento:
-            </Text>
-            <TextInput
-              value={complemento}
-              onChangeText={setComplemento}
-              placeholder="Ex: Apto 03..."
-              placeholderTextColor={'#0008'}
-              style={styles.inputs}
-            />
-          </View>
-
-          <View>
-            <Text style={{
-              fontSize: 18,
-              color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
-            }}>
-              Referência:
-            </Text>
-            <TextInput
-              value={referencia}
-              onChangeText={setReferencia}
-              placeholder="Perto de..."
-              placeholderTextColor={'#0008'}
-              style={styles.inputs}
-            />
-          </View>
-
-          <TouchableOpacity
-          onPress={() => {
-            atualizarDados()
-          }}
-          style={{
-            backgroundColor: '#EE2F2A',
-            paddingHorizontal: 40,
-            paddingVertical: 10,
-            alignSelf: 'center',
-            borderRadius: 40,
-          }}
-        >
-          <Text style={{
-            fontSize: 18,
-            color: '#fff',
-            fontFamily: 'GeneralSans-Semibold',
-          }}>
-            Atualizar
-          </Text>
-        </TouchableOpacity>
 
         </View>
-        
-        
-        
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              atualizarDados()
+            }}
+            style={{
+              backgroundColor: '#EE2F2A',
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+              borderRadius: 40,
+            }}
+          >
+            <Text style={{
+              fontSize: 18,
+              color: '#fff',
+              fontFamily: 'GeneralSans-Semibold',
+            }}>
+              Atualizar
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     </ScrollView>
     </KeyboardAvoidingView>

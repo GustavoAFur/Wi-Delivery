@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import LottieView from 'lottie-react-native';
 //@ts-ignore
-export function Login({ navigation }: { navigation: any }) {
+export function SingIn({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -57,7 +57,7 @@ export function Login({ navigation }: { navigation: any }) {
           textAlign: 'left',
           marginVertical: 20,
         }}>
-          Faça Login para uma melhor experiência
+          Faça SingIn para uma melhor experiência
         </Text>
 
         <TextInput
@@ -166,7 +166,7 @@ export function Login({ navigation }: { navigation: any }) {
           </Text>
           <TouchableOpacity
             onPress={()=>{
-              navigation.navigate('CriarConta')
+              navigation.navigate('SignUp')
             }}
           >
             <Text style={{

@@ -7,11 +7,11 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
 import { Home } from '../screens/Home'
-import { Perfil } from '../screens/Perfil'
-import { Ofertas } from '../screens/Ofertas'
+import { Profile } from '../screens/Profile'
+import { Orffers } from '../screens/Orffers'
 import { Procurar } from '../screens/Procurar'
-import { Carrinho } from '../screens/Carrinho'
-import { InfosDadosPessoais } from '../screens/InfosDadosPessoais'
+import { Cart } from '../screens/Cart'
+import { InfoPersonalDetails } from '../screens/InfoPersonalDetails'
 
 import HomeFocused from '../../assets/images/home-focused.png'
 import HomeUnfocused from '../../assets/images/home-unfocused.png'
@@ -22,25 +22,25 @@ import CartFocused from '../../assets/images/cart-focused.png'
 import ProfileFocused from '../../assets/images/profile-focused.png'
 import ProfileUnfocused from '../../assets/images/profile-unfocused.png'
 
-import { InfosEndereco } from '../screens/InfosEndereco'
-import { InfosPagamento } from '../screens/InfosPagamento'
+import { InfoAdress } from '../screens/InfoAdress'
+import { InfoPayment } from '../screens/InfoPayment'
 import SecoesList from '../screens/SecoesList'
-import ProdutosPorCategoria from '../screens/ProdutosPorCategoria'
+import ProductsByCategory from '../screens/ProductsByCategory'
 import { useAuth } from '../hooks/auth'
-import { SelecionarKit } from '../screens/SelecionarKit'
-import DetalhesProduto from '../screens/DetalhesProduto'
-import DetalhesKit from '../screens/DetalhesKit'
-import { Login } from '../screens/Login'
+import { SelectKit } from '../screens/SelectKit'
+import ProductDetails from '../screens/ProductDetails'
+import KitDetails from '../screens/KitDetails'
+import { SingIn } from '../screens/SingIn'
 import { InserirDadosInfo } from '../screens/InserirDadosInfo'
-import { MeusDetalhes } from '../screens/MeusDetalhes'
-import { DetalhesEndereco } from '../screens/DetalhesEndereco'
-import { CriarConta } from '../screens/CriarConta'
+import { MyDetails } from '../screens/MyDetails'
+import { AdressDetails } from '../screens/AdressDetails'
+import { SignUp } from '../screens/SignUp'
 
 export function AppRoutes() {
 
   const { Navigator, Screen } = createStackNavigator()
 
-  const { kitsCarrinho } = useAuth()
+  const { kitsCart } = useAuth()
 
   const [isComplete, setIsComplete] = useState<boolean | null>(true)
 
@@ -217,8 +217,8 @@ export function AppRoutes() {
           }}
         />
         <Tab.Screen
-          name="Carrinho"
-          component={Carrinho}
+          name="Cart"
+          component={Cart}
           options={{
             tabBarIcon: ({ focused }) => (
               focused ? (
@@ -229,7 +229,7 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   {
-                    kitsCarrinho.length > 0 && (
+                    kitsCart.length > 0 && (
                       <View
                         style={{
                           backgroundColor: '#D9042B',
@@ -251,7 +251,7 @@ export function AppRoutes() {
                           color: '#fff',
                           fontFamily: 'GeneralSans-Semibold',
                         }}>
-                          {kitsCarrinho.length}
+                          {kitsCart.length}
                         </Text>
                       </View>
                     )
@@ -266,7 +266,7 @@ export function AppRoutes() {
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
-                    Carrinho
+                    Cart
                   </Text>
                 </View>
               ) :
@@ -278,7 +278,7 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     {
-                      kitsCarrinho.length > 0 && (
+                      kitsCart.length > 0 && (
                         <View
                           style={{
                             backgroundColor: '#D9042B',
@@ -300,7 +300,7 @@ export function AppRoutes() {
                             color: '#fff',
                             fontFamily: 'GeneralSans-Semibold',
                           }}>
-                            {kitsCarrinho.length}
+                            {kitsCart.length}
                           </Text>
                         </View>
                       )
@@ -316,7 +316,7 @@ export function AppRoutes() {
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Carrinho
+                      Cart
                     </Text>
                   </View>
                 )
@@ -324,8 +324,8 @@ export function AppRoutes() {
           }}
         />
         <Tab.Screen
-          name="Perfil"
-          component={Perfil}
+          name="Profile"
+          component={Profile}
           options={{
             tabBarIcon: ({ focused }) => (
               focused ? (
@@ -345,7 +345,7 @@ export function AppRoutes() {
                   <Text style={{
                     fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
                   }}>
-                    Perfil
+                    Profile
                   </Text>
                 </View>
               ) :
@@ -367,7 +367,7 @@ export function AppRoutes() {
                       fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Perfil
+                      Profile
                     </Text>
                   </View>
                 )
@@ -389,10 +389,10 @@ export function AppRoutes() {
 
         <Screen name="TabNavigation" component={TabNavigation} />
         <Screen name="Home" component={Home} />
-        <Screen name="SelecionarKit" component={SelecionarKit} />
+        <Screen name="SelectKit" component={SelectKit} />
         <Screen
-          name="Ofertas"
-          component={Ofertas}
+          name="Orffers"
+          component={Orffers}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
@@ -407,45 +407,45 @@ export function AppRoutes() {
         />
 
         <Screen
-          name="ProdutosPorCategoria"
-          component={ProdutosPorCategoria}
+          name="ProductsByCategory"
+          component={ProductsByCategory}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
 
         <Screen
-          name="DetalhesKit"
-          component={DetalhesKit}
+          name="KitDetails"
+          component={KitDetails}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
 
         <Screen
-          name="DetalhesProduto"
-          component={DetalhesProduto}
+          name="ProductDetails"
+          component={ProductDetails}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
         <Screen
-          name="CriarConta"
-          component={CriarConta}
+          name="SignUp"
+          component={SignUp}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
         <Screen
-          name="MeusDetalhes"
-          component={MeusDetalhes}
+          name="MyDetails"
+          component={MyDetails}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
         <Screen
-          name="DetalhesEndereco"
-          component={DetalhesEndereco}
+          name="AdressDetails"
+          component={AdressDetails}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
@@ -456,7 +456,7 @@ export function AppRoutes() {
   } else {
     return (
       <Navigator
-        initialRouteName="InfosDadosPessoais"
+        initialRouteName="InfoPersonalDetails"
         screenOptions={{
           headerShown: false,
         }}>
@@ -468,22 +468,22 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="InfosDadosPessoais"
-          component={InfosDadosPessoais}
+          name="InfoPersonalDetails"
+          component={InfoPersonalDetails}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
         <Screen
-          name="InfosEndereco"
-          component={InfosEndereco}
+          name="InfoAdress"
+          component={InfoAdress}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
         />
         <Screen
-          name="InfosPagamento"
-          component={InfosPagamento}
+          name="InfoPayment"
+          component={InfoPayment}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

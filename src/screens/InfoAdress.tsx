@@ -1,24 +1,28 @@
-import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
+import { getStatusBarHeight } from 'react-native-status-bar-height'
+
 import ScreenBack from './../../assets/svgs/arrow-right.svg'
-
 //@ts-ignore
-export function InfosDadosPessoais({ navigation }) {
-  const { width, height } = Dimensions.get("window")
+export function InfoAdress({ navigation }) {
 
+  const { width, height } = Dimensions.get("window")
   const [userId, setUserId] = useState('')
-  const [nome, setNome] = useState('')
-  const [sobrenome, setSobrenome] = useState('')
-  const [telefone, setTelefone] = useState('')
+  
+  const [bairro, setBairro] = useState('')
+  const [rua, setRua] = useState('')
+  const [numero, setNumero] = useState('')
+  const [complemento, setComplemento] = useState('')
+  const [referencia, setReferencia] = useState('')
 
   const inputRef1 = useRef(null)
   const inputRef2 = useRef(null)
+  const inputRef3 = useRef(null)
+  const inputRef4 = useRef(null)
 
   useEffect(() => {
     const currentUser = auth().currentUser
@@ -35,73 +39,121 @@ export function InfosDadosPessoais({ navigation }) {
         contentContainerStyle={{
           flexGrow: 1,
           paddingVertical: getStatusBarHeight(),
-          paddingTop: getStatusBarHeight(),
-          paddingHorizontal: 20,
+          alignItems: 'center',
           backgroundColor: '#fff',
-          alignItems: 'center'
         }}
         keyboardShouldPersistTaps="handled"
       >
         <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
-        <View style={{ alignItems: 'center' }}>
+        <View style={{
+        width: width,
+        paddingHorizontal: 30,
+        marginTop: 0,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+      }}>
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              left: 20
+            }}
+            onPress={() => {
+              //@ts-ignore
+              navigation.goBack()
+            }}
+          >
+            <ScreenBack width={20} height={20} />
+          </TouchableOpacity>
+
+        
           <Text style={{
             fontSize: 20,
             alignSelf: 'center',
             color: '#323232',
-            fontFamily: 'GeneralSans-Semibold'
           }}>
-            Dados Pessoais
+            Endereço
           </Text>
         </View>
-        <View style={{ width: 20, height: 20 }}></View>
+      
         <View style={{ flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center' }}>
-
           <View style={{
             width: '86%',
             height: '82%',
             justifyContent: 'space-between',
-            marginTop: 25,
-
+            marginTop: 25
           }}>
             <View>
               <View style={{ marginBottom: 30 }}>
-                <Text style={styles.textos}>Primeiro nome</Text>
+                <Text style={styles.textos}>Bairro</Text>
                 <TextInput
-                  returnKeyType="next"
+                  value={bairro}
+                  onChangeText={setBairro}
+                  placeholder='Digite aqui...'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
                   //@ts-ignore
                   onSubmitEditing={() => inputRef1.current.focus()}
-                  value={nome}
-                  onChangeText={setNome}
-                  placeholder='Digite aqui...'
-                  placeholderTextColor={'#f1f1f1'}
-                  style={styles.inputs}
+                  returnKeyType="next"
                 />
               </View>
 
               <View style={{ marginBottom: 30 }}>
-                <Text style={styles.textos}>Sobrenome</Text>
+                <Text style={styles.textos}>Rua</Text>
                 <TextInput
                   ref={inputRef1}
-                  returnKeyType="next"
-                  //@ts-ignore
-                  onSubmitEditing={() => inputRef2.current.focus()}
-                  value={sobrenome}
-                  onChangeText={setSobrenome}
+                  value={rua}
+                  onChangeText={setRua}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef2.current.focus()}
+                  returnKeyType="next"
                 />
               </View>
 
               <View style={{ marginBottom: 30 }}>
-                <Text style={styles.textos}>Telefone</Text>
+                <Text style={styles.textos}>Número</Text>
                 <TextInput
                   ref={inputRef2}
-                  value={telefone}
-                  onChangeText={setTelefone}
-                  placeholder='Digite aqui...'
-                  keyboardType="numeric"
+                  value={numero}
+                  onChangeText={setNumero}
+                  keyboardType='numeric'
+                  placeholder='Número de construção/casa'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef3.current.focus()}
+                  returnKeyType="next"
+                />
+              </View>
+
+              <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>Complemento</Text>
+                <TextInput
+                  ref={inputRef3}
+                  value={complemento}
+                  onChangeText={setComplemento}
+                  placeholder='Apartamento, edificio,...'
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef4.current.focus()}
+                  returnKeyType="next"
+                />
+              </View>
+
+              <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>Referência</Text>
+                <TextInput
+                  ref={inputRef4}
+                  value={referencia}
+                  onChangeText={setReferencia}
+                  placeholder='Perto de...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
                   returnKeyType="done"
@@ -128,12 +180,12 @@ export function InfosDadosPessoais({ navigation }) {
                     .collection('users')
                     .doc(`${userId}`)
                     .update({
-                      nome: nome,
-                      sobrenome: sobrenome,
-                      telefone: telefone,
-                    })
-                    .then(() => {
-                      navigation.navigate('InfosEndereco')
+                      bairro: bairro,
+                      rua: rua,
+                      numero: numero,
+                      complemento: complemento,
+                      referencia: referencia,
+                      completo: true
                     })
                 }}
               >
@@ -146,13 +198,12 @@ export function InfosDadosPessoais({ navigation }) {
                 </Text>
               </TouchableOpacity>
             </View>
-
-
           </View>
-
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
+
+
 
   );
 }
