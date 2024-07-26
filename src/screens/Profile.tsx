@@ -6,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-import DetliveryAdress from './../../assets/svgs/delivery-address.svg'
-import Detalhes from './../../assets/svgs/details.svg'
-import Arrow from './../../assets/svgs/back-arrow.svg'
-import About from './../../assets/svgs/about icon.svg'
-import Help from './../../assets/svgs/help icon.svg'
-import Logout from './../../assets/svgs/logoutw.svg'
+import DetliveryAdress from '../../assets/svgs/delivery-address.svg'
+import Detalhes from '../../assets/svgs/details.svg'
+import Arrow from '../../assets/svgs/back-arrow.svg'
+import About from '../../assets/svgs/about icon.svg'
+import Help from '../../assets/svgs/help icon.svg'
+import Logout from '../../assets/svgs/logoutw.svg'
 import LottieView from 'lottie-react-native'
 
 //@ts-ignore

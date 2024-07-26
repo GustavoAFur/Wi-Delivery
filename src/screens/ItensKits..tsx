@@ -1,4 +1,4 @@
-import { View, Text, PressableProps, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, PressableProps, StyleSheet, Image, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 export type ItensProps = {
@@ -8,7 +8,6 @@ export type ItensProps = {
   selected?: boolean,
   selecionar: () => void,
 }
-
 
 export  function ItensKits({name, imagem, price,selected = false, selecionar}: ItensProps & PressableProps) {
 

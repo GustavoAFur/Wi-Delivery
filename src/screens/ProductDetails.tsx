@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { NavigationProp, useRoute } from '@react-navigation/native'
 import { useAuth } from '../hooks/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import More from './../../assets/svgs/mais-black.svg'
-import Less from './../../assets/svgs/menos.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import More from '../../assets/svgs/mais-black.svg'
+import Less from '../../assets/svgs/menos.svg'
 
 export default function ProductDetails({ navigation }: { navigation: any }) {
 
@@ -22,8 +22,8 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
   function handleToggleAddCart(value: any, quantidade: number) {
     //@ts-ignore
     const hasKit = kitsCart.some(item => item.categoria === 'kit')
-
-    if (value.categoria === 'kit' || hasKit) {
+    
+    if (hasKit) {
       setKitsCart(prevObjetos => {
         //@ts-ignore
         const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
@@ -48,7 +48,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   useEffect(() => {
     //@ts-ignore
-    console.log(route.params.item.nome)
+    console.log(route.params.item.preco)
   }, [])
 
   return (

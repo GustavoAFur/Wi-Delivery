@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
 //@ts-ignore
 export function InfoAdress({ navigation }) {
 

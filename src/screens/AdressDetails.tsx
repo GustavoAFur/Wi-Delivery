@@ -1,6 +1,7 @@
 import { Alert, Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+
 import { getStatusBarHeight } from "react-native-status-bar-height";
 
 import { useEffect, useState } from "react"

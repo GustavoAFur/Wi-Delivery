@@ -3,11 +3,11 @@ import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-nativ
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
-import Search from './../../assets/svgs/search.svg'
-import Menos from './../../assets/svgs/menos.svg'
-import Cart from './../../assets/svgs/cart.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import Mais from '../../assets/svgs/plus-svgrepo-com.svg'
+import Search from '../../assets/svgs/search.svg'
+import Menos from '../../assets/svgs/menos.svg'
+import Cart from '../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth'
 //@ts-ignore
 export function Orffers({navigation}) {

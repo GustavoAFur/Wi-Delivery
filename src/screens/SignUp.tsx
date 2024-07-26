@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useNavigation } from '@react-navigation/native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 import firestore from '@react-native-firebase/firestore'
 
 import auth from '@react-native-firebase/auth'
-import LottieView from 'lottie-react-native';
+import LottieView from 'lottie-react-native'
 //@ts-ignore
 export function SignUp({ navigation }: { navigation: any }) {
 
@@ -41,7 +40,7 @@ export function SignUp({ navigation }: { navigation: any }) {
             alignSelf: 'center'
           }}>
           <Image
-            source={require('./../../assets/images/Mobile-SingIn-bro.png')}
+            source={require('../../assets/images/Mobile-login-bro.png')}
             resizeMode='contain'
             style={{
               width: '100%',
@@ -165,7 +164,39 @@ export function SignUp({ navigation }: { navigation: any }) {
 
         </TouchableOpacity>
         </View>
-        
+        <View
+          style={{
+            width: '95%',
+            height: 50,
+            alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 20,
+            flexDirection: 'row',
+            gap: 5
+          }}
+        >
+          <Text style={{
+            fontSize: 16,
+            fontFamily: 'GeneralSans-Medium',
+            color: '#7C7C7C',
+          }}>
+            Já tem uma conta?
+          </Text>
+          <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate('SignIn')
+            }}
+          >
+            <Text style={{
+              fontSize: 16,
+              fontFamily: 'GeneralSans-Semibold',
+              color: '#7C7C7C',
+            }}>
+              Entrar
+            </Text>
+          </TouchableOpacity>
+        </View>
 
       </ScrollView>
     </KeyboardAvoidingView>

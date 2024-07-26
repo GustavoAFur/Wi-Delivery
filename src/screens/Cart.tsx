@@ -10,9 +10,10 @@ import { useAuth } from '../hooks/auth'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import Close from './../../assets/svgs/close.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import Close from '../../assets/svgs/close.svg'
 import LottieView from 'lottie-react-native'
+import InAppBrowser from 'react-native-inappbrowser-reborn'
 
 export function Cart({ navigation }: { navigation: any }) {
 
@@ -21,6 +22,8 @@ export function Cart({ navigation }: { navigation: any }) {
   const { width, height } = Dimensions.get("window")
 
   const { kitsCart, setKitsCart } = useAuth()
+
+  const [url, setUrl] = useState('https://blog.stackademic.com/unlocking-seamless-web-browsing-in-react-native-with-react-native-inappbrowser-reborn-7ea8c4381a49')
 
   const [modalVisible, setModalVisible] = useState(false)
   const [modalFinalizarVisible, setModalFinalizarVisible] = useState(false)
@@ -46,6 +49,14 @@ export function Cart({ navigation }: { navigation: any }) {
     { label: 'Pix', value: 'pix' },
     { label: 'Cartão', value: 'cartao' }
   ])
+
+  const handleOpenLink = async () => {
+    try {
+      await InAppBrowser.open(url);
+    } catch (error) {
+      console.error('Failed to open link:', error);
+    }
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -259,6 +270,21 @@ export function Cart({ navigation }: { navigation: any }) {
               )
             }} />
       }
+
+      <Pressable
+      onPress={() => {
+        handleOpenLink()
+      }}
+        style={{
+          position: 'absolute',
+          top: 100,
+          width: 100,
+          height: 100,
+          backgroundColor: '#EE2F2A',
+        }}
+      >
+
+      </Pressable>
 
       <TouchableOpacity
         disabled={kitsCart.length <= 0 ? true : false}

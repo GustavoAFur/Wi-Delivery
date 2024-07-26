@@ -6,9 +6,9 @@ import { useRoute } from '@react-navigation/native'
 
 import firestore from '@react-native-firebase/firestore'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import Search from './../../assets/svgs/search-b.svg'
-import Cart from './../../assets/images/icons8-Cart-de-compras-carregado-100.png'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import Search from '../../assets/svgs/search-b.svg'
+import Cart from '../../assets/images/icons8-carrinho-de-compras-carregado-100.png'
 import CartBlack from '../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth';
 

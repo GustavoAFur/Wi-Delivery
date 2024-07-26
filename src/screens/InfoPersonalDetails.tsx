@@ -6,8 +6,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-
 //@ts-ignore
 export function InfoPersonalDetails({ navigation }) {
   const { width, height } = Dimensions.get("window")

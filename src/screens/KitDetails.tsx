@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { NavigationProp, useRoute } from '@react-navigation/native'
 import { useAuth } from '../hooks/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import More from './../../assets/svgs/mais-black.svg'
-import Less from './../../assets/svgs/menos.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import More from '../../assets/svgs/mais-black.svg'
+import Less from '../../assets/svgs/menos.svg'
 
 export default function KitDetails({ navigation }: { navigation: any }) {
 

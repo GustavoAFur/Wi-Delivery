@@ -8,7 +8,7 @@ interface Props{
   navTo: () => void
 }
 
-const SecoesListComponent = ({ name, img,navTo}: Props & PressableProps) => {
+const SectionsListComponent = ({ name, img,navTo}: Props & PressableProps) => {
 
   const navigation = useNavigation(); 
  
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecoesListComponent;
+export default SectionsListComponent;

@@ -30,11 +30,12 @@ import { useAuth } from '../hooks/auth'
 import { SelectKit } from '../screens/SelectKit'
 import ProductDetails from '../screens/ProductDetails'
 import KitDetails from '../screens/KitDetails'
-import { SingIn } from '../screens/SingIn'
+import { SignIn } from '../screens/SignIn'
 import { InserirDadosInfo } from '../screens/InserirDadosInfo'
 import { MyDetails } from '../screens/MyDetails'
 import { AdressDetails } from '../screens/AdressDetails'
 import { SignUp } from '../screens/SignUp'
+import { CustomWebView } from '../screens/CustomWebView'
 
 export function AppRoutes() {
 
@@ -430,13 +431,6 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            ...TransitionPresets.SlideFromRightIOS,
-          }}
-        />
-        <Screen
           name="MyDetails"
           component={MyDetails}
           options={{
@@ -446,6 +440,13 @@ export function AppRoutes() {
         <Screen
           name="AdressDetails"
           component={AdressDetails}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="CustomWebView"
+          component={CustomWebView}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

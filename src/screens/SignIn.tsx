@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useNavigation } from '@react-navigation/native'
-import firestore from '@react-native-firebase/firestore'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import auth from '@react-native-firebase/auth'
-import LottieView from 'lottie-react-native';
+import LottieView from 'lottie-react-native'
 //@ts-ignore
-export function SingIn({ navigation }: { navigation: any }) {
+export function SignIn({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
@@ -41,7 +39,7 @@ export function SingIn({ navigation }: { navigation: any }) {
             alignSelf: 'center'
           }}>
           <Image
-            source={require('./../../assets/images/Product-hunt-bro.png')}
+            source={require('../../assets/images/Product-hunt-bro.png')}
             resizeMode='contain'
             style={{
               width: '100%',
@@ -57,7 +55,7 @@ export function SingIn({ navigation }: { navigation: any }) {
           textAlign: 'left',
           marginVertical: 20,
         }}>
-          Faça SingIn para uma melhor experiência
+          Faça login para uma melhor experiência
         </Text>
 
         <TextInput

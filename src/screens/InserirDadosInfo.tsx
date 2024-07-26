@@ -1,5 +1,5 @@
-import { Dimensions, Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { getStatusBarHeight } from "react-native-status-bar-height";
+import { Dimensions, Image, StatusBar, Text, TouchableOpacity, View } from "react-native"
+import { getStatusBarHeight } from "react-native-status-bar-height"
 
 export function InserirDadosInfo({ navigation }: { navigation: any }) {
 

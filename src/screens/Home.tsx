@@ -16,18 +16,18 @@ import auth from '@react-native-firebase/auth'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import Limpeza from './../../assets/images/beauty-product.png'
-import HortiFruti from './../../assets/images/horti-fruti.png'
-import Acougue from './../../assets/images/meet-fish.png'
-import Bebidas from './../../assets/images/heineken.png'
-import Sereais from './../../assets/images/rice.png'
+import Limpeza from '../../assets/images/beauty-product.png'
+import HortiFruti from '../../assets/images/horti-fruti.png'
+import Acougue from '../../assets/images/meet-fish.png'
+import Bebidas from '../../assets/images/heineken.png'
+import Sereais from '../../assets/images/rice.png'
 
-import Mais from './../../assets/images/icons8-mais-100.png'
+import Mais from '../../assets/images/icons8-mais-100.png'
 
 import IconNotification from '../../assets/svgs/notification.svg'
 import Arrow from '../../assets/svgs/arrow-p.svg'
 
-import SecoesListComponent from '../components/SecoesListComponent'
+import SectionsListComponent from '../components/SectionsListComponent'
 import { ItensOffers } from '../components/ItensOffers'
 
 interface Kit {
@@ -211,7 +211,7 @@ export function Home({ navigation }: { navigation: any }) {
       >
         {
           sessoes.map((item, index) => (
-            <SecoesListComponent
+            <SectionsListComponent
               key={index}
               img={item.imagem}
               name={item.nome}
@@ -222,7 +222,7 @@ export function Home({ navigation }: { navigation: any }) {
           ))
         }
 
-        <SecoesListComponent
+        <SectionsListComponent
           img={Mais}
           name={'Mais'}
           navTo={() => {
@@ -267,19 +267,19 @@ export function Home({ navigation }: { navigation: any }) {
         contentContainerStyle={styles.scrollViewContentNews}>
         <View style={styles.novidadesItem}>
           <Image
-            source={require('./../../assets/images/banner01.jpg')}
+            source={require('../../assets/images/banner01.jpg')}
             style={{ width: '100%', height: '100%' }}
           />
         </View>
         <View style={styles.novidadesItem}>
           <Image
-            source={require('./../../assets/images/banner02.jpg')}
+            source={require('../../assets/images/banner02.jpg')}
             style={{ width: '100%', height: '100%' }}
           />
         </View>
         <View style={styles.novidadesItem}>
           <Image
-            source={require('./../../assets/images/banner03.jpg')}
+            source={require('../../assets/images/banner03.jpg')}
             style={{ width: '100%', height: '100%' }}
           />
         </View>

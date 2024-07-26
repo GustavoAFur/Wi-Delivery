@@ -1,4 +1,4 @@
-import { Image, StatusBar, Text, View } from "react-native";
+import { Image, StatusBar, Text, View } from "react-native"
 
 export function SplashScreen(){
   return(

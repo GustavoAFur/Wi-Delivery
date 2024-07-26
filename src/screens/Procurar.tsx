@@ -3,7 +3,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React from 'react'
 
-import Search from './../../assets/svgs/search-b.svg'
+import Search from '../../assets/svgs/search-b.svg'
 
 export function Procurar({ navigation }: { navigation: any }) {
   const { width, height } = Dimensions.get("window")
