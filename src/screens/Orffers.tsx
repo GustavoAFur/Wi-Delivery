@@ -1,5 +1,5 @@
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
-import { View, Text, StyleSheet,Image, Dimensions, StatusBar } from 'react-native'
+import { View, Text, StyleSheet,Image, Dimensions, StatusBar, Pressable } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useState } from 'react'
 

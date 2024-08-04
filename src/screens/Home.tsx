@@ -29,6 +29,7 @@ import Arrow from '../../assets/svgs/arrow-p.svg'
 
 import SectionsListComponent from '../components/SectionsListComponent'
 import { ItensOffers } from '../components/ItensOffers'
+import { YourAdress } from '../components/YourAdress'
 
 interface Kit {
   id: string;
@@ -36,7 +37,16 @@ interface Kit {
   preco: string;
   imagem: string;
 }
+interface DadosUsuario{
+    nome?: string
+    email?: string
+    rua?: string
+    numero?: string
+    bairro?: string
+    imagem?: string
+}
 
+const dadosUsuario: DadosUsuario = {}; // Initialize dadosUsuario with an empty object
 export function Home({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
@@ -61,7 +71,7 @@ export function Home({ navigation }: { navigation: any }) {
   }
 
   const [kitsList, setKitsList] = useState<Kit[]>([])
-  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario> ({})
 
   useEffect(()=>{
     const fetchUserData = async () => {
@@ -174,8 +184,7 @@ export function Home({ navigation }: { navigation: any }) {
               fontFamily: 'GeneralSans-Semibold',
               color: '#0F1121',
             }}>
-              {/*@ts-ignore*/}
-              {dadosUsuario.nome}
+              {dadosUsuario.nome ?? ''}
             </Text>
 
 
@@ -195,7 +204,12 @@ export function Home({ navigation }: { navigation: any }) {
         </Pressable>
       </View>
 
-      
+      <YourAdress
+        navTo={() => navigation.navigate('AdressDetails')}
+        street={dadosUsuario.rua ?? ''}
+        number={dadosUsuario.numero ?? ''}
+        neighborhood={dadosUsuario.bairro ?? ''}
+      />
 
       <ScrollView
         horizontal
@@ -247,18 +261,7 @@ export function Home({ navigation }: { navigation: any }) {
         }}>
           Novidades
         </Text>
-        <TouchableOpacity style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-          <Text style={{
-            fontSize: 16,
-            fontFamily: 'GeneralSans-Semibold',
-            color: '#EE2F2A',
-          }}>Ver mais</Text>
-
-        </TouchableOpacity>
+        
       </View>
 
       <ScrollView

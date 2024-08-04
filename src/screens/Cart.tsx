@@ -2,6 +2,8 @@ import { View, Text, TouchableOpacity, Dimensions, StyleSheet, Image, StatusBar,
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useRef, useState } from 'react'
 
+//@ts-ignore
+import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 import ItensCart from '../components/ItensCart'
@@ -23,7 +25,7 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const { kitsCart, setKitsCart } = useAuth()
 
-  const [url, setUrl] = useState('https://blog.stackademic.com/unlocking-seamless-web-browsing-in-react-native-with-react-native-inappbrowser-reborn-7ea8c4381a49')
+  const [url, setUrl] = useState('https://github.com/')
 
   const [modalVisible, setModalVisible] = useState(false)
   const [modalFinalizarVisible, setModalFinalizarVisible] = useState(false)
@@ -148,11 +150,12 @@ export function Cart({ navigation }: { navigation: any }) {
             //@ts-ignore
             quantidade: itens.quantidade
           })
-      }))
+      })).then(() => {
+        setKitsCart([])
+      }).finally(() => {
+        handleOpenLink()
+      })
 
-      Alert.alert("Pedido Cadastrado")
-      setKitsCart([])
-      navigation.goBack()
 
     } catch (error) {
       Alert.alert('Erro ao salvar pedido')
@@ -271,21 +274,7 @@ export function Cart({ navigation }: { navigation: any }) {
             }} />
       }
 
-      <Pressable
-      onPress={() => {
-        handleOpenLink()
-      }}
-        style={{
-          position: 'absolute',
-          top: 100,
-          width: 100,
-          height: 100,
-          backgroundColor: '#EE2F2A',
-        }}
-      >
-
-      </Pressable>
-
+      
       <TouchableOpacity
         disabled={kitsCart.length <= 0 ? true : false}
         onPress={() => {
@@ -322,6 +311,7 @@ export function Cart({ navigation }: { navigation: any }) {
             alignItems: 'center',
             justifyContent: 'center',
             padding: 5,
+            opacity: kitsCart.length <= 0 ? .5 : 1,
             backgroundColor: '#FF5F5A',
             right: 10,
             borderRadius: 5
@@ -470,7 +460,7 @@ export function Cart({ navigation }: { navigation: any }) {
               R$ {totalCompra.toFixed(2)}
             </Text>
           </View>
-
+            
           <View
             style={{
               width: '100%',
@@ -489,6 +479,7 @@ export function Cart({ navigation }: { navigation: any }) {
               Retirada:
             </Text>
             <DropDownPicker
+              placeholder='Selecione'
               open={openRet}
               value={valueRet}
               items={itemsRet}
@@ -527,6 +518,7 @@ export function Cart({ navigation }: { navigation: any }) {
               Forma de Pagamento:
             </Text>
             <DropDownPicker
+              placeholder='Selecione'
               open={openPag}
               value={valuePag}
               items={itemsPag}
