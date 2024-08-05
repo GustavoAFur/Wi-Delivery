@@ -333,7 +333,7 @@ export function Home({ navigation }: { navigation: any }) {
             price={item.preco}
             imagem={item.imagem}
             navTo={() => {
-              navigation.navigate('KitDetails', { item: item })
+              navigation.navigate('ProductDetails', { item: item })
             }}
 
           />

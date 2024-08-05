@@ -124,24 +124,30 @@ export function Profile({ navigation }) {
               <Arrow width={15} height={15} />
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={styles.optionsProfile}>
-              <View style={styles.iconText}>
-                <About width={20} height={20} />
-                <Text style={styles.optionText}>Sobre</Text>
-              </View>
-              <Arrow width={15} height={15} />
+          <TouchableOpacity 
+            style={styles.optionsProfile}
+            onPress={()=>{
+              navigation.navigate('About')
+            }}
+          >
+            <View style={styles.iconText}>
+              <About width={20} height={20} />
+              <Text style={styles.optionText}>Sobre</Text>
             </View>
+            <Arrow width={15} height={15} />
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={styles.optionsProfile}>
-              <View style={styles.iconText}>
-                <Help width={20} height={20} />
-                <Text style={styles.optionText}>Ajuda</Text>
-              </View>
-              <Arrow width={15} height={15} />
+          <TouchableOpacity 
+            style={styles.optionsProfile}
+            onPress={()=>{
+              navigation.navigate('Help')
+            }}
+          >
+            <View style={styles.iconText}>
+              <Help width={20} height={20} />
+              <Text style={styles.optionText}>Ajuda</Text>
             </View>
+            <Arrow width={15} height={15} />
           </TouchableOpacity>
 
           <TouchableOpacity

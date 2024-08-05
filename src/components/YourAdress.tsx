@@ -59,7 +59,17 @@ export function YourAdress({street,number, neighborhood, navTo}: Props & Pressab
               fontSize: 14,
               fontFamily: 'GeneralSans-Semibold',
             }}>
-              {street}, {number} - {neighborhood}
+              {
+                street.length > 18
+                  ? street.slice(0, 18) + '...'
+                  : street
+              }{', '}
+              {number}{', '} 
+              {
+                neighborhood.length > 6
+                  ? neighborhood.slice(0, 6) + '...'
+                  : neighborhood
+              }
             </Text>
           </View>
         </View>

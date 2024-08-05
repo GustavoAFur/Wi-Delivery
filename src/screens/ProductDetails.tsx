@@ -19,11 +19,15 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const [qtsItens, setQtdItens] = useState(1)
 
+  //@ts-ignore
+  const [imageKit, setImageKit] = useState(route.params.item.images[0])
+  const [indexImg, setIndexImg] = useState(1)
+
   function handleToggleAddCart(value: any, quantidade: number) {
     //@ts-ignore
     const hasKit = kitsCart.some(item => item.categoria === 'kit')
     
-    if (hasKit) {
+    if (hasKit || value.categoria === 'kit') {
       setKitsCart(prevObjetos => {
         //@ts-ignore
         const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
@@ -118,14 +122,92 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
       >
         <Image
           //@ts-ignore
-          source={{ uri: route.params.item.imagem }}
+          source={{ uri: imageKit }}
           style={{
             width: '80%',
             height: '80%',
             resizeMode: 'contain'
           }}
         />
+        <View
+          style={{
+            width: 40,
+            borderRadius: 10,
+            backgroundColor: '#A9A9A9',
+            position: 'absolute',
+            bottom: 10,
+            left: 20,
+            padding: 5,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              color: '#fff',
+              fontFamily: 'Manrope-SemiBold'
+            }}
+          >
+            {/*@ts-ignore*/}
+            {indexImg}/{route.params.item.images.length}
+          </Text>
+        </View>
       </View>
+
+      {
+        //@ts-ignore
+        route.params.item.images.length > 1 && (
+          <ScrollView
+            horizontal
+            style={{
+              width: '100%',
+              height: 80,
+              marginVertical: 20
+            }}
+            contentContainerStyle={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              paddingHorizontal: 20,
+            }}
+          >
+            {
+              //@ts-ignore
+              route.params.item.images.map((image, index) => (
+                <Pressable
+                  onPress={() => {
+                    setImageKit(image)
+                    setIndexImg(index + 1)
+                  }}
+                  key={index}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    borderColor: imageKit === image ? '#EE2F2A' : '#9c9a9a',
+                    borderWidth: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    //@ts-ignore
+                    source={{ uri: image }}
+                    style={{
+                      width: '80%',
+                      height: '80%',
+                      resizeMode: 'contain'
+                    }}
+                  />
+                </Pressable>
+              ))
+            }
+
+          </ScrollView>
+        )
+      }
 
       <View
         style={{

@@ -54,9 +54,9 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const handleOpenLink = async () => {
     try {
-      await InAppBrowser.open(url);
+      await InAppBrowser.open(url)
     } catch (error) {
-      console.error('Failed to open link:', error);
+      console.error('Failed to open link:', error)
     }
   }
 
