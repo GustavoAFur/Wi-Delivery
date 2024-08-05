@@ -36,6 +36,8 @@ import { MyDetails } from '../screens/MyDetails'
 import { AdressDetails } from '../screens/AdressDetails'
 import { SignUp } from '../screens/SignUp'
 import { CustomWebView } from '../screens/CustomWebView'
+import { About } from '../screens/About'
+import { Help } from '../screens/Help'
 
 export function AppRoutes() {
 
@@ -447,6 +449,20 @@ export function AppRoutes() {
         <Screen
           name="CustomWebView"
           component={CustomWebView}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="About"
+          component={About}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="Help"
+          component={Help}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

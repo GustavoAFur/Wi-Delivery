@@ -320,7 +320,7 @@ export function Home({ navigation }: { navigation: any }) {
 
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: 30,
+          paddingHorizontal: 20,
           gap: 20
         }}
         data={kitsList}
@@ -390,7 +390,7 @@ export const styles = StyleSheet.create({
 
   },
   scrollViewContentNews: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     gap: 10
   },
   scrollViewMain: {
