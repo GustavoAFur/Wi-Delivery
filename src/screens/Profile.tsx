@@ -80,8 +80,8 @@ export function Profile({ navigation }) {
           <View style={styles.ProfileInfos}>
             <Text style={{
               color: '#000',
-              fontFamily: 'GeneralSans-Bold',
-              fontSize: 15,
+              fontFamily: 'GeneralSans-Semibold',
+              fontSize: 16,
             }}>
               {/*@ts-ignore*/}
               {dadosUsuario.nome} {dadosUsuario.sobrenome}
@@ -89,7 +89,7 @@ export function Profile({ navigation }) {
             <Text style={{
               color: '#c6c6c6',
               fontFamily: 'GeneralSans-Semibold',
-              fontSize: 15
+              fontSize: 14
             }}>
               {/*@ts-ignore*/}
               {dadosUsuario.email}

@@ -122,7 +122,15 @@ export default function ItensCart ({
         paddingRight: 5
       }}>
         <View >
-          <Pressable onPress={delProd}>
+          <Pressable 
+            style={{
+              width: 30,
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={delProd}
+          >
             <Close  width={15} height={15}/> 
           </Pressable>
         </View>

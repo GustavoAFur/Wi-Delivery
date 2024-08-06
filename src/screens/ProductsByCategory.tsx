@@ -1,6 +1,6 @@
 import { View, Text, Dimensions, StatusBar, StyleSheet, TouchableOpacity, FlatList, Image, Pressable } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import {TextInput } from 'react-native-gesture-handler'
+import { TextInput } from 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 
@@ -15,42 +15,42 @@ import { useAuth } from '../hooks/auth';
 export default function ProductsByCategory({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
-  
+
   const route = useRoute()
-  
+
   const [produtosList, setProdutosList] = useState([])
 
   const { kitsCart, setKitsCart } = useAuth()
 
-  useEffect(()=>{
-    const produtos = async () =>{
-      try{
+  useEffect(() => {
+    const produtos = async () => {
+      try {
         const produtosSnapShot = await firestore()
-        .collection('avulsos')
-        //@ts-ignore
-        .where('categoria', '==',`${route.params.filtroCategoria}`)
-        .get()
+          .collection('avulsos')
+          //@ts-ignore
+          .where('categoria', '==', `${route.params.filtroCategoria}`)
+          .get()
 
         const arrayProd: any = []
-        produtosSnapShot.forEach((produtos)=>{
+        produtosSnapShot.forEach((produtos) => {
           const id = produtos.id
           const produto = produtos.data()
-          arrayProd.push({id,...produto})
+          arrayProd.push({ id, ...produto })
         })
 
         setProdutosList(arrayProd)
-      }catch(error) {
+      } catch (error) {
         console.error("Error fetching produtos: ", error)
       }
     }
     produtos()
     console.log(produtosList)
-  },[])
+  }, [])
 
   return (
-    <View style={{ 
-      width: width, 
-      height: height +getStatusBarHeight(),
+    <View style={{
+      width: width,
+      height: height + getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
       backgroundColor: '#fff',
       flex: 1
@@ -66,29 +66,29 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
         flexDirection: 'row',
         backgroundColor: '#fff',
       }}>
-        
-          <TouchableOpacity
-            onPress={()=>{
-              //@ts-ignore
-              navigation.goBack()
-            }}
-          >
-            <ScreenBack  width={20} height={20}/>
-          </TouchableOpacity>
-        
-        
-          <Text style={{
-            fontSize: 18,
-            alignSelf:'center',
-            color: '#323232',
-            fontFamily: 'GeneralSans-SemiBold'
-          }}>
-            {/* @ts-ignore */}
-            {route.params.categoria}
-          </Text>
-        
+
         <TouchableOpacity
-          onPress={()=>{
+          onPress={() => {
+            //@ts-ignore
+            navigation.goBack()
+          }}
+        >
+          <ScreenBack width={20} height={20} />
+        </TouchableOpacity>
+
+
+        <Text style={{
+          fontSize: 18,
+          alignSelf: 'center',
+          color: '#323232',
+          fontFamily: 'GeneralSans-SemiBold'
+        }}>
+          {/* @ts-ignore */}
+          {route.params.categoria}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
             navigation.navigate('Cart')
           }}
           style={{
@@ -96,35 +96,41 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
             height: 24,
           }}
         >
-        {
-          kitsCart.length > 0 && (
-            <View
-              style={{
-                backgroundColor: '#EE2F2A',
-                width: 20,
-                height: 20,
-                borderRadius: 10,
-                zIndex: 3,
-                position: 'absolute',
-                top: -10,
-                right: -10,
-                borderColor: '#fff',
-                borderWidth: 2,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Text style={{
-                fontSize: 10,
-                color: '#fff',
-                fontFamily: 'GeneralSans-Semibold',
-              }}>
-                {kitsCart.length}
-              </Text>
-            </View>
-          )
-        }
-        <CartBlack width={24} height={24}/>
+          {
+            kitsCart.length > 0 && (
+              <View
+                style={{
+                  backgroundColor: '#EE2F2A',
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                  zIndex: 3,
+                  position: 'absolute',
+                  top: -5,
+                  right: -15,
+                  borderColor: '#fff',
+                  borderWidth: 2,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Text style={{
+                  fontSize: 10,
+                  color: '#fff',
+                  fontFamily: 'GeneralSans-Semibold',
+                }}>
+                  {kitsCart.length}
+                </Text>
+              </View>
+            )
+          }
+          <Image
+            source={require('../../assets/images/cart-unfocused.png')}
+            resizeMode='contain'
+            style={{
+              width: 32,
+              height: 32,
+            }} />
         </TouchableOpacity>
       </View>
 
@@ -152,7 +158,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
           paddingHorizontal: 20,
         }}
         data={produtosList}
-        
+
         renderItem={({ item }) => (
           <View
             style={{
@@ -174,9 +180,9 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
 
               }}
             >
-              <Image 
+              <Image
                 //@ts-ignore
-                source={{uri:item.imagem}}
+                source={{ uri: item.imagem }}
                 style={{
                   width: 80,
                   height: 80,
@@ -195,7 +201,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
               {/*@ts-ignore*/}
               {item.nome}
             </Text>
-            
+
             <View
               style={{
                 width: '100%',
@@ -204,56 +210,56 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
                 alignItems: 'center'
               }}
             >
-            <Text
-              style={{
-                color: '#7C7C7C',
-                fontSize: 15,
-                fontFamily: 'GeneralSans-Semibold'
-              }}
-            >
-              {/*@ts-ignore*/}
-              R$ {item.preco}
-            </Text>
-            <Pressable
-              onPress={()=>{
-                navigation.navigate('ProductDetails', {item: item})
-              }}
-              style={{
-                width: 44,
-                height: 44,
-                backgroundColor:'#EE2F2A',
-                borderRadius: 22,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Image
-                source={Cart}
-                resizeMode='contain'
+              <Text
                 style={{
-                  width: 24,
-                  height: 24,
+                  color: '#7C7C7C',
+                  fontSize: 15,
+                  fontFamily: 'GeneralSans-Semibold'
                 }}
-              />
-            </Pressable>
-            
+              >
+                {/*@ts-ignore*/}
+                R$ {item.preco}
+              </Text>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('ProductDetails', { item: item })
+                }}
+                style={{
+                  width: 44,
+                  height: 44,
+                  backgroundColor: '#EE2F2A',
+                  borderRadius: 22,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Image
+                  source={Cart}
+                  resizeMode='contain'
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                />
+              </Pressable>
+
             </View>
-            
+
           </View>
         )}
         //@ts-ignore
-        keyExtractor={item => item.id}  
+        keyExtractor={item => item.id}
         numColumns={2}
       />
     </View>
   );
 }
 export const styles = StyleSheet.create({
-  
+
   input: {
-    width:'88%',
+    width: '88%',
     height: 45,
-    alignSelf:'center',
+    alignSelf: 'center',
     fontFamily: 'GeneralSans-Semibold',
     borderRadius: 16,
     paddingLeft: 20,

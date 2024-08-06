@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, KeyboardAvoidingView, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
@@ -91,6 +91,7 @@ export function AppRoutes() {
         initialRouteName="Home"
         screenOptions={() => ({
           tabBarStyle: {
+            keyboardHidesTabBar : true,
             right: 10,
             left: 10,
             position: 'absolute',
