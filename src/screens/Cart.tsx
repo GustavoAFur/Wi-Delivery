@@ -17,6 +17,8 @@ import Close from '../../assets/svgs/close.svg'
 import LottieView from 'lottie-react-native'
 import InAppBrowser from 'react-native-inappbrowser-reborn'
 
+import { useCart } from '../cart/CartContext'
+
 export function Cart({ navigation }: { navigation: any }) {
 
   const dataAtual = new Date()
@@ -25,6 +27,9 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const { kitsCart, setKitsCart } = useAuth()
 
+  const { products } = useCart()
+
+  console.log('products', products)
   const [url, setUrl] = useState('https://github.com/')
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -99,24 +104,9 @@ export function Cart({ navigation }: { navigation: any }) {
     setTotalCompra(valorTotal)
   }, [kitsCart])
 
-  function addQtd(idProd: any) {
-    setKitsCart(prevObjetos =>
-      prevObjetos.map(objeto =>
-        //@ts-ignore
-        objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade + 1 } : objeto
-      )
-    )
-  }
+ 
 
-  function decQtd(idProd: any) {
-    //@ts-ignore
-    setKitsCart(prevObjetos =>
-      prevObjetos.map(objeto =>
-        //@ts-ignore
-        objeto && objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade - 1 } : objeto
-      )
-    );
-  }
+
 
   function delProdCart(value: string) {
     //@ts-ignore
@@ -212,7 +202,7 @@ export function Cart({ navigation }: { navigation: any }) {
 
       </View>
       {
-        kitsCart.length <= 0 ?
+        products.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <Text style={{
               fontSize: 18,
@@ -227,60 +217,23 @@ export function Cart({ navigation }: { navigation: any }) {
             style={{
               marginBottom: 140
             }}
-            data={kitsCart}
-            //  @ts-ignore
+            data={products}
             keyExtractor={item => item.id}
-
             renderItem={({ item }) => {
-              //@ts-ignore
-              let qtdProdutoSelecionado = kitsCart.find(objeto => objeto.id === item.id)
-
               return (
-                <ItensCart
-                  //@ts-ignore
-                  name={item.nome}
-                  //@ts-ignore
-                  price={parseFloat(item.preco)}
-                  //@ts-ignore
-                  imagem={item.imagem}
-                  //@ts-ignore
-                  und={item.und}
-                  //@ts-ignore
-                  quantidade={qtdProdutoSelecionado}
-
-                  addProd={() => {
-                    //@ts-ignore
-                    addQtd(item.id)
-                  }}
-                  decProd={() => {
-                    //@ts-ignore
-                    if (qtdProdutoSelecionado.quantidade <= 1) {
-                      //@ts-ignore
-                      setIdItemRef(item.id)
-                      setModalVisible(!modalVisible)
-                    } else {
-                      //@ts-ignore
-                      decQtd(item.id)
-                    }
-                  }}
-                  delProd={() => {
-                    //@ts-ignore
-                    setIdItemRef(item.id)
-                    setModalVisible(!modalVisible)
-
-                  }}
-                />
+                <ItensCart product={item} />
               )
-            }} />
+            }}
+          />
       }
 
-      
+
       <TouchableOpacity
         disabled={kitsCart.length <= 0 ? true : false}
         onPress={() => {
           //@ts-ignore
           const hasKit = kitsCart.some(item => item.categoria === 'kit')
-          if(hasKit)
+          if (hasKit)
             setModalFinalizarVisible(!modalFinalizarVisible)
           else
             Alert.alert('Você precisa ter pelo menos um KIT no seu carrino')
@@ -460,7 +413,7 @@ export function Cart({ navigation }: { navigation: any }) {
               R$ {totalCompra.toFixed(2)}
             </Text>
           </View>
-            
+
           <View
             style={{
               width: '100%',
@@ -499,7 +452,7 @@ export function Cart({ navigation }: { navigation: any }) {
               }}
             />
           </View>
-            
+
           <View
             style={{
               width: '100%',
@@ -541,15 +494,15 @@ export function Cart({ navigation }: { navigation: any }) {
           {
             valuePag === 'dinheiro' &&
             <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: 10
-            }}>
+              style={{
+                width: '100%',
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                gap: 10
+              }}>
               <Text
                 style={{
                   fontSize: 16,
@@ -561,7 +514,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 Troco para:
               </Text>
               <TextInput
-                value={troco }
+                value={troco}
                 onChangeText={setTroco}
                 placeholder='Ex: R$ 100,00'
                 placeholderTextColor={'#7C7C7C'}

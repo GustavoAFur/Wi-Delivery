@@ -25,11 +25,20 @@ import Sereais from '../../assets/images/rice.png'
 import Mais from '../../assets/images/icons8-mais-100.png'
 
 import IconNotification from '../../assets/svgs/notification.svg'
-import Arrow from '../../assets/svgs/arrow-p.svg'
 
 import SectionsListComponent from '../components/SectionsListComponent'
 import { ItensOffers } from '../components/ItensOffers'
 import { YourAdress } from '../components/YourAdress'
+import { Products } from '../components/Products'
+
+
+ interface  product {
+    id: string
+    name: string
+    price: string
+    category: string
+    images: string[]
+  }
 
 interface Kit {
   id: string;
@@ -71,6 +80,8 @@ export function Home({ navigation }: { navigation: any }) {
   }
 
   const [kitsList, setKitsList] = useState<Kit[]>([])
+  const [products, setProducts] = useState<product[]>([])
+
   const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario> ({})
 
   useEffect(()=>{
@@ -121,6 +132,28 @@ export function Home({ navigation }: { navigation: any }) {
       }
     }
     kits()
+  }, [])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const produtosSnapShot = await firestore()
+          .collection('products')
+          .get()
+
+        const arrayProducts: any = []
+        produtosSnapShot.forEach((items) => {
+          const id = items.id
+          const item = items.data()
+          arrayProducts.push({ id, ...item })
+        })
+        
+        setProducts(arrayProducts)
+      } catch (error) {
+        console.error("Error fetching produtos: ", error)
+      }
+    }
+    fetchProducts()
   }, [])
 
 
@@ -259,34 +292,60 @@ export function Home({ navigation }: { navigation: any }) {
           fontSize: 18,
           fontFamily: 'GeneralSans-Semibold',
         }}>
+          Recomendados
+        </Text>
+      </View>
+      
+      <View
+        style={{
+          paddingHorizontal: 0
+        }}
+      >
+        <FlatList
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+          }}
+          horizontal
+          data={products} // wrap the product object in an array
+          renderItem={({ item }) => {
+            return (
+              <Products product={item} navigation={navigation}/>
+            )
+          }}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 15,
+        marginBottom: 15,
+        paddingHorizontal: 20,
+      }}>
+        <Text style={{
+          color: '#030303',
+          fontSize: 18,
+          fontFamily: 'GeneralSans-Semibold',
+        }}>
           Novidades
         </Text>
         
       </View>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContentNews}>
-        <View style={styles.novidadesItem}>
-          <Image
-            source={require('../../assets/images/banner01.jpg')}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </View>
-        <View style={styles.novidadesItem}>
-          <Image
-            source={require('../../assets/images/banner02.jpg')}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </View>
-        <View style={styles.novidadesItem}>
-          <Image
-            source={require('../../assets/images/banner03.jpg')}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </View>
-      </ScrollView>
+      
+      <View style={{
+        width: '100%',
+        height: 150,
+        marginTop: 10,
+        marginBottom: 10,
+        paddingHorizontal: 20,
+      }}>
+        <Image
+          source={require('../../assets/images/banner03.jpg')}
+          style={{ width: '100%', height: '100%',borderRadius: 10, }}
+        />
+      </View>
 
       <View style={styles.Orffers}>
         <View style={styles.OrffersInfo}>
@@ -318,27 +377,22 @@ export function Home({ navigation }: { navigation: any }) {
         </View>
       </View>
 
-      <FlatList
-        contentContainerStyle={{
+      <View
+        style={{
           paddingHorizontal: 20,
-          gap: 20
         }}
-        data={kitsList}
-        keyExtractor={item => item.id}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ItensOffers
-            name={item.nome}
-            price={item.preco}
-            imagem={item.imagem}
-            navTo={() => {
-              navigation.navigate('ProductDetails', { item: item })
-            }}
-
-          />
-        )}
-      />
+      >
+        <FlatList
+          horizontal
+          data={products} // wrap the product object in an array
+          renderItem={({ item }) => {
+            return (
+              <Products product={item} navigation={navigation}/>
+            )
+          }}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
 
     </ScrollView>
 
@@ -455,11 +509,13 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#d2d2d2',
     backgroundColor: '#fff',
-    width: 220,
-    height: 110,
+    width: '100%',
+    height: 150,
     borderRadius: 10,
     resizeMode: 'contain',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    alignSelf: 'center',
+    marginHorizontal: 20
   },
   btnAdicionar: {
     backgroundColor: '#EE2F2A',

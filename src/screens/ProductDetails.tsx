@@ -2,7 +2,9 @@ import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert,
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useState } from 'react'
 
-import { NavigationProp, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
+
+import { useCart } from '../cart/CartContext'
 import { useAuth } from '../hooks/auth'
 
 import ScreenBack from '../../assets/svgs/arrow-right.svg'
@@ -17,38 +19,13 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const { kitsCart, setKitsCart } = useAuth()
 
+  const { products, addProduct } = useCart()
+
   const [qtsItens, setQtdItens] = useState(1)
 
   //@ts-ignore
-  const [imageKit, setImageKit] = useState(route.params.item.images[0])
+  const [imageProduct, setImageProduct] = useState(route.params.item.images[0])
   const [indexImg, setIndexImg] = useState(1)
-
-  function handleToggleAddCart(value: any, quantidade: number) {
-    //@ts-ignore
-    const hasKit = kitsCart.some(item => item.categoria === 'kit')
-    
-    if (hasKit || value.categoria === 'kit') {
-      setKitsCart(prevObjetos => {
-        //@ts-ignore
-        const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
-
-        if (objetoExistente) {
-          // Se o objeto já existir, atualize a quantidade
-          return prevObjetos.map(objeto =>
-            //@ts-ignore
-            objeto.id === value.id ? { ...objeto, quantidade: objeto.quantidade + quantidade } : objeto
-          )
-        } else {
-          // Se o objeto não existir, adicione-o com a quantidade especificada
-          return [...prevObjetos, { ...value, quantidade }]
-        }
-      })
-    } else {
-      Alert.alert("Adicione um kit antes")
-    }
-
-    navigation.goBack();
-  }
 
   useEffect(() => {
     //@ts-ignore
@@ -122,7 +99,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
       >
         <Image
           //@ts-ignore
-          source={{ uri: imageKit }}
+          source={{ uri: imageProduct }}
           style={{
             width: '80%',
             height: '80%',
@@ -177,7 +154,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
               route.params.item.images.map((image, index) => (
                 <Pressable
                   onPress={() => {
-                    setImageKit(image)
+                    setImageProduct(image)
                     setIndexImg(index + 1)
                   }}
                   key={index}
@@ -186,7 +163,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
                     height: 80,
                     borderRadius: 10,
                     backgroundColor: '#fff',
-                    borderColor: imageKit === image ? '#EE2F2A' : '#9c9a9a',
+                    borderColor: imageProduct === image ? '#EE2F2A' : '#9c9a9a',
                     borderWidth: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -224,7 +201,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           fontFamily: 'GeneralSans-Bold'
         }}>
           {/*@ts-ignore*/}
-          {route.params.item.nome}
+          {route.params.item.name}
         </Text>
 
         <Text style={{
@@ -233,7 +210,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           fontFamily: 'GeneralSans-Medium'
         }}>
           {/*@ts-ignore*/}
-          R$ {route.params.item.preco}
+          R$ {route.params.item.price}
         </Text>
       </View>
 
@@ -314,8 +291,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         <Pressable
           onPress={() => {
             //@ts-ignore
-            handleToggleAddCart(route.params.item, qtsItens)
-
+            addProduct(route.params.item, qtsItens)
           }}
           style={{
             paddingHorizontal: 20,
@@ -369,7 +345,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           }}
         >
           {/*@ts-ignore*/}
-          {route.params.item.detalhes}
+          {route.params.item.details}
         </Text>
       </View>
 
