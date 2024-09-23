@@ -379,12 +379,15 @@ export function Home({ navigation }: { navigation: any }) {
 
       <View
         style={{
-          paddingHorizontal: 20,
+          paddingHorizontal: 0,
         }}
       >
         <FlatList
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+          }}
           horizontal
-          data={products} // wrap the product object in an array
+          data={products} 
           renderItem={({ item }) => {
             return (
               <Products product={item} navigation={navigation}/>

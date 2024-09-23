@@ -3,6 +3,7 @@ import { Image, KeyboardAvoidingView, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
+import { useCart } from '../cart/CartContext'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
@@ -44,6 +45,7 @@ export function AppRoutes() {
   const { Navigator, Screen } = createStackNavigator()
 
   const { kitsCart } = useAuth()
+  const { products } = useCart()
 
   const [isComplete, setIsComplete] = useState<boolean | null>(true)
 
@@ -233,7 +235,7 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   {
-                    kitsCart.length > 0 && (
+                    products.length > 0 && (
                       <View
                         style={{
                           backgroundColor: '#D9042B',
@@ -255,7 +257,7 @@ export function AppRoutes() {
                           color: '#fff',
                           fontFamily: 'GeneralSans-Semibold',
                         }}>
-                          {kitsCart.length}
+                          {products.length}
                         </Text>
                       </View>
                     )
@@ -282,7 +284,7 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     {
-                      kitsCart.length > 0 && (
+                      products.length > 0 && (
                         <View
                           style={{
                             backgroundColor: '#D9042B',
@@ -304,7 +306,7 @@ export function AppRoutes() {
                             color: '#fff',
                             fontFamily: 'GeneralSans-Semibold',
                           }}>
-                            {kitsCart.length}
+                            {products.length}
                           </Text>
                         </View>
                       )

@@ -94,19 +94,14 @@ export function Cart({ navigation }: { navigation: any }) {
   }, [])
 
   useEffect(() => {
-    const dataArray = kitsCart.map((item) => {
-      //@ts-ignore
-      const valorItem = parseFloat(item.preco) * parseFloat(item.quantidade)
+    const dataArray = products.map((item) => {
+      const valorItem = parseFloat(item.price) * (item.quantity || 1)
       return { valorItem }
     })
 
     const valorTotal = dataArray.reduce((total, item) => total + item.valorItem, 0)
     setTotalCompra(valorTotal)
-  }, [kitsCart])
-
- 
-
-
+  }, [products])
 
   function delProdCart(value: string) {
     //@ts-ignore
@@ -229,10 +224,9 @@ export function Cart({ navigation }: { navigation: any }) {
 
 
       <TouchableOpacity
-        disabled={kitsCart.length <= 0 ? true : false}
+        disabled={products.length <= 0 ? true : false}
         onPress={() => {
-          //@ts-ignore
-          const hasKit = kitsCart.some(item => item.categoria === 'kit')
+          const hasKit = products.some(item => item.category === 'Kit')
           if (hasKit)
             setModalFinalizarVisible(!modalFinalizarVisible)
           else
@@ -241,7 +235,7 @@ export function Cart({ navigation }: { navigation: any }) {
         style={{
           position: 'absolute',
           backgroundColor: '#EE2F2A',
-          opacity: kitsCart.length <= 0 ? .5 : 1,
+          opacity: products.length <= 0 ? .5 : 1,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
@@ -264,7 +258,7 @@ export function Cart({ navigation }: { navigation: any }) {
             alignItems: 'center',
             justifyContent: 'center',
             padding: 5,
-            opacity: kitsCart.length <= 0 ? .5 : 1,
+            opacity: products.length <= 0 ? .5 : 1,
             backgroundColor: '#FF5F5A',
             right: 10,
             borderRadius: 5
