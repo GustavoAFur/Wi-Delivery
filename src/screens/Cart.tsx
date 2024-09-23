@@ -18,6 +18,7 @@ import LottieView from 'lottie-react-native'
 import InAppBrowser from 'react-native-inappbrowser-reborn'
 
 import { useCart } from '../cart/CartContext'
+import { HeaderScreens } from '../components/HeaderScreens'
 
 export function Cart({ navigation }: { navigation: any }) {
 
@@ -40,7 +41,7 @@ export function Cart({ navigation }: { navigation: any }) {
   const [troco, setTroco] = useState('')
 
   const [idItemRef, setIdItemRef] = useState(0)
-  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [userData, setUserData] = useState({})
 
   const [openRet, setOpenRet] = useState(false)
   const [valueRet, setValueRet] = useState(null)
@@ -79,8 +80,7 @@ export function Cart({ navigation }: { navigation: any }) {
           if (documentSnapshot.exists) {
             const id = documentSnapshot.id
             const data = documentSnapshot.data()
-            //@ts-ignore
-            setDadosUsuario({ id, ...data })
+            setUserData({ id, ...data })
           }
         } else {
           console.log('No user is signed in')
@@ -122,18 +122,15 @@ export function Cart({ navigation }: { navigation: any }) {
           valor: totalCompra.toFixed(2),
           troco: troco !== '' ? parseFloat(troco) - totalCompra : 'Finalizadora sem troco'
         })
-      await Promise.all(kitsCart.map(async (itens) => {
+      await Promise.all(products.map(async (itens) => {
         await firestore()
           .collection('pedidos')
           .doc(idSnapshot.id)
           .collection('itens')
           .add({
-            //@ts-ignore
-            nome: itens.nome,
-            //@ts-ignore
-            preco: itens.preco,
-            //@ts-ignore
-            quantidade: itens.quantidade
+            name: itens.name,
+            price: itens.price,
+            quantity: itens.quantity || 1,
           })
       })).then(() => {
         setKitsCart([])
@@ -160,42 +157,11 @@ export function Cart({ navigation }: { navigation: any }) {
 
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
-      <View style={{
-        width: '100%',
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        borderBottomColor: '#E2E2E2',
-        borderBottomWidth: .5
-      }}>
-        <TouchableOpacity
-          style={{
-            width: 20,
-            height: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            left: 20
-          }}
-          onPress={() => {
-            //@ts-ignore
-            navigation.goBack()
-          }}
-        >
-          <ScreenBack width={20} height={20} />
-        </TouchableOpacity>
-        <Text style={{
-          fontSize: 18,
-          alignSelf: 'center',
-          color: '#323232',
-          fontFamily: 'GeneralSans-Semibold'
-        }}>
-          Meu carrinho
-        </Text>
+      <HeaderScreens
+        navigation={navigation}
+        title={'Carrinho'}
+      />
 
-      </View>
       {
         products.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
@@ -226,7 +192,7 @@ export function Cart({ navigation }: { navigation: any }) {
       <TouchableOpacity
         disabled={products.length <= 0 ? true : false}
         onPress={() => {
-          const hasKit = products.some(item => item.category === 'Kit')
+          const hasKit = products.some(item => item.category === 'Kits')
           if (hasKit)
             setModalFinalizarVisible(!modalFinalizarVisible)
           else
@@ -274,49 +240,7 @@ export function Cart({ navigation }: { navigation: any }) {
         </View>
 
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Deseja mesmo Excluir item?</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '85%',
-              }}
-            >
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
-                }
-                }>
-                <Text style={styles.textStyle}>Cancelar</Text>
-              </Pressable>
-
-              <Pressable
-                style={[styles.button, styles.buttonExcluir]}
-                onPress={() => {
-                  //@ts-ignore
-                  delProdCart(idItemRef)
-                  setModalVisible(!modalVisible)
-                }
-                }>
-                <Text style={styles.textStyle}>Excluir</Text>
-              </Pressable>
-            </View>
-
-          </View>
-        </View>
-      </Modal>
-
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -567,7 +491,7 @@ export function Cart({ navigation }: { navigation: any }) {
 
           <TouchableOpacity
             onPress={() => {
-              finalizarPedido(dadosUsuario)
+              finalizarPedido(userData)
             }}
             style={{
               backgroundColor: '#EE2F2A',
