@@ -2,6 +2,8 @@ import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert,
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useState } from 'react'
 
+import firestore from '@react-native-firebase/firestore'
+
 import { useRoute } from '@react-navigation/native'
 
 import { useCart } from '../cart/CartContext'
@@ -10,6 +12,15 @@ import { useAuth } from '../hooks/auth'
 import ScreenBack from '../../assets/svgs/arrow-right.svg'
 import More from '../../assets/svgs/mais-black.svg'
 import Less from '../../assets/svgs/menos.svg'
+import { ProductsList } from '../components/PorductsList'
+
+interface  product {
+  id: string
+  name: string
+  price: string
+  category: string
+  images: string[]
+}
 
 export default function ProductDetails({ navigation }: { navigation: any }) {
 
@@ -17,7 +28,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const { kitsCart, setKitsCart } = useAuth()
+  const [productsData, setProductsData] = useState<product[]>([])
 
   const { products, addProduct } = useCart()
 
@@ -28,8 +39,25 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
   const [indexImg, setIndexImg] = useState(1)
 
   useEffect(() => {
-    //@ts-ignore
-    console.log(route.params.item.preco)
+    const fetchProducts = async () => {
+      try {
+        const produtosSnapShot = await firestore()
+          .collection('products')
+          .get()
+
+        const arrayProducts: any = []
+        produtosSnapShot.forEach((items) => {
+          const id = items.id
+          const item = items.data()
+          arrayProducts.push({ id, ...item })
+        })
+        
+        setProductsData(arrayProducts)
+      } catch (error) {
+        console.error("Error fetching produtos: ", error)
+      }
+    }
+    fetchProducts()
   }, [])
 
   return (
@@ -39,6 +67,10 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         width: width,
         paddingTop: getStatusBarHeight(),
         backgroundColor: '#fff',
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: 40
       }}
     >
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
@@ -204,6 +236,21 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           {route.params.item.name}
         </Text>
 
+
+      </View>
+
+      <View
+        style={{
+          width: width,
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingVertical: 10,
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}
+      >
+
         <Text style={{
           fontSize: 18,
           color: '#A9A9A9',
@@ -212,19 +259,6 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           {/*@ts-ignore*/}
           R$ {route.params.item.price}
         </Text>
-      </View>
-
-      <View
-        style={{
-          width: width,
-          paddingLeft: 20,
-          paddingRight: 20,
-          paddingVertical: 15,
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        }}
-      >
 
         <View
           style={{
@@ -288,30 +322,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
         </View>
 
-        <Pressable
-          onPress={() => {
-            //@ts-ignore
-            addProduct(route.params.item, qtsItens)
-            navigation.goBack()
-            ToastAndroid.show('Adicionado ao carrinho', ToastAndroid.SHORT)
-          }}
-          style={{
-            paddingHorizontal: 20,
-            paddingVertical: 15,
-            backgroundColor: '#EE2F2A',
-            borderRadius: 30,
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Text style={{
-            fontSize: 18,
-            color: '#fff',
-            fontFamily: 'GeneralSans-Bold'
-          }}>
-            Adicionar
-          </Text>
-        </Pressable>
+
 
       </View>
 
@@ -342,7 +353,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         <Text
           style={{
             fontSize: 18,
-            color: '#4F4F4F',
+            color: '#A9A9A9',
             fontFamily: 'GeneralSans-Medium'
           }}
         >
@@ -350,6 +361,53 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           {route.params.item.details}
         </Text>
       </View>
+          
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 15,
+        marginBottom: 15,
+        paddingHorizontal: 20,
+      }}>
+        <Text style={{
+          fontSize: 20,
+          color: '#4F4F4F',
+          fontFamily: 'GeneralSans-Bold'
+        }}>
+          Semelhantes
+        </Text>
+        
+      </View>
+
+      <ProductsList product={productsData} navigation={navigation} />
+      
+      <Pressable
+        onPress={() => {
+          //@ts-ignore
+          addProduct(route.params.item, qtsItens)
+          navigation.goBack()
+          ToastAndroid.show('Adicionado ao carrinho', ToastAndroid.SHORT)
+        }}
+        style={{
+          paddingHorizontal: 20,
+          marginHorizontal: 20,
+          marginVertical: 20,
+          paddingVertical: 15,
+          backgroundColor: '#EE2F2A',
+          borderRadius: 30,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Text style={{
+          fontSize: 18,
+          color: '#fff',
+          fontFamily: 'GeneralSans-Bold'
+        }}>
+          Adicionar
+        </Text>
+      </Pressable>
 
     </ScrollView>
   );

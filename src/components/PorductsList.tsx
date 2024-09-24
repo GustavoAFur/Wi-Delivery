@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react"
-
-import firestore from '@react-native-firebase/firestore'
 import { FlatList, View } from "react-native"
 import { Products } from "./Products"
 interface  product {
