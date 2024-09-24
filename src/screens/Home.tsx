@@ -30,6 +30,7 @@ import SectionsListComponent from '../components/SectionsListComponent'
 import { ItensOffers } from '../components/ItensOffers'
 import { YourAdress } from '../components/YourAdress'
 import { Products } from '../components/Products'
+import { ProductsList } from '../components/PorductsList'
 
 
  interface  product {
@@ -296,25 +297,7 @@ export function Home({ navigation }: { navigation: any }) {
         </Text>
       </View>
       
-      <View
-        style={{
-          paddingHorizontal: 0
-        }}
-      >
-        <FlatList
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-          }}
-          horizontal
-          data={products} // wrap the product object in an array
-          renderItem={({ item }) => {
-            return (
-              <Products product={item} navigation={navigation}/>
-            )
-          }}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <ProductsList navigation={navigation} product={products}/>
 
       <View style={{
         flexDirection: 'row',
@@ -377,25 +360,7 @@ export function Home({ navigation }: { navigation: any }) {
         </View>
       </View>
 
-      <View
-        style={{
-          paddingHorizontal: 0,
-        }}
-      >
-        <FlatList
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-          }}
-          horizontal
-          data={products} 
-          renderItem={({ item }) => {
-            return (
-              <Products product={item} navigation={navigation}/>
-            )
-          }}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <ProductsList navigation={navigation} product={products}/>
 
     </ScrollView>
 

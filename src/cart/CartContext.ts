@@ -50,6 +50,7 @@ export const useCart = create<CartProducts>()(
             };
           }
           return { products: [...state.products, { ...product, quantity: qtd }] };
+          
         }),
       deleteProduct: (id: string) =>
         set((state) => ({
@@ -75,7 +76,7 @@ export const useCart = create<CartProducts>()(
     }),
     {
       name: 'cart-storage', // Nome para o armazenamento persistente
-      storage, // Definindo o AsyncStorage para persistência no Expo
+      storage, // Definindo o AsyncStorage para persistência
     }
   )
 );

@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity, ToastAndroid } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useState } from 'react'
 
@@ -292,6 +292,8 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           onPress={() => {
             //@ts-ignore
             addProduct(route.params.item, qtsItens)
+            navigation.goBack()
+            ToastAndroid.show('Adicionado ao carrinho', ToastAndroid.SHORT)
           }}
           style={{
             paddingHorizontal: 20,
