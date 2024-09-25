@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Dimensions, StyleSheet, Image, StatusBar, FlatList, Alert, Modal, Pressable, Animated, TextInput } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 //@ts-ignore
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native'
@@ -93,7 +93,7 @@ export function Cart({ navigation }: { navigation: any }) {
     fetchUserData()
   }, [])
 
-  useEffect(() => {
+  useMemo(() => {
     const dataArray = products.map((item) => {
       const valorItem = parseFloat(item.price) * (item.quantity || 1)
       return { valorItem }

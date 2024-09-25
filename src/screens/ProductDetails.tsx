@@ -43,6 +43,8 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
       try {
         const produtosSnapShot = await firestore()
           .collection('products')
+          //@ts-ignore
+          .where('category', '==', `${route.params.item.category}`)
           .get()
 
         const arrayProducts: any = []
@@ -112,8 +114,8 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
       <View
         style={{
-          width: '94%',
-          height: 280,
+          width: '95%',
+          height: 260,
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
@@ -172,7 +174,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             style={{
               width: '100%',
               height: 80,
-              marginVertical: 20
+              marginTop: 20
             }}
             contentContainerStyle={{
               alignItems: 'center',
@@ -222,7 +224,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         style={{
           width: width,
           paddingHorizontal: 20,
-          paddingVertical: 15,
+          marginTop: 10,
           flexDirection: 'row',
           justifyContent: 'space-between'
         }}
@@ -395,9 +397,10 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           marginVertical: 20,
           paddingVertical: 15,
           backgroundColor: '#EE2F2A',
-          borderRadius: 30,
+          borderRadius: 10,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          
         }}
       >
         <Text style={{

@@ -62,7 +62,7 @@ export function Home({ navigation }: { navigation: any }) {
   const { width, height } = Dimensions.get("window")
 
   const sessoes = [
-    { nome: 'Cereais', value: 'cereais', imagem: Sereais },
+    { nome: 'Cereais', value: 'Cereais', imagem: Sereais },
     { nome: 'Limpeza', value: 'limpeza', imagem: Limpeza },
     { nome: 'Açougue', value: 'acougue', imagem: Acougue },
     { nome: 'Bebidas', value: 'bebidas', imagem: Bebidas },

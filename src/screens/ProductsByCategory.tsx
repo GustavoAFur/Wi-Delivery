@@ -6,11 +6,14 @@ import { useRoute } from '@react-navigation/native'
 
 import firestore from '@react-native-firebase/firestore'
 
+import { useCart } from '../cart/CartContext'
+
 import ScreenBack from '../../assets/svgs/arrow-right.svg'
 import Search from '../../assets/svgs/search-b.svg'
 import Cart from '../../assets/images/icons8-carrinho-de-compras-carregado-100.png'
 import CartBlack from '../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth';
+import { Products } from '../components/Products';
 
 export default function ProductsByCategory({ navigation }: { navigation: any }) {
 
@@ -21,14 +24,15 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
   const [produtosList, setProdutosList] = useState([])
 
   const { kitsCart, setKitsCart } = useAuth()
+  const { products } = useCart()
 
   useEffect(() => {
     const produtos = async () => {
       try {
         const produtosSnapShot = await firestore()
-          .collection('avulsos')
+          .collection('products')
           //@ts-ignore
-          .where('categoria', '==', `${route.params.filtroCategoria}`)
+          .where('category', '==', `${route.params.filtroCategoria}`)
           .get()
 
         const arrayProd: any = []
@@ -97,7 +101,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
           }}
         >
           {
-            kitsCart.length > 0 && (
+            products.length > 0 && (
               <View
                 style={{
                   backgroundColor: '#EE2F2A',
@@ -119,7 +123,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
                   color: '#fff',
                   fontFamily: 'GeneralSans-Semibold',
                 }}>
-                  {kitsCart.length}
+                  {products.length}
                 </Text>
               </View>
             )
@@ -160,92 +164,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
         data={produtosList}
 
         renderItem={({ item }) => (
-          <View
-            style={{
-              width: 150,
-              height: 230,
-              borderWidth: 1,
-              borderRadius: 10,
-              padding: 10,
-              borderColor: '#F1F3F5',
-              gap: 8,
-              margin: 5
-            }}
-          >
-            <View
-              style={{
-                padding: 10,
-                alignItems: 'center',
-                justifyContent: 'center'
-
-              }}
-            >
-              <Image
-                //@ts-ignore
-                source={{ uri: item.imagem }}
-                style={{
-                  width: 80,
-                  height: 80,
-                  resizeMode: 'contain'
-                }}
-              />
-            </View>
-
-            <Text
-              style={{
-                color: '#0F1121',
-                fontSize: 15,
-                fontFamily: 'GeneralSans-Semibold'
-              }}
-            >
-              {/*@ts-ignore*/}
-              {item.nome}
-            </Text>
-
-            <View
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}
-            >
-              <Text
-                style={{
-                  color: '#7C7C7C',
-                  fontSize: 15,
-                  fontFamily: 'GeneralSans-Semibold'
-                }}
-              >
-                {/*@ts-ignore*/}
-                R$ {item.preco}
-              </Text>
-              <Pressable
-                onPress={() => {
-                  navigation.navigate('ProductDetails', { item: item })
-                }}
-                style={{
-                  width: 44,
-                  height: 44,
-                  backgroundColor: '#EE2F2A',
-                  borderRadius: 22,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Image
-                  source={Cart}
-                  resizeMode='contain'
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-              </Pressable>
-
-            </View>
-
-          </View>
+          <Products product={item} navigation={navigation} />
         )}
         //@ts-ignore
         keyExtractor={item => item.id}
