@@ -97,7 +97,6 @@ export default function ItensCart ({product}: Props & PressableProps) {
             </Pressable>
             
               <View>
-                {/*@ts-ignore*/}
                 <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{product.quantity}</Text>
               </View>
             

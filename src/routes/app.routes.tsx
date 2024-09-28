@@ -39,6 +39,7 @@ import { SignUp } from '../screens/SignUp'
 import { CustomWebView } from '../screens/CustomWebView'
 import { About } from '../screens/About'
 import { Help } from '../screens/Help'
+import { Cadastros } from '../screens/Cadastros'
 
 export function AppRoutes() {
 
@@ -396,6 +397,7 @@ export function AppRoutes() {
         <Screen name="TabNavigation" component={TabNavigation} />
         <Screen name="Home" component={Home} />
         <Screen name="SelectKit" component={SelectKit} />
+        <Screen name="Cadastros" component={Cadastros} />
         <Screen
           name="Orffers"
           component={Orffers}

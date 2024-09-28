@@ -7,14 +7,13 @@ import firestore from '@react-native-firebase/firestore'
 import { useRoute } from '@react-navigation/native'
 
 import { useCart } from '../cart/CartContext'
-import { useAuth } from '../hooks/auth'
 
 import ScreenBack from '../../assets/svgs/arrow-right.svg'
 import More from '../../assets/svgs/mais-black.svg'
 import Less from '../../assets/svgs/menos.svg'
 import { ProductsList } from '../components/PorductsList'
 
-interface  product {
+interface product {
   id: string
   name: string
   price: string
@@ -34,10 +33,16 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const [qtsItens, setQtdItens] = useState(1)
 
-  //@ts-ignore
-  const [imageProduct, setImageProduct] = useState(route.params.item.images[0])
+  const [imageProduct, setImageProduct] = useState()
   const [indexImg, setIndexImg] = useState(1)
 
+  useEffect(() => {
+    //@ts-ignore
+    setImageProduct(route.params.item.images[0])
+    //@ts-ignore
+    console.log(route.params.item)
+    //@ts-ignore
+  }, [route.params.item])
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -45,6 +50,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           .collection('products')
           //@ts-ignore
           .where('category', '==', `${route.params.item.category}`)
+          .limit(11)
           .get()
 
         const arrayProducts: any = []
@@ -53,8 +59,10 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           const item = items.data()
           arrayProducts.push({ id, ...item })
         })
-        
-        setProductsData(arrayProducts)
+        //@ts-ignore
+        const productsFiltered = arrayProducts.filter((item: any) => item.id !== route.params.item.id)
+        setProductsData(productsFiltered)
+
       } catch (error) {
         console.error("Error fetching produtos: ", error)
       }
@@ -324,46 +332,51 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
         </View>
 
-
-
       </View>
+      {
+        //@ts-ignore
+        route.params.item.details !== '' && (
+          <>
+            <View
+              style={{
+                width: width,
+                paddingLeft: 20,
+              }}
+            >
+              <Text style={{
+                fontSize: 20,
+                color: '#4F4F4F',
+                fontFamily: 'GeneralSans-Bold'
+              }}>
+                Detalhes:
+              </Text>
+            </View>
 
-      <View
-        style={{
-          width: width,
-          paddingLeft: 20,
-        }}
-      >
-        <Text style={{
-          fontSize: 20,
-          color: '#4F4F4F',
-          fontFamily: 'GeneralSans-Bold'
-        }}>
-          Detalhes:
-        </Text>
-      </View>
+            <View
+              style={{
+                width: width,
+                paddingTop: 10,
+                paddingBottom: 10,
+                paddingHorizontal: 20,
+                gap: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#A9A9A9',
+                  fontFamily: 'GeneralSans-Medium'
+                }}
+              >
+                {/*@ts-ignore*/}
+                {route.params.item.details}
+              </Text>
+            </View>
+          </>
+        )
+      }
 
-      <View
-        style={{
-          width: width,
-          paddingTop: 10,
-          paddingBottom: 10,
-          paddingHorizontal: 20,
-          gap: 20
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 18,
-            color: '#A9A9A9',
-            fontFamily: 'GeneralSans-Medium'
-          }}
-        >
-          {/*@ts-ignore*/}
-          {route.params.item.details}
-        </Text>
-      </View>
-          
+
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -379,11 +392,11 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         }}>
           Semelhantes
         </Text>
-        
+
       </View>
 
       <ProductsList product={productsData} navigation={navigation} />
-      
+
       <Pressable
         onPress={() => {
           //@ts-ignore
@@ -400,7 +413,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
-          
+
         }}
       >
         <Text style={{

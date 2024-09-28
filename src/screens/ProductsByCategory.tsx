@@ -15,41 +15,65 @@ import CartBlack from '../../assets/svgs/cart.svg'
 import { useAuth } from '../hooks/auth';
 import { Products } from '../components/Products';
 
+interface  product {
+  id: string
+  name: string
+  price: string
+  category: string
+  images: string[]
+}
 export default function ProductsByCategory({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
   const route = useRoute()
 
-  const [produtosList, setProdutosList] = useState([])
+  const [productsList, setProductsList] = useState<product[]>([])
+  const [lastDocument, setLastDocument] = useState();
 
-  const { kitsCart, setKitsCart } = useAuth()
+  const [search, setSearch] = useState('')
+
   const { products } = useCart()
 
-  useEffect(() => {
-    const produtos = async () => {
-      try {
-        const produtosSnapShot = await firestore()
-          .collection('products')
+  const showProducts = async () => {
+    try {
+      let query = firestore()
+        .collection('products')
+        //@ts-ignore
+        .where('category', '==', `${route.params.filtroCategoria}`)
+
+        if(lastDocument != undefined) 
+          query = query.startAfter(lastDocument)
+        
+        query.limit(10)
+        .get()
+        .then(querySnapshot => {
           //@ts-ignore
-          .where('category', '==', `${route.params.filtroCategoria}`)
-          .get()
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
 
-        const arrayProd: any = []
-        produtosSnapShot.forEach((produtos) => {
-          const id = produtos.id
-          const produto = produtos.data()
-          arrayProd.push({ id, ...produto })
-        })
+          const arrayProd: any = []
+          querySnapshot.forEach((produtos) => {
+            const id = produtos.id
+            const produto = produtos.data()
+            arrayProd.push({ id, ...produto })
+          })
+          setProductsList(prev => [...prev, ...arrayProd])
+        });
 
-        setProdutosList(arrayProd)
-      } catch (error) {
-        console.error("Error fetching produtos: ", error)
-      }
+      
+    } catch (error) {
+      console.error("Error fetching produtos: ", error)
     }
-    produtos()
-    console.log(produtosList)
+  } 
+
+  useEffect(() => {
+    console.log(lastDocument)
+  }, [lastDocument])
+
+  useEffect(() => {
+    showProducts()
   }, [])
+
 
   return (
     <View style={{
@@ -147,26 +171,72 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
         alignSelf: 'center',
         borderRadius: 16,
         marginTop: 20,
-        marginBottom: 30,
         paddingLeft: 10
       }}>
         <Search width={20} height={20} />
         <TextInput
           placeholder='Pesquisar Produto'
           placeholderTextColor={'#7C7C7C'}
-          style={styles.input} />
+          style={styles.input} 
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
       </View>
+
+      {
+        search !== '' && search.length < 3 && (
+          <Text style={{
+            alignSelf: 'center',
+            color: '#EE2F2A',
+            marginTop: 10,
+            fontFamily: 'GeneralSans-Semibold',
+          }}
+          >
+            Digite pelo menos 3 caracteres
+          </Text>
+        )
+      }
 
       <FlatList
         contentContainerStyle={{
           paddingHorizontal: 20,
+          paddingTop: 30
         }}
-        data={produtosList}
-
+        data={productsList}
         renderItem={({ item }) => (
           <Products product={item} navigation={navigation} />
         )}
-        //@ts-ignore
+        ListFooterComponent={() => 
+        {
+          if (productsList.length >= 10) {
+            return (
+             <Pressable
+              onPress={() => {
+                showProducts()
+              }}
+              style={{
+                paddingHorizontal: 20,
+                marginVertical: 20,
+                paddingVertical: 15,
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255,160,122,0.5)',
+              }}
+             >
+              <Text 
+                style={{
+                  color: '#EE2F2A',
+                  fontFamily: 'GeneralSans-Semibold',
+                }}
+              >
+                Mostrar mais
+              </Text>
+             </Pressable>
+            )
+          }
+        }
+        }
         keyExtractor={item => item.id}
         numColumns={2}
       />

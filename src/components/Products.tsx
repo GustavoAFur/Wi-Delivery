@@ -43,16 +43,24 @@ export function Products({ product, navigation }: Props & PressableProps & { nav
           }}
         />
       </View>
-
-      <Text
+      
+      <View
         style={{
-          color: '#0F1121',
-          fontSize: 15,
-          fontFamily: 'GeneralSans-Semibold'
+          width: '100%',
+          height: 40,
         }}
       >
-        {product.name}
-      </Text>
+        <Text
+          style={{
+            color: '#0F1121',
+            fontSize: 15,
+            fontFamily: 'GeneralSans-Semibold'
+          }}
+        >
+          {product.name}
+        </Text>
+
+      </View>
 
       <View
         style={{

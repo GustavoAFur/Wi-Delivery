@@ -114,32 +114,11 @@ export function Home({ navigation }: { navigation: any }) {
   },[dadosUsuario])
 
   useEffect(() => {
-    const kits = async () => {
-      try {
-        const produtosSnapShot = await firestore()
-          .collection('kits')
-          .get()
-
-        const arrayKits: any = []
-        produtosSnapShot.forEach((kits) => {
-          const id = kits.id
-          const kit = kits.data()
-          arrayKits.push({ id, ...kit })
-        })
-        
-        setKitsList(arrayKits)
-      } catch (error) {
-        console.error("Error fetching produtos: ", error)
-      }
-    }
-    kits()
-  }, [])
-
-  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const produtosSnapShot = await firestore()
           .collection('products')
+          .limit(10)
           .get()
 
         const arrayProducts: any = []
@@ -156,6 +135,7 @@ export function Home({ navigation }: { navigation: any }) {
     }
     fetchProducts()
   }, [])
+
 
 
   return (
