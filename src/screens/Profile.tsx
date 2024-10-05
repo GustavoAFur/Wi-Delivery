@@ -12,6 +12,8 @@ import Arrow from '../../assets/svgs/back-arrow.svg'
 import About from '../../assets/svgs/about icon.svg'
 import Help from '../../assets/svgs/help icon.svg'
 import Logout from '../../assets/svgs/logoutw.svg'
+import Order from '../../assets/svgs/Orders-icon.svg'
+
 import LottieView from 'lottie-react-native'
 
 //@ts-ignore
@@ -98,6 +100,19 @@ export function Profile({ navigation }) {
         </View>
 
         <View style={{ width: '88%', alignSelf: 'center' }}>
+        <TouchableOpacity 
+            style={styles.optionsProfile}
+            onPress={()=>{
+              navigation.navigate('Help')
+            }}
+          >
+            <View style={styles.iconText}>
+              <Order width={20} height={20} />
+              <Text style={styles.optionText}>Meus Pedidos</Text>
+            </View>
+            <Arrow width={15} height={15} />
+          </TouchableOpacity>
+
           <TouchableOpacity 
             onPress={()=>{
               navigation.navigate('MyDetails')
@@ -150,52 +165,64 @@ export function Profile({ navigation }) {
             <Arrow width={15} height={15} />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnSair}
-            onPress={() => {
-              setIsSingOut(true)
-              auth()
-                .signOut()
-                .then(() => {
-                  setIsSingOut(false)
-                })
-            }}
-          >
-            {
-              isSingOut ?
-              <LottieView
-                  autoPlay
-                  loop
-                  source={require('../../assets/json/Animation-Red.json')}
-                  style={{ width: 60, height: 60, alignSelf: 'center' }}
-                /> :
-                <View
-                  style={{
-                    width: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Logout
-                    style={{
-                      position: 'absolute',
-                      left: 20
-                    }}
-                  />
-                  <Text style={{
-                    fontSize: 16,
-                    fontFamily: 'GeneralSans-Semibold',
-                    color: '#fff',
-                  }}>
-                    Sair
-                  </Text>
-                </View>
-                
-            }
-          </TouchableOpacity>
+          
+          
 
 
         </View>
+        <View
+            style={{
+              width: '100%',
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <TouchableOpacity
+              style={styles.btnSair}
+              onPress={() => {
+                setIsSingOut(true)
+                auth()
+                  .signOut()
+                  .then(() => {
+                    setIsSingOut(false)
+                  })
+              }}
+            >
+              {
+                isSingOut ?
+                <LottieView
+                    autoPlay
+                    loop
+                    source={require('../../assets/json/Animation-Red.json')}
+                    style={{ width: 60, height: 60, alignSelf: 'center' }}
+                  /> :
+                  <View
+                    style={{
+                      width: '100%',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Logout
+                      style={{
+                        position: 'absolute',
+                        left: 20
+                      }}
+                    />
+                    <Text style={{
+                      fontSize: 16,
+                      fontFamily: 'GeneralSans-Semibold',
+                      color: '#fff',
+                    }}>
+                      Sair
+                    </Text>
+                  </View>
+                  
+              }
+            </TouchableOpacity>
+
+          </View>
 
       </View>
     </View>
@@ -243,13 +270,10 @@ export const styles = StyleSheet.create({
   },
   btnSair: {
     backgroundColor: '#EE2F2A',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '85%',
+    width: 300,
     height: 55,
-    alignSelf: 'center',
-    marginTop: 80,
     borderRadius: 10,
   }
 })

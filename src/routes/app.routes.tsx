@@ -40,6 +40,7 @@ import { CustomWebView } from '../screens/CustomWebView'
 import { About } from '../screens/About'
 import { Help } from '../screens/Help'
 import { Cadastros } from '../screens/Cadastros'
+import { SeeMoreHighlights } from '../screens/SeeMoreHighlights'
 
 export function AppRoutes() {
 
@@ -399,8 +400,8 @@ export function AppRoutes() {
         <Screen name="SelectKit" component={SelectKit} />
         <Screen name="Cadastros" component={Cadastros} />
         <Screen
-          name="Orffers"
-          component={Orffers}
+          name="SeeMoreHighlights"
+          component={SeeMoreHighlights}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

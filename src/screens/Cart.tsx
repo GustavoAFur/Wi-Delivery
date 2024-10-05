@@ -103,10 +103,7 @@ export function Cart({ navigation }: { navigation: any }) {
     setTotalCompra(valorTotal)
   }, [products])
 
-  function delProdCart(value: string) {
-    //@ts-ignore
-    setKitsCart((state) => state.filter(item => item.id !== value))
-  }
+
 
   async function finalizarPedido(usuario: any) {
     setFinalizando(true)
@@ -179,7 +176,8 @@ export function Cart({ navigation }: { navigation: any }) {
               marginBottom: 140
             }}
             data={products}
-            keyExtractor={item => item.id}
+            extraData={products}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
                 <ItensCart product={item} />

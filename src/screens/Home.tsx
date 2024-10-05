@@ -11,63 +11,39 @@ import {
 } from 'react-native'
 import { useEffect, useState } from 'react'
 
-import firestore from '@react-native-firebase/firestore'
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-
-import Limpeza from '../../assets/images/beauty-product.png'
-import HortiFruti from '../../assets/images/horti-fruti.png'
-import Acougue from '../../assets/images/meet-fish.png'
-import Bebidas from '../../assets/images/heineken.png'
-import Sereais from '../../assets/images/rice.png'
 
 import Mais from '../../assets/images/icons8-mais-100.png'
 
 import IconNotification from '../../assets/svgs/notification.svg'
 
 import SectionsListComponent from '../components/SectionsListComponent'
-import { ItensOffers } from '../components/ItensOffers'
 import { YourAdress } from '../components/YourAdress'
-import { Products } from '../components/Products'
 import { ProductsList } from '../components/PorductsList'
-
+import { sections } from '../data/Sections'
 
  interface  product {
-    id: string
-    name: string
-    price: string
-    category: string
-    images: string[]
-  }
-
-interface Kit {
-  id: string;
-  nome: string;
-  preco: string;
-  imagem: string;
+  id: string
+  name: string
+  price: string
+  category: string
+  images: string[]
 }
+
 interface DadosUsuario{
-    nome?: string
-    email?: string
-    rua?: string
-    numero?: string
-    bairro?: string
-    imagem?: string
+  nome?: string
+  email?: string
+  rua?: string
+  numero?: string
+  bairro?: string
+  imagem?: string
 }
 
 const dadosUsuario: DadosUsuario = {}; // Initialize dadosUsuario with an empty object
 export function Home({ navigation }: { navigation: any }) {
-
-  const { width, height } = Dimensions.get("window")
-
-  const sessoes = [
-    { nome: 'Cereais', value: 'Cereais', imagem: Sereais },
-    { nome: 'Limpeza', value: 'limpeza', imagem: Limpeza },
-    { nome: 'Açougue', value: 'acougue', imagem: Acougue },
-    { nome: 'Bebidas', value: 'bebidas', imagem: Bebidas },
-    { nome: 'Horti-Fruti', value: 'horti-fruti', imagem: HortiFruti },
-  ]
 
   const horaAtual = new Date().getHours()
   let saudacaoApp
@@ -80,7 +56,6 @@ export function Home({ navigation }: { navigation: any }) {
     saudacaoApp = 'Boa noite,'
   }
 
-  const [kitsList, setKitsList] = useState<Kit[]>([])
   const [products, setProducts] = useState<product[]>([])
 
   const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario> ({})
@@ -238,7 +213,7 @@ export function Home({ navigation }: { navigation: any }) {
         }}
       >
         {
-          sessoes.map((item, index) => (
+          sections.map((item, index) => (
             <SectionsListComponent
               key={index}
               img={item.imagem}
@@ -267,6 +242,11 @@ export function Home({ navigation }: { navigation: any }) {
         marginTop: 15,
         marginBottom: 15,
         paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderLeftColor: '#EE2F2A',
+        borderLeftWidth: 3,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
       }}>
         <Text style={{
           color: '#030303',
@@ -286,6 +266,11 @@ export function Home({ navigation }: { navigation: any }) {
         marginTop: 15,
         marginBottom: 15,
         paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderLeftColor: '#EE2F2A',
+        borderLeftWidth: 3,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
       }}>
         <Text style={{
           color: '#030303',
@@ -321,7 +306,7 @@ export function Home({ navigation }: { navigation: any }) {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Orffers')
+              navigation.navigate('SeeMoreHighlights')
             }}
             style={{
               display: 'flex',
@@ -434,6 +419,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingVertical: 10,
+        borderLeftColor: '#EE2F2A',
+        borderLeftWidth: 3,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
   },
   OrffersItem: {
     borderWidth: 0.5,

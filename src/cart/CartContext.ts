@@ -1,36 +1,36 @@
-import { create } from "zustand";
-import { persist, StorageValue } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Necessário para persistência no Expo
+import { create } from "zustand"
+import { persist, StorageValue } from 'zustand/middleware'
+import AsyncStorage from '@react-native-async-storage/async-storage' // Necessário para persistência no Expo
 
 interface Products {
-  id: string;
-  name: string;
-  price: string;
-  images: string[];
-  category: string;
-  quantity?: number;
+  id: string
+  name: string
+  price: string
+  images: string[]
+  category: string
+  quantity: number
 }
 
 interface CartProducts {
-  products: Products[];
-  addProduct: (product: Products, qtd: number) => void;
-  deleteProduct: (id: string) => void;
-  decreaseProductQuantity: (product: Products) => void;
-  increaseProductQuantity: (product: Products) => void;
+  products: Products[]
+  addProduct: (product: Products, qtd: number) => void
+  deleteProduct: (id: string) => void
+  decreaseProductQuantity: (product: Products) => void
+  increaseProductQuantity: (product: Products) => void
 }
 
 const storage = {
   getItem: async (key: string) => {
-    const value = await AsyncStorage.getItem(key);
-    return value ? JSON.parse(value) as StorageValue<CartProducts> : null;
+    const value = await AsyncStorage.getItem(key)
+    return value ? JSON.parse(value) as StorageValue<CartProducts> : null
   },
   setItem: async (key: string, value: StorageValue<CartProducts>) => {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
+    await AsyncStorage.setItem(key, JSON.stringify(value))
   },
   removeItem: async (key: string) => {
-    await AsyncStorage.removeItem(key);
+    await AsyncStorage.removeItem(key)
   },
-};
+}
 
 export const useCart = create<CartProducts>()(
   
@@ -49,7 +49,7 @@ export const useCart = create<CartProducts>()(
               ),
             };
           }
-          return { products: [...state.products, { ...product, quantity: qtd }] };
+          return { products: [...state.products, { ...product, quantity: qtd }] }
           
         }),
       deleteProduct: (id: string) =>

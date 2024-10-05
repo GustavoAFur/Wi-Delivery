@@ -13,7 +13,7 @@ interface Props {
     price: string
     images: string[]
     category: string
-    quantity?: number
+    quantity: number
   }
 }
 
