@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 
-import firestore from '@react-native-firebase/firestore'
+import firestore, { Filter } from '@react-native-firebase/firestore'
 
 import { useCart } from '../cart/CartContext'
 
@@ -64,8 +64,42 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
   } 
 
   useEffect(() => {
-    console.log(lastDocument)
-  }, [lastDocument])
+    if(search.length >= 3) {
+      const fetchProducts = async () => {
+        try {
+          const querySnapshot = await firestore()
+            .collection('products')
+            //@ts-ignore
+            .where('category', '==', route.params.filtroCategoria)
+            .where('name', '>=', search)
+            .where('name', '<=', search + '\uf8ff')
+            .get();
+  
+          if (querySnapshot.empty) {
+            console.log('No products found');
+            return;
+          }
+          //@ts-ignore
+          setLastDocument(querySnapshot.docs[querySnapshot.docs.length - 1]);
+
+          const arrayProd: any = [];
+          querySnapshot.forEach((doc) => {
+            const id = doc.id;
+            const produto = doc.data()
+            arrayProd.push({ id, ...produto });
+          });
+  
+          setProductsList(arrayProd);
+        } catch (error) {
+          console.error("Error fetching products: ", error);
+        }
+      };
+  
+      fetchProducts();
+      
+    }
+    //@ts-ignore
+  }, [search, route.params.filtroCategoria])
 
   useEffect(() => {
     showProducts()
