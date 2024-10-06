@@ -93,6 +93,7 @@ export function Home({ navigation }: { navigation: any }) {
       try {
         const produtosSnapShot = await firestore()
           .collection('products')
+          .orderBy('relevance', 'desc')
           .limit(10)
           .get()
 

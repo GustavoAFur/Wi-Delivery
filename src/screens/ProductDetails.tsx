@@ -36,13 +36,28 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
   const [imageProduct, setImageProduct] = useState()
   const [indexImg, setIndexImg] = useState(1)
 
-  useEffect(() => {
-    //@ts-ignore
-    setImageProduct(route.params.item.images[0])
-    //@ts-ignore
-    console.log(route.params.item)
-    //@ts-ignore
-  }, [route.params.item])
+  const attProductRelevance = (productId: string) => {
+    const postReference = firestore().doc(`products/${productId}`);
+
+    return firestore().runTransaction(async transaction => {
+      // Get post data first
+      const productSnapshot = await transaction.get(postReference);
+
+      if (!productSnapshot.exists) {
+        throw 'Post does not exist!';
+      }
+
+      const currentRelevance = productSnapshot.data()?.relevance || 0;
+
+      transaction.update(postReference, {
+        relevance: currentRelevance + 1,
+      });
+    });
+  }
+  const hadleAddProduct =  (item : any, qtsItens: number) => {
+    addProduct(item, qtsItens)
+    attProductRelevance(item.id)
+  }
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -400,7 +415,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
       <Pressable
         onPress={() => {
           //@ts-ignore
-          addProduct(route.params.item, qtsItens)
+          hadleAddProduct(route.params.item, qtsItens)
           navigation.goBack()
           ToastAndroid.show('Adicionado ao carrinho', ToastAndroid.SHORT)
         }}
