@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'
 
-import { useRoute } from '@react-navigation/native'
+import { useRoute} from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native';
 
 import { useCart } from '../cart/CartContext'
 
@@ -21,6 +22,7 @@ interface product {
   images: string[]
 }
 
+
 export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const route = useRoute()
@@ -32,7 +34,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
   const { products, addProduct } = useCart()
 
   const [qtsItens, setQtdItens] = useState(1)
-
+  //@ts-ignore
   const [imageProduct, setImageProduct] = useState()
   const [indexImg, setIndexImg] = useState(1)
 
@@ -58,6 +60,11 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
     addProduct(item, qtsItens)
     attProductRelevance(item.id)
   }
+
+  useEffect(() => {
+    //@ts-ignore
+    setImageProduct(route.params.item.images[0])
+  },[])
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -119,7 +126,6 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             left: 20
           }}
           onPress={() => {
-            //@ts-ignore
             navigation.goBack()
           }}
         >
