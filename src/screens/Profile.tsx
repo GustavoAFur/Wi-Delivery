@@ -103,7 +103,7 @@ export function Profile({ navigation }) {
         <TouchableOpacity 
             style={styles.optionsProfile}
             onPress={()=>{
-              navigation.navigate('Help')
+              navigation.navigate('MyOrders')
             }}
           >
             <View style={styles.iconText}>

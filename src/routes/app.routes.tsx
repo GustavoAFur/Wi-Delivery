@@ -41,6 +41,7 @@ import { About } from '../screens/About'
 import { Help } from '../screens/Help'
 import { Cadastros } from '../screens/Cadastros'
 import { SeeMoreHighlights } from '../screens/SeeMoreHighlights'
+import { MyOrders } from '../screens/MyOrders'
 
 export function AppRoutes() {
 
@@ -469,6 +470,13 @@ export function AppRoutes() {
         <Screen
           name="Help"
           component={Help}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="MyOrders"
+          component={MyOrders}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
