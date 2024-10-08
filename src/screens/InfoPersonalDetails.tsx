@@ -2,7 +2,7 @@ import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Pl
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import React, { useEffect, useRef, useState } from 'react'
-
+import MaskInput, { Masks } from 'react-native-mask-input'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
@@ -12,11 +12,13 @@ export function InfoPersonalDetails({ navigation }) {
 
   const [userId, setUserId] = useState('')
   const [nome, setNome] = useState('')
+  const [cpfCnpj, setCpfCnpj] = useState('')
   const [sobrenome, setSobrenome] = useState('')
   const [telefone, setTelefone] = useState('')
 
   const inputRef1 = useRef(null)
   const inputRef2 = useRef(null)
+  const inputRef3 = useRef(null)
 
   useEffect(() => {
     const currentUser = auth().currentUser
@@ -47,7 +49,7 @@ export function InfoPersonalDetails({ navigation }) {
             fontSize: 20,
             alignSelf: 'center',
             color: '#323232',
-            fontFamily: 'GeneralSans-Semibold'
+            fontFamily: 'DMSans-SemiBold'
           }}>
             Dados Pessoais
           </Text>
@@ -93,10 +95,30 @@ export function InfoPersonalDetails({ navigation }) {
               </View>
 
               <View style={{ marginBottom: 30 }}>
+                <Text style={styles.textos}>CPF</Text>
+                <MaskInput
+                  ref={inputRef1}
+                  returnKeyType="next"
+                  keyboardType="decimal-pad"
+                        autoComplete='off'
+                        placeholder="CPF ou CNPJ"
+                        autoCorrect={false}
+                        mask={Masks.BRL_CPF_CNPJ}
+                  //@ts-ignore
+                  onSubmitEditing={() => inputRef3.current.focus()}
+                  value={cpfCnpj}
+                  onChangeText={setCpfCnpj}
+                  placeholderTextColor={'#f1f1f1'}
+                  style={styles.inputs}
+                />
+              </View>
+
+              <View style={{ marginBottom: 30 }}>
                 <Text style={styles.textos}>Telefone</Text>
-                <TextInput
-                  ref={inputRef2}
+                <MaskInput
+                  ref={inputRef3}
                   value={telefone}
+                  mask={Masks.BRL_PHONE}
                   onChangeText={setTelefone}
                   placeholder='Digite aqui...'
                   keyboardType="numeric"
@@ -110,8 +132,10 @@ export function InfoPersonalDetails({ navigation }) {
 
             <View style={{
               marginTop: 15,
+              opacity: nome == '' || sobrenome == '' || cpfCnpj == '' ? 0.5 : 1
             }}>
               <TouchableOpacity
+              disabled={nome == '' || sobrenome == '' || cpfCnpj == '' ? true : false}
                 style={{
                   width: '100%',
                   height: 55,
@@ -119,7 +143,7 @@ export function InfoPersonalDetails({ navigation }) {
                   justifyContent: 'center',
                   backgroundColor: '#EE2F2A',
                   borderRadius: 10,
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
                 onPress={() => {
                   firestore()
@@ -129,6 +153,7 @@ export function InfoPersonalDetails({ navigation }) {
                       nome: nome,
                       sobrenome: sobrenome,
                       telefone: telefone,
+                      cpfCnpj: cpfCnpj,
                     })
                     .then(() => {
                       navigation.navigate('InfoAdress')
@@ -137,7 +162,7 @@ export function InfoPersonalDetails({ navigation }) {
               >
                 <Text style={{
                   fontSize: 18,
-                  fontFamily: 'Manrope-SemiBold',
+                  fontFamily: 'DMSans-SemiBold',
                   color: '#fff',
                 }}>
                   Continuar
@@ -158,7 +183,7 @@ export const styles = StyleSheet.create({
   textos: {
     position: 'absolute',
     fontSize: 14,
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: 'DMSans-SemiBold',
     color: '#323232',
     marginLeft: 10,
     marginTop: -12,
@@ -175,6 +200,6 @@ export const styles = StyleSheet.create({
     color: '#0008',
     paddingHorizontal: 18,
     fontSize: 16,
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: 'DMSans-SemiBold',
   }
 })
