@@ -30,7 +30,6 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const { products } = useCart()
 
-  console.log('products', products)
   const [url, setUrl] = useState('https://github.com/')
 
   const [modalVisible, setModalVisible] = useState(false)

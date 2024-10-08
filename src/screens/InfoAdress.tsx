@@ -12,7 +12,7 @@ export function InfoAdress({ navigation }) {
 
   const { width, height } = Dimensions.get("window")
   const [userId, setUserId] = useState('')
-  
+
   const [bairro, setBairro] = useState('')
   const [rua, setRua] = useState('')
   const [numero, setNumero] = useState('')
@@ -47,15 +47,15 @@ export function InfoAdress({ navigation }) {
         <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
         <View style={{
-        width: width,
-        paddingHorizontal: 30,
-        marginTop: 0,
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-      }}>
+          width: width,
+          paddingHorizontal: 30,
+          marginTop: 0,
+          height: 60,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+        }}>
           <TouchableOpacity
             style={{
               position: 'absolute',
@@ -69,16 +69,17 @@ export function InfoAdress({ navigation }) {
             <ScreenBack width={20} height={20} />
           </TouchableOpacity>
 
-        
+
           <Text style={{
             fontSize: 20,
+            fontFamily: 'DMSans-SemiBold',
             alignSelf: 'center',
             color: '#323232',
           }}>
             Endereço
           </Text>
         </View>
-      
+
         <View style={{ flex: 1, width: width, backgroundColor: '#fff', alignItems: 'center' }}>
           <View style={{
             width: '86%',
@@ -186,12 +187,53 @@ export function InfoAdress({ navigation }) {
                       complemento: complemento,
                       referencia: referencia,
                       completo: true
+                    }).then(() => {
+
+                      firestore()
+                        .collection('users')
+                        .doc(`${userId}`)
+                        .get()
+                        .then(documentSnapshot => {
+
+                          if (documentSnapshot.exists) {
+
+                            const options = {
+                              method: 'POST',
+                              headers: {
+                                accept: 'application/json',
+                                'content-type': 'application/json',
+                                access_token: `${process.env.API_KEY_ASAAS}`
+                              },
+                              body: JSON.stringify({
+                                name: documentSnapshot.data()?.nome,
+                                cpfCnpj: documentSnapshot.data()?.cpfCnpj,
+                                email: auth().currentUser?.email,
+                                mobilePhone: documentSnapshot.data()?.numero,
+                                address: documentSnapshot.data()?.rua,
+                                addressNumber:  documentSnapshot.data()?.numero,
+                                complement: documentSnapshot.data()?.referencia,
+                                province: documentSnapshot.data()?.bairro,
+                                notificationDisabled: false,
+                              })
+                            };
+                            
+                            fetch('https://sandbox.asaas.com/api/v3/customers', options)
+                              .then(response => {
+                              
+                                firestore()
+                                .collection('users')
+                                .doc(`${userId}`)
+                                .update(response.json())
+                              })
+                              .catch(err => console.error(err))
+                          }
+                        })
                     })
                 }}
               >
                 <Text style={{
                   fontSize: 18,
-                  fontFamily: 'Manrope-SemiBold',
+                  fontFamily: 'DMSans-SemiBold',
                   color: '#fff',
                 }}>
                   Continuar
@@ -211,7 +253,7 @@ export const styles = StyleSheet.create({
   textos: {
     position: 'absolute',
     fontSize: 14,
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: 'DMSans-SemiBold',
     color: '#323232',
     marginLeft: 10,
     marginTop: -12,
@@ -228,6 +270,6 @@ export const styles = StyleSheet.create({
     color: '#0008',
     paddingHorizontal: 18,
     fontSize: 16,
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: 'DMSans-SemiBold',
   }
 })

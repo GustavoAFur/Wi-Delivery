@@ -44,14 +44,14 @@ export function InserirDadosInfo({ navigation }: { navigation: any }) {
       >
         <Text style={{
           fontSize: 28,
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
           color: '#0F1121',
           textAlign: 'center',
           marginVertical: 20,
         }}>
           Menos de
           <Text style={{
-            fontFamily: 'GeneralSans-Bold',
+            fontFamily: 'DMSans-Bold',
             color: '#EE2F2A',
           }}>
             {' '}um minuto!
@@ -60,8 +60,9 @@ export function InserirDadosInfo({ navigation }: { navigation: any }) {
         </Text>
 
         <Text style={{
-          fontSize: 24,
-          fontFamily: 'GeneralSans-Light',
+          fontSize: 20,
+          lineHeight: 24,
+          fontFamily: 'DMSans-Light',
           color: '#0F1121',
           textAlign: 'center',
         }}>
@@ -84,7 +85,7 @@ export function InserirDadosInfo({ navigation }: { navigation: any }) {
           }}>
           <Text style={{
             fontSize: 18,
-            fontFamily: 'GeneralSans-SemiBold',
+            fontFamily: 'DMSans-SemiBold',
             color: '#fff',
           }}>
             Continuar
