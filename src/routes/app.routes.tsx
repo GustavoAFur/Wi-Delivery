@@ -10,7 +10,7 @@ import firestore from '@react-native-firebase/firestore'
 import { Home } from '../screens/Home'
 import { Profile } from '../screens/Profile'
 import { Orffers } from '../screens/Orffers'
-import { Procurar } from '../screens/Procurar'
+import { SearchScreen } from '../screens/SearchScreen'
 import { Cart } from '../screens/Cart'
 import { InfoPersonalDetails } from '../screens/InfoPersonalDetails'
 
@@ -175,8 +175,8 @@ export function AppRoutes() {
           }}
         />
         <Tab.Screen
-          name="Procurar"
-          component={Procurar}
+          name="SearchScreen"
+          component={SearchScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               focused ? (

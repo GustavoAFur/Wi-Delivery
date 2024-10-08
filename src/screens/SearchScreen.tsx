@@ -1,43 +1,34 @@
-import { View, Text, Dimensions, StatusBar, StyleSheet, TouchableOpacity, FlatList, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, StatusBar, FlatList, Pressable } from 'react-native'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { TextInput } from 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
-import { useRoute } from '@react-navigation/native'
 
-import firestore, { Filter } from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore'
 
-import { useCart } from '../cart/CartContext'
-
-import ScreenBack from '../../assets/svgs/arrow-right.svg'
 import Search from '../../assets/svgs/search-b.svg'
-import { Products } from '../components/Products';
+import { Products } from '../components/Products'
 
-interface  product {
+interface product {
   id: string
   name: string
   price: string
   category: string
   images: string[]
 }
-export default function ProductsByCategory({ navigation }: { navigation: any }) {
-
-  const { width, height } = Dimensions.get("window")
-
-  const route = useRoute()
-
-  const [productsList, setProductsList] = useState<product[]>([])
-  const [lastDocument, setLastDocument] = useState();
+export function SearchScreen({ navigation }: { navigation: any }) {
 
   const [search, setSearch] = useState('')
 
-  const { products } = useCart()
+  const { width, height } = Dimensions.get("window")
+
+  const [productsList, setProductsList] = useState<product[]>([])
+  const [lastDocument, setLastDocument] = useState();
 
   const showProducts = async () => {
     try {
       let query = firestore()
         .collection('products')
-        //@ts-ignore
-        .where('category', '==', `${route.params.filtroCategoria}`)
+        .orderBy('name', 'asc')
 
         if(lastDocument != undefined) 
           query = query.startAfter(lastDocument)
@@ -69,8 +60,6 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
         try {
           const querySnapshot = await firestore()
             .collection('products')
-            //@ts-ignore
-            .where('category', '==', route.params.filtroCategoria)
             .where('name', '>=', search)
             .where('name', '<=', search + '\uf8ff')
             .get();
@@ -98,101 +87,16 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
       fetchProducts();
       
     }
-    //@ts-ignore
-  }, [search, route.params?.filtroCategoria])
-
-  useEffect(() => {
-    showProducts()
-  }, [])
-
+  }, [search])
 
   return (
     <View style={{
       width: width,
       height: height + getStatusBarHeight(),
       paddingTop: getStatusBarHeight(),
-      backgroundColor: '#fff',
-      flex: 1
+      backgroundColor: '#fff'
     }}>
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
-      <View style={{
-        width: width,
-        paddingHorizontal: 30,
-        marginTop: 0,
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-      }}>
-
-        <TouchableOpacity
-          onPress={() => {
-            //@ts-ignore
-            navigation.goBack()
-          }}
-        >
-          <ScreenBack width={20} height={20} />
-        </TouchableOpacity>
-
-
-        <Text style={{
-          fontSize: 18,
-          alignSelf: 'center',
-          color: '#323232',
-          fontFamily: 'GeneralSans-SemiBold'
-        }}>
-          {/* @ts-ignore */}
-          {route.params.categoria}
-        </Text>
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Cart')
-          }}
-          style={{
-            width: 24,
-            height: 24,
-          }}
-        >
-          {
-            products.length > 0 && (
-              <View
-                style={{
-                  backgroundColor: '#EE2F2A',
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  zIndex: 3,
-                  position: 'absolute',
-                  top: -5,
-                  right: -15,
-                  borderColor: '#fff',
-                  borderWidth: 2,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text style={{
-                  fontSize: 10,
-                  color: '#fff',
-                  fontFamily: 'GeneralSans-Semibold',
-                }}>
-                  {products.length}
-                </Text>
-              </View>
-            )
-          }
-          <Image
-            source={require('../../assets/images/cart-unfocused.png')}
-            resizeMode='contain'
-            style={{
-              width: 32,
-              height: 32,
-            }} />
-        </TouchableOpacity>
-      </View>
-
       <View style={{
         width: '90%',
         height: 45,
@@ -201,32 +105,18 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 16,
-        marginTop: 20,
+        marginTop: 30,
+        marginBottom: 30,
         paddingLeft: 10
       }}>
         <Search width={20} height={20} />
         <TextInput
+          value={search}
+          onChangeText={setSearch}
           placeholder='Pesquisar Produto'
           placeholderTextColor={'#7C7C7C'}
-          style={styles.input} 
-          value={search}
-          onChangeText={(text) => setSearch(text)}
-        />
+          style={styles.input} />
       </View>
-
-      {
-        search !== '' && search.length < 3 && (
-          <Text style={{
-            alignSelf: 'center',
-            color: '#EE2F2A',
-            marginTop: 10,
-            fontFamily: 'GeneralSans-Semibold',
-          }}
-          >
-            Digite pelo menos 3 caracteres
-          </Text>
-        )
-      }
 
       <FlatList
         contentContainerStyle={{
@@ -268,15 +158,45 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
           }
         }
         }
+        ListEmptyComponent={() => (
+          <View style={{
+            alignItems: 'center',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            width: '98%',
+            height: '80%',
+          }}>
+            <Text style={{
+              fontSize: 18,
+              color: '#c6c6c6',
+              fontFamily: 'GeneralSans-SemiBold',
+            }}>
+              Procure por um produto da loja.
+            </Text>
+          </View>
+
+        )}
         keyExtractor={item => item.id}
         numColumns={2}
       />
+
+     
     </View>
+
   );
 }
 export const styles = StyleSheet.create({
-
+  OrffersItem: {
+    borderWidth: 1,
+    borderColor: '#d2d2d2',
+    width: 110,
+    height: 198,
+    borderRadius: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff'
+  },
   input: {
+    backgroundColor: '#F2F3F2',
     width: '88%',
     height: 45,
     alignSelf: 'center',
@@ -286,4 +206,27 @@ export const styles = StyleSheet.create({
     color: '#7C7C7C'
 
   },
+  btnAdicionar: {
+    backgroundColor: '#EE2F2A',
+    width: '100%',
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10
+  },
+  imgProdView: {
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  imgProd: {
+    width: 80,
+    height: 80
+  },
+  detailsProd: {
+    width: '86%',
+    height: '45%',
+    alignSelf: 'center',
+    justifyContent: 'space-between'
+  }
 })

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'
 
-import { useRoute} from '@react-navigation/native'
+import { StackActions, useRoute} from '@react-navigation/native'
 import { RouteProp } from '@react-navigation/native';
 
 import { useCart } from '../cart/CartContext'
@@ -13,6 +13,7 @@ import ScreenBack from '../../assets/svgs/arrow-right.svg'
 import More from '../../assets/svgs/mais-black.svg'
 import Less from '../../assets/svgs/menos.svg'
 import { ProductsList } from '../components/PorductsList'
+import { ScreenStackHeaderBackButtonImage } from 'react-native-screens'
 
 interface product {
   id: string
