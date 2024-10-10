@@ -16,13 +16,19 @@ import Order from '../../assets/svgs/Orders-icon.svg'
 
 import LottieView from 'lottie-react-native'
 
+interface user{
+  id: string
+  name: string
+  email: string
+}
+
 //@ts-ignore
 export function Profile({ navigation }) {
 
   const { width, height } = Dimensions.get("window")
   const [isSingOut, setIsSingOut] = useState(false)
 
-  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [userData, setUserData] = useState<user>()
 
   useEffect(()=>{
     const fetchUserData = async () => {
@@ -38,8 +44,7 @@ export function Profile({ navigation }) {
           if (documentSnapshot.exists) {
             const id = documentSnapshot.id
             const data = documentSnapshot.data()
-            //@ts-ignore
-            setDadosUsuario({id, ...data});
+            setUserData({id, name: data?.name, email: data?.email});
           }
         } else {
           console.log('No user is signed in');
@@ -50,7 +55,7 @@ export function Profile({ navigation }) {
     };
 
     fetchUserData()
-  },[dadosUsuario])
+  },[userData])
 
   return (
     <View style={{
@@ -85,16 +90,14 @@ export function Profile({ navigation }) {
               fontFamily: 'GeneralSans-Semibold',
               fontSize: 16,
             }}>
-              {/*@ts-ignore*/}
-              {dadosUsuario.nome} {dadosUsuario.sobrenome}
+              {userData?.name} 
             </Text>
             <Text style={{
               color: '#c6c6c6',
               fontFamily: 'GeneralSans-Semibold',
               fontSize: 14
             }}>
-              {/*@ts-ignore*/}
-              {dadosUsuario.email}
+              {userData?.email}
             </Text>
           </View>
         </View>

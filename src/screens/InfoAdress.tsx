@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Platform, StatusBar, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'
@@ -7,17 +7,31 @@ import auth from '@react-native-firebase/auth'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import ScreenBack from '../../assets/svgs/arrow-right.svg'
-//@ts-ignore
-export function InfoAdress({ navigation }) {
+
+import { useAuth } from '../hooks/auth'
+
+export function InfoAdress({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
   const [userId, setUserId] = useState('')
 
-  const [bairro, setBairro] = useState('')
-  const [rua, setRua] = useState('')
-  const [numero, setNumero] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [referencia, setReferencia] = useState('')
+  const {
+    province,
+    setProvince,
+    street,
+    setStreet,
+    number,
+    setNumber,
+    complement,
+    setComplement,  
+    reference,
+    setReference,
+    name,
+    cpfCnpj,
+    lastName,
+    phone,
+  } = useAuth()
+
 
   const inputRef1 = useRef(null)
   const inputRef2 = useRef(null)
@@ -29,6 +43,51 @@ export function InfoAdress({ navigation }) {
     //@ts-ignore
     setUserId(currentUser.uid)
   }, [])
+
+  async function createClient() {
+    const options = {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        access_token: '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwODA1MDU6OiRhYWNoX2M2ZjcxNTQzLTc0MzMtNGJjZi1hNzNhLTQyNmIxMzJlMjYzNQ==',
+      },
+      body: JSON.stringify({
+        name: name + '' + lastName,
+        cpfCnpj: cpfCnpj,
+        email: auth().currentUser?.email,
+        mobilePhone: phone,
+        address: street,
+        addressNumber: number,
+        complement: complement,
+        province: province,
+        notificationDisabled: false,
+      })
+    };
+  
+    try {
+      const response = await fetch('https://sandbox.asaas.com/api/v3/customers', options);
+  
+      if (!response.ok) {
+        const errorMessage = await response.text();  // Captura a mensagem de erro da resposta
+        Alert.alert('Erro', `Request failed with status ${response.status}: ${errorMessage}`);
+        throw new Error(`Request failed with status ${response.status}: ${errorMessage}`);
+      }
+  
+      const data = await response.json();
+      await firestore()
+      .collection('users')
+      .doc(`${userId}`)
+      .update(
+        data
+      );
+      
+      console.log('Client created and Firestore updated successfully');
+    } catch (err) {
+      console.error('Error:',err);
+    }
+  }
+  
 
   return (
     <KeyboardAvoidingView
@@ -62,7 +121,6 @@ export function InfoAdress({ navigation }) {
               left: 20
             }}
             onPress={() => {
-              //@ts-ignore
               navigation.goBack()
             }}
           >
@@ -91,8 +149,8 @@ export function InfoAdress({ navigation }) {
               <View style={{ marginBottom: 30 }}>
                 <Text style={styles.textos}>Bairro</Text>
                 <TextInput
-                  value={bairro}
-                  onChangeText={setBairro}
+                  value={province}
+                  onChangeText={setProvince}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -106,8 +164,8 @@ export function InfoAdress({ navigation }) {
                 <Text style={styles.textos}>Rua</Text>
                 <TextInput
                   ref={inputRef1}
-                  value={rua}
-                  onChangeText={setRua}
+                  value={street}
+                  onChangeText={setStreet}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -121,8 +179,8 @@ export function InfoAdress({ navigation }) {
                 <Text style={styles.textos}>Número</Text>
                 <TextInput
                   ref={inputRef2}
-                  value={numero}
-                  onChangeText={setNumero}
+                  value={number}
+                  onChangeText={setNumber}
                   keyboardType='numeric'
                   placeholder='Número de construção/casa'
                   placeholderTextColor={'#f1f1f1'}
@@ -137,8 +195,8 @@ export function InfoAdress({ navigation }) {
                 <Text style={styles.textos}>Complemento</Text>
                 <TextInput
                   ref={inputRef3}
-                  value={complemento}
-                  onChangeText={setComplemento}
+                  value={complement}
+                  onChangeText={setComplement}
                   placeholder='Apartamento, edificio,...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -152,8 +210,8 @@ export function InfoAdress({ navigation }) {
                 <Text style={styles.textos}>Referência</Text>
                 <TextInput
                   ref={inputRef4}
-                  value={referencia}
-                  onChangeText={setReferencia}
+                  value={reference}
+                  onChangeText={setReference}
                   placeholder='Perto de...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -177,59 +235,8 @@ export function InfoAdress({ navigation }) {
                   alignItems: 'center'
                 }}
                 onPress={() => {
-                  firestore()
-                    .collection('users')
-                    .doc(`${userId}`)
-                    .update({
-                      bairro: bairro,
-                      rua: rua,
-                      numero: numero,
-                      complemento: complemento,
-                      referencia: referencia,
-                      completo: true
-                    }).then(() => {
-
-                      firestore()
-                        .collection('users')
-                        .doc(`${userId}`)
-                        .get()
-                        .then(documentSnapshot => {
-
-                          if (documentSnapshot.exists) {
-
-                            const options = {
-                              method: 'POST',
-                              headers: {
-                                accept: 'application/json',
-                                'content-type': 'application/json',
-                                access_token: `${process.env.API_KEY_ASAAS}`
-                              },
-                              body: JSON.stringify({
-                                name: documentSnapshot.data()?.nome,
-                                cpfCnpj: documentSnapshot.data()?.cpfCnpj,
-                                email: auth().currentUser?.email,
-                                mobilePhone: documentSnapshot.data()?.numero,
-                                address: documentSnapshot.data()?.rua,
-                                addressNumber:  documentSnapshot.data()?.numero,
-                                complement: documentSnapshot.data()?.referencia,
-                                province: documentSnapshot.data()?.bairro,
-                                notificationDisabled: false,
-                              })
-                            };
-                            
-                            fetch('https://sandbox.asaas.com/api/v3/customers', options)
-                              .then(response => {
-                              
-                                firestore()
-                                .collection('users')
-                                .doc(`${userId}`)
-                                .update(response.json())
-                              })
-                              .catch(err => console.error(err))
-                          }
-                        })
-                    })
-                }}
+                  createClient()
+                }}        
               >
                 <Text style={{
                   fontSize: 18,

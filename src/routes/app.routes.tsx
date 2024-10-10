@@ -47,7 +47,6 @@ export function AppRoutes() {
 
   const { Navigator, Screen } = createStackNavigator()
 
-  const { kitsCart } = useAuth()
   const { products } = useCart()
 
   const [isComplete, setIsComplete] = useState<boolean | null>(true)
@@ -65,7 +64,7 @@ export function AppRoutes() {
         if (documentSnapshot.exists) {
           const userData = documentSnapshot.data()
 
-          if (userData?.completo === false) {
+          if (userData?.name === undefined) {
             setIsComplete(false)
             console.log('Usuário incompleto:', userData)
           } else {
@@ -168,57 +167,6 @@ export function AppRoutes() {
                     }}>
 
                       Inicío
-                    </Text>
-                  </View>
-                )
-            )
-          }}
-        />
-        <Tab.Screen
-          name="SearchScreen"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              focused ? (
-                <View style={{
-                  height: '100%',
-                  paddingVertical: 10,
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}>
-                  <Image
-                    source={SearchFocused}
-                    resizeMode='contain'
-                    style={{
-                      width: 32,
-                      height: 32,
-                    }} />
-                  <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
-                  }}>
-                    Procurar
-                  </Text>
-                </View>
-              ) :
-                (
-                  <View style={{
-                    height: '100%',
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}>
-                    <Image
-                      source={SearchUnfocused}
-                      resizeMode='contain'
-                      style={{
-                        width: 32,
-                        height: 32,
-                      }} />
-                    <Text style={{
-                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
-                    }}>
-
-                      Procurar
                     </Text>
                   </View>
                 )
@@ -477,6 +425,13 @@ export function AppRoutes() {
         <Screen
           name="MyOrders"
           component={MyOrders}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="SearchScreen"
+          component={SearchScreen}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
