@@ -120,6 +120,7 @@ export function SearchScreen({ navigation }: { navigation: any }) {
 
       <FlatList
         contentContainerStyle={{
+          flexGrow: 1,
           paddingHorizontal: 20,
           paddingTop: 30
         }}
@@ -161,10 +162,8 @@ export function SearchScreen({ navigation }: { navigation: any }) {
         ListEmptyComponent={() => (
           <View style={{
             alignItems: 'center',
-            alignSelf: 'center',
             justifyContent: 'center',
-            width: '98%',
-            height: '80%',
+            flex: 1
           }}>
             <Text style={{
               fontSize: 18,
