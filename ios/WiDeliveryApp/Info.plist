@@ -49,13 +49,18 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Manrope-Bold.ttf</string>
-		<string>Manrope-ExtraBold.ttf</string>
-		<string>Manrope-ExtraLight.ttf</string>
-		<string>Manrope-Light.ttf</string>
-		<string>Manrope-Medium.ttf</string>
-		<string>Manrope-Regular.ttf</string>
-		<string>Manrope-SemiBold.ttf</string>
+		<string>GeneralSans-Bold.otf</string>
+		<string>GeneralSans-BoldItalic.otf</string>
+		<string>GeneralSans-Extralight.otf</string>
+		<string>GeneralSans-ExtralightItalic.otf</string>
+		<string>GeneralSans-Italic.otf</string>
+		<string>GeneralSans-Light.otf</string>
+		<string>GeneralSans-LightItalic.otf</string>
+		<string>GeneralSans-Medium.otf</string>
+		<string>GeneralSans-MediumItalic.otf</string>
+		<string>GeneralSans-Regular.otf</string>
+		<string>GeneralSans-Semibold.otf</string>
+		<string>GeneralSans-SemiboldItalic.otf</string>
 	</array>
 </dict>
 </plist>
