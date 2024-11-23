@@ -22,7 +22,6 @@ export function Products({ product, navigation }: Props & PressableProps & { nav
         borderRadius: 10,
         padding: 10,
         borderColor: '#F1F3F5',
-        gap: 8,
         margin: 5
       }}
     >
@@ -47,34 +46,24 @@ export function Products({ product, navigation }: Props & PressableProps & { nav
       <View
         style={{
           width: '100%',
-          height: 40,
         }}
       >
         <Text
           style={{
             color: '#0F1121',
             fontSize: 15,
-            fontFamily: 'GeneralSans-Semibold'
+            fontFamily: 'DMSans-SemiBold'
           }}
         >
           {product.name}
         </Text>
 
-      </View>
-
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}
-      >
         <Text
           style={{
             color: '#7C7C7C',
             fontSize: 15,
-            fontFamily: 'GeneralSans-Semibold'
+            fontFamily: 'DMSans-SemiBold',
+            marginTop: 5
           }}
         >
           R$ {product.price}

@@ -37,7 +37,7 @@ export function HeaderScreens({ navigation, title }: Props & PressableProps) {
         fontSize: 18,
         alignSelf: 'center',
         color: '#323232',
-        fontFamily: 'GeneralSans-Semibold'
+        fontFamily: 'DMSans-SemiBold'
       }}>
         {title}
       </Text>

@@ -136,7 +136,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           fontSize: 18,
           alignSelf: 'center',
           color: '#323232',
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Detalhes do Produto
         </Text>
@@ -187,7 +187,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             style={{
               fontSize: 14,
               color: '#fff',
-              fontFamily: 'Manrope-SemiBold'
+              fontFamily: 'DMSans-SemiBold'
             }}
           >
             {/*@ts-ignore*/}
@@ -286,7 +286,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         <Text style={{
           fontSize: 18,
           color: '#A9A9A9',
-          fontFamily: 'GeneralSans-Medium'
+          fontFamily: 'DMSans-Medium'
         }}>
           {/*@ts-ignore*/}
           R$ {route.params.item.price}
@@ -329,7 +329,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 20,
               color: '#323232',
-              fontFamily: 'GeneralSans-Bold'
+              fontFamily: 'DMSans-Bold'
             }}>
               {qtsItens}
             </Text>
@@ -368,7 +368,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
               <Text style={{
                 fontSize: 20,
                 color: '#4F4F4F',
-                fontFamily: 'GeneralSans-Bold'
+                fontFamily: 'DMSans-Bold'
               }}>
                 Detalhes:
               </Text>
@@ -441,7 +441,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         <Text style={{
           fontSize: 18,
           color: '#fff',
-          fontFamily: 'GeneralSans-Bold'
+          fontFamily: 'DMSans-Bold'
         }}>
           Adicionar
         </Text>

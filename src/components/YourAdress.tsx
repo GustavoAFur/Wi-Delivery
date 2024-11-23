@@ -49,7 +49,7 @@ export function YourAdress({street,number, neighborhood, navTo}: Props & Pressab
             <Text style={{
               color: '#808D9E',
               fontSize: 12,
-              fontFamily: 'GeneralSans-Medium',
+              fontFamily: 'DMSans-Medium',
             }}>
               O seu endereço de delivery
             </Text>
@@ -57,7 +57,7 @@ export function YourAdress({street,number, neighborhood, navTo}: Props & Pressab
             <Text style={{
               color: '#191A26',
               fontSize: 14,
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               {
                 street.length > 18

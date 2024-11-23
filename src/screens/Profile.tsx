@@ -87,14 +87,14 @@ export function Profile({ navigation }) {
           <View style={styles.ProfileInfos}>
             <Text style={{
               color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
               fontSize: 16,
             }}>
               {userData?.name} 
             </Text>
             <Text style={{
               color: '#c6c6c6',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
               fontSize: 14
             }}>
               {userData?.email}
@@ -215,7 +215,7 @@ export function Profile({ navigation }) {
                     />
                     <Text style={{
                       fontSize: 16,
-                      fontFamily: 'GeneralSans-Semibold',
+                      fontFamily: 'DMSans-SemiBold',
                       color: '#fff',
                     }}>
                       Sair
@@ -267,7 +267,7 @@ export const styles = StyleSheet.create({
   },
   optionText: {
     color: '#181725',
-    fontFamily: 'GeneralSans-Semibold',
+    fontFamily: 'DMSans-SemiBold',
     fontSize: 16,
     paddingLeft: 8
   },

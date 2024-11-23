@@ -50,7 +50,7 @@ export function SignIn({ navigation }: { navigation: any }) {
 
         <Text style={{
           fontSize: 24,
-          fontFamily: 'GeneralSans-Light',
+          fontFamily: 'DMSans-Light',
           color: '#0F1121',
           textAlign: 'left',
           marginVertical: 20,
@@ -71,7 +71,7 @@ export function SignIn({ navigation }: { navigation: any }) {
             borderRadius: 8,
             color: '#000',
             fontSize: 16,
-            fontFamily: 'GeneralSans-Light',
+            fontFamily: 'DMSans-Light',
             paddingLeft: 10,
             marginBottom: 20,
           }}
@@ -89,7 +89,7 @@ export function SignIn({ navigation }: { navigation: any }) {
             borderRadius: 8,
             color: '#000',
             fontSize: 16,
-            fontFamily: 'GeneralSans-Light',
+            fontFamily: 'DMSans-Light',
             paddingLeft: 10,
             marginBottom: 20,
           }}
@@ -135,7 +135,7 @@ export function SignIn({ navigation }: { navigation: any }) {
               /> :
               <Text style={{
                 fontSize: 16,
-                fontFamily: 'GeneralSans-Semibold',
+                fontFamily: 'DMSans-SemiBold',
                 color: '#fff',
               }}>
                 Entrar
@@ -157,7 +157,7 @@ export function SignIn({ navigation }: { navigation: any }) {
         >
           <Text style={{
             fontSize: 16,
-            fontFamily: 'GeneralSans-Medium',
+            fontFamily: 'DMSans-Regular',
             color: '#7C7C7C',
           }}>
             Ainda não tem conta?
@@ -169,8 +169,8 @@ export function SignIn({ navigation }: { navigation: any }) {
           >
             <Text style={{
               fontSize: 16,
-              fontFamily: 'GeneralSans-Semibold',
-              color: '#7C7C7C',
+              fontFamily: 'DMSans-SemiBold',
+              color: '#EE2F2A',
             }}>
               Criar conta
             </Text>

@@ -221,9 +221,9 @@ export function AppRoutes() {
                       height: 32,
                     }} />
                   <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
+                    fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#000'
                   }}>
-                    Cart
+                    Carrinho
                   </Text>
                 </View>
               ) :
@@ -255,7 +255,7 @@ export function AppRoutes() {
                           <Text style={{
                             fontSize: 10,
                             color: '#fff',
-                            fontFamily: 'GeneralSans-Semibold',
+                            fontFamily: 'DMSans-SemiBold',
                           }}>
                             {products.length}
                           </Text>
@@ -270,10 +270,10 @@ export function AppRoutes() {
                         height: 32,
                       }} />
                     <Text style={{
-                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Cart
+                      Carrinho
                     </Text>
                   </View>
                 )
@@ -300,9 +300,9 @@ export function AppRoutes() {
                       height: 32,
                     }} />
                   <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
+                    fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#000'
                   }}>
-                    Profile
+                    Perfil
                   </Text>
                 </View>
               ) :
@@ -321,10 +321,10 @@ export function AppRoutes() {
                         height: 32,
                       }} />
                     <Text style={{
-                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Profile
+                      Perfil
                     </Text>
                   </View>
                 )

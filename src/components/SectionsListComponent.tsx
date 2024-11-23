@@ -62,6 +62,7 @@ const SectionsListComponent = ({name, img, navTo}: Props & PressableProps) => {
         </Text>
       </View>
     </Pressable>
+
   );
 };
 

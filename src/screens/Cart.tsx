@@ -161,7 +161,7 @@ export function Cart({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 18,
               color: '#c6c6c6',
-              fontFamily: 'GeneralSans-SemiBold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Não há nenhum ítem no seu carrinho
             </Text>
@@ -208,7 +208,7 @@ export function Cart({ navigation }: { navigation: any }) {
         <Text style={{
           fontSize: 16,
           color: '#fff',
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Finalizar Compra
         </Text>
@@ -227,7 +227,7 @@ export function Cart({ navigation }: { navigation: any }) {
           <Text style={{
             fontSize: 12,
             color: '#fff',
-            fontFamily: 'GeneralSans-Semibold',
+            fontFamily: 'DMSans-SemiBold',
           }}>
             R$ {totalCompra.toFixed(2)}
           </Text>
@@ -280,7 +280,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 18,
                 color: '#000',
-                fontFamily: 'GeneralSans-Semibold',
+                fontFamily: 'DMSans-SemiBold',
               }}
             >
               Checkout
@@ -310,7 +310,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
               }}
             >
               Total:
@@ -319,7 +319,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Semibold',
+                fontFamily: 'DMSans-SemiBold',
               }}
             >
               R$ {totalCompra.toFixed(2)}
@@ -337,7 +337,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
                 textAlign: 'left'
               }}
             >
@@ -376,7 +376,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
                 textAlign: 'left'
               }}
             >
@@ -419,7 +419,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 style={{
                   fontSize: 16,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Medium',
+                  fontFamily: 'DMSans-Medium',
                   textAlign: 'left'
                 }}
               >
@@ -457,7 +457,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 12,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
               }}
             >
               Ao comprar você concorda com nossos termos de
@@ -465,7 +465,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 style={{
                   fontSize: 12,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}
               >
                 {' '}uso{' '}
@@ -475,7 +475,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 style={{
                   fontSize: 12,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}
               >
                 {' '}condições{' '}
@@ -509,7 +509,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 <Text style={{
                   fontSize: 16,
                   color: '#fff',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}>
                   Finalizar Compra
                 </Text>
@@ -601,6 +601,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'center',
     color: '#323232',
-    fontFamily: 'Manrope-SemiBold'
+    fontFamily: 'DMSans-SemiBold'
   },
 })
