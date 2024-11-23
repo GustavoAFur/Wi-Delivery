@@ -1,202 +1,544 @@
-import React, { useState } from 'react'
-import { Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height'
-import firestore from '@react-native-firebase/firestore'
+import React, {useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions,
+  Pressable,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  TouchableNativeFeedback,
+} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import auth from '@react-native-firebase/auth'
-import LottieView from 'lottie-react-native'
-//@ts-ignore
-export function SignUp({ navigation }: { navigation: any }) {
+import IconBack from '../../assets/svgs/back-w.svg';
 
-  const { width, height } = Dimensions.get("window")
+export function SignUp({navigation}: {navigation: any}) {
+  const {width, height} = Dimensions.get('window');
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isCreating, setIsCreating] = useState(false)
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingVertical: getStatusBarHeight(),
-          paddingHorizontal: 20,
-          backgroundColor: '#fff',
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
-        <View
-          style={{
-            width: width,
-            height: height * 0.4, // Ajuste de altura
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'center'
-          }}>
-          <Image
-            source={require('../../assets/images/Mobile-login-bro.png')}
-            resizeMode='contain'
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </View>
+  const [isFocused, setIsFocused] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [messageErro, setmessageErro] = useState<string>('');
 
-        <Text style={{
-          fontSize: 24,
-          fontFamily: 'DMSans-Light',
-          color: '#0F1121',
-          textAlign: 'center',
-          marginVertical: 20,
-        }}>
-          Crie sua conta!
-        </Text>
+  function signInWithEmailAndPassword() {
+    setLoading(true);
 
-        <TextInput
-          placeholder='E-mail'
-          placeholderTextColor={'#7C7C7C'}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          style={{
-            borderColor: '#F2F3F3',
-            borderWidth: 0.6,
-            borderRadius: 8,
-            color: '#000',
-            fontSize: 16,
-            fontFamily: 'DMSans-Light',
-            paddingLeft: 10,
-            marginBottom: 20,
-          }}
-        />
-
-        <TextInput
-          placeholder='Senha'
-          placeholderTextColor={'#7C7C7C'}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          style={{
-            borderColor: '#F2F3F3',
-            borderWidth: 0.6,
-            borderRadius: 8,
-            color: '#000',
-            fontSize: 16,
-            fontFamily: 'DMSans-Light',
-            paddingLeft: 10,
-            marginBottom: 20,
-          }}
-        />
-
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-        <TouchableOpacity
-          disabled={!email || !password ? true : false}
-          onPress={() => {
-            setIsCreating(true)
-            auth()
-              .createUserWithEmailAndPassword(`${email}`, `${password}`)
-              .then(userCredential => {
-                // Cria um documento no Firestore com o mesmo ID do usuário
-                return firestore()
-                  .collection('users')
-                  .doc(userCredential.user.uid)
-                  .set({
-                    email: userCredential.user.email,
-                  });
-              })
-              .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                  Alert.alert('Este e-mail já está em uso!');
-                }
-
-                if (error.code === 'auth/invalid-email') {
-                  Alert.alert('E-mail inválido!');
-                }
-
-                console.error(error);
-              }).finally(() => {
-                setIsCreating(false)
-              })
-          }}
-          style={{
-            backgroundColor: '#EE2F2A',
-            borderRadius: 8,
-            width: '95%',
-            height: 50,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 20,
-          }}
-        >
-          {
-            isCreating ?
-              <LottieView
-                autoPlay
-                loop
-                source={require('../../assets/json/Animation-Red.json')}
-                style={{ width: 60, height: 60 }}
-              /> :
-              <Text style={{
-                fontSize: 16,
-                fontFamily: 'DMSans-SemiBold',
-                color: '#fff',
-              }}>
-                Criar conta
-              </Text>
+    if (email != '' && password != '') {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            setmessageErro('Esse endereço de email já esta em uso!');
           }
 
-        </TouchableOpacity>
-        </View>
+          if (error.code === 'auth/invalid-email') {
+            setmessageErro('Email ou senha inválida.');
+          }
+
+          if (error.code === 'auth/wrong-password') {
+            setmessageErro('Sua senha está incorreta.');
+          }
+
+          if (error.code === 'auth/invalid-credential') {
+            setmessageErro('Tente novamente mais tarde.');
+          } else {
+            console.log(error.code);
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setmessageErro('Informe um email e senha válidos.');
+      setLoading(false);
+    }
+  }
+
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="always"
+      showsVerticalScrollIndicator={false}
+      style={{
+        backgroundColor: '#ffff',
+      }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === 'ios' ? -15 : -15}
+        style={{
+          width: width,
+          height: '100%',
+        }}>
+        <StatusBar
+          translucent
+          backgroundColor={'#00000000'}
+          barStyle={'light-content'}
+        />
+
+        <LinearGradient
+          colors={['#F58106', '#EE2F2A']}
+          style={{
+            width: '100%',
+            height: 250,
+            paddingTop: getStatusBarHeight(),
+          }}>
+          <View
+            style={{
+              width: '100%',
+              height: 42,
+              marginTop: 16,
+              paddingHorizontal: 30,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <IconBack width={24} height={24} />
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+
         <View
           style={{
-            width: '95%',
-            height: 50,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 20,
-            flexDirection: 'row',
-            gap: 5
-          }}
-        >
-          <Text style={{
-            fontSize: 16,
-            fontFamily: 'DMSans-Medium',
-            color: '#7C7C7C',
+            width: '100%',
+            marginVertical: 32,
           }}>
-            Já tem uma conta?
-          </Text>
-          <TouchableOpacity
-            onPress={()=>{
-              navigation.navigate('SignIn')
-            }}
-          >
-            <Text style={{
-              fontSize: 16,
-              fontFamily: 'DMSans-SemiBold',
-              color: '#EE2F2A',
+          <Text
+            style={{
+              color: '#323232',
+              textAlign: 'center',
+              letterSpacing: -1,
+              fontSize: 30,
+              lineHeight: 30,
+              fontFamily: 'DMSans-Regular',
+              textAlignVertical: 'center',
             }}>
-              Entrar
+            Crie sua conta agora,{'\n'}
+            <Text style={{color: '#EE2F2A', fontFamily: 'DMSans-SemiBold'}}>
+              simples{' '}
             </Text>
-          </TouchableOpacity>
+            e{' '}
+            <Text style={{color: '#EE2F2A', fontFamily: 'DMSans-SemiBold'}}>
+              fácil
+            </Text>
+            .
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 13,
+              width: '60%',
+              textAlign: 'center',
+              fontFamily: 'DMSans-Regular',
+              color: '#323232',
+              alignSelf: 'center',
+              marginTop: 10,
+            }}>
+            Cadastre-se para ter acesso aos melhores descontos e ofertas.
+          </Text>
         </View>
 
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <View
+          style={{
+            marginTop: 8,
+            paddingHorizontal: 30,
+            gap: 16,
+          }}>
+          <View style={{}}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: 'DMSans-SemiBold',
+                color: '#0F1121',
+              }}>
+              Nome
+            </Text>
+
+            <View
+              style={{
+                width: '100%',
+                height: 50,
+                backgroundColor: '#F5F5F5',
+                borderRadius: 12,
+                marginTop: 8,
+                borderWidth: 1,
+                //@ts-ignore
+                borderColor: isFocused == 'nameRef' ? '#EE2F2A' : '#F5F5F5',
+              }}>
+              <TextInput
+                ref={nameRef}
+                onSubmitEditing={() => {
+                  //@ts-ignore
+                  emailRef.current.focus();
+                }}
+                keyboardType="email-address"
+                autoComplete="email"
+                placeholder="Digite seu nome"
+                placeholderTextColor={'#D5D6DB'}
+                autoCorrect={false}
+                returnKeyType="go"
+                showSoftInputOnFocus={true}
+                selectTextOnFocus={true}
+                onChangeText={setEmail}
+                value={email}
+                onFocus={() => {
+                  setIsFocused('nameRef');
+                }}
+                onBlur={() => {
+                  setIsFocused('');
+                }}
+                style={{
+                  width: '100%',
+                  fontSize: 15,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#0F1121',
+                  height: 48,
+                  marginLeft: 10,
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={{}}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: 'DMSans-SemiBold',
+                color: '#0F1121',
+              }}>
+              Email
+            </Text>
+
+            <View
+              style={{
+                width: '100%',
+                height: 50,
+                backgroundColor: '#F5F5F5',
+                borderRadius: 12,
+                marginTop: 8,
+                borderWidth: 1,
+                //@ts-ignore
+                borderColor: isFocused == 'emailRef' ? '#EE2F2A' : '#F5F5F5',
+              }}>
+              <TextInput
+                ref={emailRef}
+                onSubmitEditing={() => {
+                  //@ts-ignore
+                  passwordRef.current.focus();
+                }}
+                keyboardType="email-address"
+                autoComplete="email"
+                placeholder="Digite seu email"
+                placeholderTextColor={'#D5D6DB'}
+                autoCorrect={false}
+                returnKeyType="go"
+                showSoftInputOnFocus={true}
+                selectTextOnFocus={true}
+                onChangeText={setEmail}
+                value={email}
+                onFocus={() => {
+                  setIsFocused('emailRef');
+                }}
+                onBlur={() => {
+                  setIsFocused('');
+                }}
+                style={{
+                  width: '100%',
+                  fontSize: 15,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#0F1121',
+                  height: 48,
+                  marginLeft: 10,
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={{}}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: 'DMSans-SemiBold',
+                color: '#0F1121',
+              }}>
+              Senha
+            </Text>
+
+            <View
+              style={{
+                width: '100%',
+                height: 48,
+                backgroundColor: '#F5F5F5',
+                borderRadius: 12,
+                marginTop: 8,
+                borderWidth: 1,
+                //@ts-ignore
+                borderColor: isFocused == 'passwordRef' ? '#EE2F2A' : '#F3F3FA',
+              }}>
+              <TextInput
+                ref={passwordRef}
+                onSubmitEditing={() => {
+                  signInWithEmailAndPassword();
+                }}
+                keyboardType="default"
+                secureTextEntry={true}
+                placeholder="Digite sua senha"
+                placeholderTextColor={'#D5D6DB'}
+                returnKeyType="send"
+                showSoftInputOnFocus={true}
+                selectTextOnFocus={true}
+                onChangeText={setPassword}
+                value={password}
+                onFocus={() => {
+                  setIsFocused('passwordRef');
+                }}
+                onBlur={() => {
+                  setIsFocused('');
+                }}
+                style={{
+                  width: '100%',
+                  fontSize: 15,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#0F1121',
+                  height: 48,
+                  marginLeft: 10,
+                }}
+              />
+            </View>
+          </View>
+
+          {messageErro && (
+            <View style={{alignItems: 'center'}}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#EE2F2A',
+                }}>
+                {messageErro}
+              </Text>
+            </View>
+          )}
+
+          <Pressable
+            onPress={() => {
+              signInWithEmailAndPassword();
+            }}
+            style={{
+              width: '100%',
+              height: 52,
+              borderRadius: 50,
+              backgroundColor: '#EE2F2A',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 24,
+            }}>
+            {loading ? (
+              <LottieView
+                source={require('../../assets/json/loading-w.json')}
+                autoPlay
+                loop={true}
+                speed={1}
+                style={{
+                  width: 66,
+                  height: 66,
+                }}
+              />
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'DMSans-SemiBold',
+                  color: '#FFFFFF',
+                }}>
+                Entrar
+              </Text>
+            )}
+          </Pressable>
+        </View>
+
+        <View
+          style={{
+            width: '100%',
+            marginTop: 24,
+            paddingHorizontal: 30,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <View
+              style={{
+                width: '22%',
+                height: 1,
+                backgroundColor: '#F3F3FA',
+              }}
+            />
+
+            <Text
+              style={{
+                fontSize: 14,
+                lineHeight: 16,
+                fontFamily: 'DMSans-Regular',
+                color: '#67697A',
+              }}>
+              ou cadastre-se com
+            </Text>
+
+            <View
+              style={{
+                width: '22%',
+                height: 1,
+                backgroundColor: '#F3F3FA',
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: 20,
+            }}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('SignUpPaceiro');
+              }}
+              style={{
+                width: 160,
+                height: 52,
+                borderRadius: 50,
+                flexDirection: 'row',
+                gap: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderWidth: 1,
+                borderColor: '#F3F3FA',
+              }}>
+              <Image
+                source={require('../../assets/images/gmail.png')}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#0F1121',
+                }}>
+                Google
+              </Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => {
+                navigation.navigate('SignUpGarcom');
+              }}
+              style={{
+                width: 160,
+                height: 52,
+                borderRadius: 50,
+                flexDirection: 'row',
+                gap: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderWidth: 1,
+                borderColor: '#F3F3FA',
+              }}>
+              <Image
+                source={require('../../assets/images/facebook.png')}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: 'DMSans-Medium',
+                  color: '#0F1121',
+                }}>
+                Facebook
+              </Text>
+            </Pressable>
+          </View>
+
+          <View
+            style={{
+              marginTop: 32,
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: 'DMSans-Regular',
+                color: '#0F1121',
+              }}>
+              Já uma tem conta?{' '}
+              <Text
+                style={{
+                  color: '#EE2F2A',
+                  fontFamily: 'DMSans-SemiBold',
+                }}>
+                Entre
+              </Text>
+            </Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderTopColor: '#F1F1F1',
+            borderTopWidth: 0.8,
+            paddingHorizontal: 20,
+            marginBottom: 24,
+            marginTop: 32,
+          }}>
+          <Text
+            style={{
+              width: '90%',
+              fontSize: 12,
+              fontFamily: 'GeneralSans-Regular',
+              color: '#707070',
+              marginTop: 16,
+              textAlign: 'center',
+            }}>
+            Ao continuar, você concorda com os nossos{' '}
+            <Text style={{fontFamily: 'GeneralSans-Medium', color: '#323232'}}>
+              Termos de Serviço
+            </Text>{' '}
+            e declara que leu nossa
+            <Text style={{fontFamily: 'GeneralSans-Medium', color: '#323232'}}>
+              {' '}
+              Política de Privacidade
+            </Text>{' '}
+            para saber como coletamos e usamos seus dados.
+          </Text>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

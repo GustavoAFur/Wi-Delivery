@@ -14,13 +14,18 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-WiDeliveryApp-WiDeliveryAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-WiDeliveryApp-WiDeliveryAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		50CFBDD27ACB47F78F22BBBF /* Manrope-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0134619FD3CA422BAD6CDAF7 /* Manrope-Bold.ttf */; };
-		C0EEB619BF1D4E548B00D7B9 /* Manrope-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A262F7C42F6A4985A1BF30A6 /* Manrope-ExtraBold.ttf */; };
-		478F15374B63487382BDC530 /* Manrope-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F594743537404F5EA56D2F24 /* Manrope-ExtraLight.ttf */; };
-		892636DCF20F432687DF7506 /* Manrope-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09ED888A8C74415D9FDA9526 /* Manrope-Light.ttf */; };
-		5E9A0546A97C47F99C7D18C3 /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7715FF5CB54400A81989E7D /* Manrope-Medium.ttf */; };
-		FE484D4749C741379ABF3E01 /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3394346E9B1D4F2DB8E82B06 /* Manrope-Regular.ttf */; };
-		BD702353E69A4E2BB9B18BAC /* Manrope-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0E792984F31413180B107C4 /* Manrope-SemiBold.ttf */; };
+		10670E60B17B49E9A26038F4 /* GeneralSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6115DD4A924846B4A69F67B1 /* GeneralSans-Bold.otf */; };
+		A6CFBAB7442A48F086710457 /* GeneralSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 580E4C18C7E74DB6873C843A /* GeneralSans-BoldItalic.otf */; };
+		63E55F6F03D546DBA8F95AD2 /* GeneralSans-Extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5EFFAEFE409748C9A98A7C63 /* GeneralSans-Extralight.otf */; };
+		7188260FB8AD4B72990B9EEC /* GeneralSans-ExtralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = ADE0711B7B2942AEB453CB74 /* GeneralSans-ExtralightItalic.otf */; };
+		1B63D90D1ACD4360A58A07D0 /* GeneralSans-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = DCE236FE58FA4E2C8B097F8C /* GeneralSans-Italic.otf */; };
+		E4630FD4B44146C3964F1B2D /* GeneralSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5C5AA5AF1CEF41088EB12C19 /* GeneralSans-Light.otf */; };
+		FF3CC723D31A4155B84464D0 /* GeneralSans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = BA517F222A874743BB28CC1C /* GeneralSans-LightItalic.otf */; };
+		F81211E303274B1F81EF5963 /* GeneralSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B47D364FB2484CEBBDB15387 /* GeneralSans-Medium.otf */; };
+		DE3A5DF9300E48B2B8367753 /* GeneralSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FF0C54DE98D403DACD6D92E /* GeneralSans-MediumItalic.otf */; };
+		E62BD1660522435A8D47FD15 /* GeneralSans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04A1086A409244BE96FB994A /* GeneralSans-Regular.otf */; };
+		C2FC996D422F44CDADBA3BA3 /* GeneralSans-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FC076624FB85470AA60A7A6B /* GeneralSans-Semibold.otf */; };
+		71AE3546B3754A13B3BBBF34 /* GeneralSans-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5A445A2C8BF54E948AFFC0B2 /* GeneralSans-SemiboldItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,13 +56,18 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = WiDeliveryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-WiDeliveryApp-WiDeliveryAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiDeliveryApp-WiDeliveryAppTests.release.xcconfig"; path = "Target Support Files/Pods-WiDeliveryApp-WiDeliveryAppTests/Pods-WiDeliveryApp-WiDeliveryAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		0134619FD3CA422BAD6CDAF7 /* Manrope-Bold.ttf */ = {isa = PBXFileReference; name = "Manrope-Bold.ttf"; path = "../assets/fonts/Manrope-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A262F7C42F6A4985A1BF30A6 /* Manrope-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Manrope-ExtraBold.ttf"; path = "../assets/fonts/Manrope-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F594743537404F5EA56D2F24 /* Manrope-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Manrope-ExtraLight.ttf"; path = "../assets/fonts/Manrope-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		09ED888A8C74415D9FDA9526 /* Manrope-Light.ttf */ = {isa = PBXFileReference; name = "Manrope-Light.ttf"; path = "../assets/fonts/Manrope-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E7715FF5CB54400A81989E7D /* Manrope-Medium.ttf */ = {isa = PBXFileReference; name = "Manrope-Medium.ttf"; path = "../assets/fonts/Manrope-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3394346E9B1D4F2DB8E82B06 /* Manrope-Regular.ttf */ = {isa = PBXFileReference; name = "Manrope-Regular.ttf"; path = "../assets/fonts/Manrope-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E0E792984F31413180B107C4 /* Manrope-SemiBold.ttf */ = {isa = PBXFileReference; name = "Manrope-SemiBold.ttf"; path = "../assets/fonts/Manrope-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6115DD4A924846B4A69F67B1 /* GeneralSans-Bold.otf */ = {isa = PBXFileReference; name = "GeneralSans-Bold.otf"; path = "../assets/fonts/GeneralSans-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		580E4C18C7E74DB6873C843A /* GeneralSans-BoldItalic.otf */ = {isa = PBXFileReference; name = "GeneralSans-BoldItalic.otf"; path = "../assets/fonts/GeneralSans-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5EFFAEFE409748C9A98A7C63 /* GeneralSans-Extralight.otf */ = {isa = PBXFileReference; name = "GeneralSans-Extralight.otf"; path = "../assets/fonts/GeneralSans-Extralight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ADE0711B7B2942AEB453CB74 /* GeneralSans-ExtralightItalic.otf */ = {isa = PBXFileReference; name = "GeneralSans-ExtralightItalic.otf"; path = "../assets/fonts/GeneralSans-ExtralightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DCE236FE58FA4E2C8B097F8C /* GeneralSans-Italic.otf */ = {isa = PBXFileReference; name = "GeneralSans-Italic.otf"; path = "../assets/fonts/GeneralSans-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5C5AA5AF1CEF41088EB12C19 /* GeneralSans-Light.otf */ = {isa = PBXFileReference; name = "GeneralSans-Light.otf"; path = "../assets/fonts/GeneralSans-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BA517F222A874743BB28CC1C /* GeneralSans-LightItalic.otf */ = {isa = PBXFileReference; name = "GeneralSans-LightItalic.otf"; path = "../assets/fonts/GeneralSans-LightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B47D364FB2484CEBBDB15387 /* GeneralSans-Medium.otf */ = {isa = PBXFileReference; name = "GeneralSans-Medium.otf"; path = "../assets/fonts/GeneralSans-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2FF0C54DE98D403DACD6D92E /* GeneralSans-MediumItalic.otf */ = {isa = PBXFileReference; name = "GeneralSans-MediumItalic.otf"; path = "../assets/fonts/GeneralSans-MediumItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		04A1086A409244BE96FB994A /* GeneralSans-Regular.otf */ = {isa = PBXFileReference; name = "GeneralSans-Regular.otf"; path = "../assets/fonts/GeneralSans-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FC076624FB85470AA60A7A6B /* GeneralSans-Semibold.otf */ = {isa = PBXFileReference; name = "GeneralSans-Semibold.otf"; path = "../assets/fonts/GeneralSans-Semibold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5A445A2C8BF54E948AFFC0B2 /* GeneralSans-SemiboldItalic.otf */ = {isa = PBXFileReference; name = "GeneralSans-SemiboldItalic.otf"; path = "../assets/fonts/GeneralSans-SemiboldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,13 +176,18 @@
 		5F0A65618E644D128D41D9E9 /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
-				0134619FD3CA422BAD6CDAF7 /* Manrope-Bold.ttf */,
-				A262F7C42F6A4985A1BF30A6 /* Manrope-ExtraBold.ttf */,
-				F594743537404F5EA56D2F24 /* Manrope-ExtraLight.ttf */,
-				09ED888A8C74415D9FDA9526 /* Manrope-Light.ttf */,
-				E7715FF5CB54400A81989E7D /* Manrope-Medium.ttf */,
-				3394346E9B1D4F2DB8E82B06 /* Manrope-Regular.ttf */,
-				E0E792984F31413180B107C4 /* Manrope-SemiBold.ttf */,
+				6115DD4A924846B4A69F67B1 /* GeneralSans-Bold.otf */,
+				580E4C18C7E74DB6873C843A /* GeneralSans-BoldItalic.otf */,
+				5EFFAEFE409748C9A98A7C63 /* GeneralSans-Extralight.otf */,
+				ADE0711B7B2942AEB453CB74 /* GeneralSans-ExtralightItalic.otf */,
+				DCE236FE58FA4E2C8B097F8C /* GeneralSans-Italic.otf */,
+				5C5AA5AF1CEF41088EB12C19 /* GeneralSans-Light.otf */,
+				BA517F222A874743BB28CC1C /* GeneralSans-LightItalic.otf */,
+				B47D364FB2484CEBBDB15387 /* GeneralSans-Medium.otf */,
+				2FF0C54DE98D403DACD6D92E /* GeneralSans-MediumItalic.otf */,
+				04A1086A409244BE96FB994A /* GeneralSans-Regular.otf */,
+				FC076624FB85470AA60A7A6B /* GeneralSans-Semibold.otf */,
+				5A445A2C8BF54E948AFFC0B2 /* GeneralSans-SemiboldItalic.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -273,13 +288,18 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				50CFBDD27ACB47F78F22BBBF /* Manrope-Bold.ttf in Resources */,
-				C0EEB619BF1D4E548B00D7B9 /* Manrope-ExtraBold.ttf in Resources */,
-				478F15374B63487382BDC530 /* Manrope-ExtraLight.ttf in Resources */,
-				892636DCF20F432687DF7506 /* Manrope-Light.ttf in Resources */,
-				5E9A0546A97C47F99C7D18C3 /* Manrope-Medium.ttf in Resources */,
-				FE484D4749C741379ABF3E01 /* Manrope-Regular.ttf in Resources */,
-				BD702353E69A4E2BB9B18BAC /* Manrope-SemiBold.ttf in Resources */,
+				10670E60B17B49E9A26038F4 /* GeneralSans-Bold.otf in Resources */,
+				A6CFBAB7442A48F086710457 /* GeneralSans-BoldItalic.otf in Resources */,
+				63E55F6F03D546DBA8F95AD2 /* GeneralSans-Extralight.otf in Resources */,
+				7188260FB8AD4B72990B9EEC /* GeneralSans-ExtralightItalic.otf in Resources */,
+				1B63D90D1ACD4360A58A07D0 /* GeneralSans-Italic.otf in Resources */,
+				E4630FD4B44146C3964F1B2D /* GeneralSans-Light.otf in Resources */,
+				FF3CC723D31A4155B84464D0 /* GeneralSans-LightItalic.otf in Resources */,
+				F81211E303274B1F81EF5963 /* GeneralSans-Medium.otf in Resources */,
+				DE3A5DF9300E48B2B8367753 /* GeneralSans-MediumItalic.otf in Resources */,
+				E62BD1660522435A8D47FD15 /* GeneralSans-Regular.otf in Resources */,
+				C2FC996D422F44CDADBA3BA3 /* GeneralSans-Semibold.otf in Resources */,
+				71AE3546B3754A13B3BBBF34 /* GeneralSans-SemiboldItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
