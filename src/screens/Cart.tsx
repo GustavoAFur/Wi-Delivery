@@ -26,7 +26,6 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const { kitsCart, setKitsCart } = useAuth()
 
   const { products } = useCart()
 
@@ -128,9 +127,7 @@ export function Cart({ navigation }: { navigation: any }) {
             price: itens.price,
             quantity: itens.quantity || 1,
           })
-      })).then(() => {
-        setKitsCart([])
-      }).finally(() => {
+      })).finally(() => {
         handleOpenLink()
       })
 

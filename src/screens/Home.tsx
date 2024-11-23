@@ -24,6 +24,7 @@ import SectionsListComponent from '../components/SectionsListComponent'
 import { YourAdress } from '../components/YourAdress'
 import { ProductsList } from '../components/PorductsList'
 import { sections } from '../data/Sections'
+import { SearchInput } from '../components/SearchInput'
 
  interface  product {
   id: string
@@ -34,12 +35,13 @@ import { sections } from '../data/Sections'
 }
 
 interface DadosUsuario{
-  nome?: string
+  name?: string
   email?: string
-  rua?: string
-  numero?: string
-  bairro?: string
-  imagem?: string
+  street?: string
+  addressNumber?: string
+  address?: string
+  province?: string
+  image?: string
 }
 
 const dadosUsuario: DadosUsuario = {}; // Initialize dadosUsuario with an empty object
@@ -172,7 +174,7 @@ export function Home({ navigation }: { navigation: any }) {
               fontFamily: 'DMSans-SemiBold',
               color: '#0F1121',
             }}>
-              {dadosUsuario.nome ?? ''}
+              {dadosUsuario.name ?? ''}
             </Text>
 
 
@@ -192,12 +194,17 @@ export function Home({ navigation }: { navigation: any }) {
         </Pressable>
       </View>
 
+      <SearchInput 
+        navTo={() => navigation.navigate('SearchScreen')}
+      />
+
       <YourAdress
         navTo={() => navigation.navigate('AdressDetails')}
-        street={dadosUsuario.rua ?? ''}
-        number={dadosUsuario.numero ?? ''}
-        neighborhood={dadosUsuario.bairro ?? ''}
+        street={dadosUsuario.address ?? ''}
+        number={dadosUsuario.addressNumber ?? ''}
+        neighborhood={dadosUsuario.province ?? ''}
       />
+
 
       <ScrollView
         horizontal

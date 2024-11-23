@@ -2,19 +2,28 @@ import { View, Text, Dimensions, TextInput, StyleSheet, KeyboardAvoidingView, Pl
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import React, { useEffect, useRef, useState } from 'react'
-import MaskInput, { Masks } from 'react-native-mask-input'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
+import MaskInput, { Masks } from 'react-native-mask-input'
+
+import { useAuth } from '../hooks/auth'
 //@ts-ignore
 export function InfoPersonalDetails({ navigation }) {
   const { width, height } = Dimensions.get("window")
 
+  const { 
+    name,
+    setName,
+    cpfCnpj,
+    setCpfCnpj,
+    lastName,
+    setLastName,
+    phone,
+    setPhone
+  } = useAuth()
+
   const [userId, setUserId] = useState('')
-  const [nome, setNome] = useState('')
-  const [cpfCnpj, setCpfCnpj] = useState('')
-  const [sobrenome, setSobrenome] = useState('')
-  const [telefone, setTelefone] = useState('')
 
   const inputRef1 = useRef(null)
   const inputRef2 = useRef(null)
@@ -71,8 +80,8 @@ export function InfoPersonalDetails({ navigation }) {
                   returnKeyType="next"
                   //@ts-ignore
                   onSubmitEditing={() => inputRef1.current.focus()}
-                  value={nome}
-                  onChangeText={setNome}
+                  value={name}
+                  onChangeText={setName}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -86,8 +95,8 @@ export function InfoPersonalDetails({ navigation }) {
                   returnKeyType="next"
                   //@ts-ignore
                   onSubmitEditing={() => inputRef2.current.focus()}
-                  value={sobrenome}
-                  onChangeText={setSobrenome}
+                  value={lastName}
+                  onChangeText={setLastName}
                   placeholder='Digite aqui...'
                   placeholderTextColor={'#f1f1f1'}
                   style={styles.inputs}
@@ -97,7 +106,7 @@ export function InfoPersonalDetails({ navigation }) {
               <View style={{ marginBottom: 30 }}>
                 <Text style={styles.textos}>CPF</Text>
                 <MaskInput
-                  ref={inputRef1}
+                  ref={inputRef2}
                   returnKeyType="next"
                   keyboardType="decimal-pad"
                         autoComplete='off'
@@ -117,9 +126,9 @@ export function InfoPersonalDetails({ navigation }) {
                 <Text style={styles.textos}>Telefone</Text>
                 <MaskInput
                   ref={inputRef3}
-                  value={telefone}
+                  value={phone}
                   mask={Masks.BRL_PHONE}
-                  onChangeText={setTelefone}
+                  onChangeText={setPhone}
                   placeholder='Digite aqui...'
                   keyboardType="numeric"
                   placeholderTextColor={'#f1f1f1'}
@@ -132,10 +141,10 @@ export function InfoPersonalDetails({ navigation }) {
 
             <View style={{
               marginTop: 15,
-              opacity: nome == '' || sobrenome == '' || cpfCnpj == '' ? 0.5 : 1
+              opacity: name == '' || lastName == '' || cpfCnpj == '' ? 0.5 : 1
             }}>
               <TouchableOpacity
-              disabled={nome == '' || sobrenome == '' || cpfCnpj == '' ? true : false}
+              disabled={name == '' || lastName == '' || cpfCnpj == '' ? true : false}
                 style={{
                   width: '100%',
                   height: 55,
@@ -146,18 +155,8 @@ export function InfoPersonalDetails({ navigation }) {
                   alignItems: 'center',
                 }}
                 onPress={() => {
-                  firestore()
-                    .collection('users')
-                    .doc(`${userId}`)
-                    .update({
-                      nome: nome,
-                      sobrenome: sobrenome,
-                      telefone: telefone,
-                      cpfCnpj: cpfCnpj,
-                    })
-                    .then(() => {
-                      navigation.navigate('InfoAdress')
-                    })
+                  navigation.navigate('InfoAdress')
+
                 }}
               >
                 <Text style={{

@@ -15,8 +15,8 @@ export function YourAdress({street,number, neighborhood, navTo}: Props & Pressab
     onPress={navTo}
     style={{
       width: '100%',
-      marginTop: 24,
       paddingHorizontal: 20,
+      marginTop: 24
     }}>
       <View style={{
         width: '100%',

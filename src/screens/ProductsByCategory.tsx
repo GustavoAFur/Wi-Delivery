@@ -99,7 +99,7 @@ export default function ProductsByCategory({ navigation }: { navigation: any }) 
       
     }
     //@ts-ignore
-  }, [search, route.params.filtroCategoria])
+  }, [search, route.params?.filtroCategoria])
 
   useEffect(() => {
     showProducts()

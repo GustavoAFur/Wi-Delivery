@@ -115,9 +115,7 @@ export function SignUp({ navigation }: { navigation: any }) {
                   .collection('users')
                   .doc(userCredential.user.uid)
                   .set({
-                    completo: false,
                     email: userCredential.user.email,
-                    dataCriacao: new Date()
                   });
               })
               .catch(error => {
