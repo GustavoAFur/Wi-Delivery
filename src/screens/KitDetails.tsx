@@ -1,13 +1,13 @@
-import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity, ScrollViewBase } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useState } from 'react'
 
 import { NavigationProp, useRoute } from '@react-navigation/native'
 import { useAuth } from '../hooks/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import More from './../../assets/svgs/mais-black.svg'
-import Less from './../../assets/svgs/menos.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import More from '../../assets/svgs/mais-black.svg'
+import Less from '../../assets/svgs/menos.svg'
 
 export default function KitDetails({ navigation }: { navigation: any }) {
 
@@ -15,15 +15,17 @@ export default function KitDetails({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const {kitsCart, setKitsCart} = useAuth()
+  const { kitsCart, setKitsCart } = useAuth()
 
   const [qtsItens, setQtdItens] = useState(1)
-
+  //@ts-ignore
+  const [imageKit, setImageKit] = useState(route.params.item.images[0])
+  const [indexImg, setIndexImg] = useState(1)
   function handleToggleAddCart(value: any, quantidade: number) {
     setKitsCart(prevObjetos => {
       //@ts-ignore
       const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
-  
+
       if (objetoExistente) {
         // Se o objeto já existir, atualize a quantidade
         return prevObjetos.map(objeto =>
@@ -35,18 +37,14 @@ export default function KitDetails({ navigation }: { navigation: any }) {
         return [...prevObjetos, { ...value, quantidade }]
       }
     })
-  
+
     navigation.goBack();
   }
 
-  useEffect(()=>{
-    //@ts-ignore
-    console.log(route.params.item.nome)
-  },[])
 
   return (
-    
-    <ScrollView 
+
+    <ScrollView
       style={{
         width: width,
         paddingTop: getStatusBarHeight(),
@@ -73,21 +71,21 @@ export default function KitDetails({ navigation }: { navigation: any }) {
             position: 'absolute',
             left: 20
           }}
-            onPress={()=>{
-              //@ts-ignore
-              navigation.goBack()
-            }}
-          >
-            <ScreenBack  width={20} height={20}/>
-          </TouchableOpacity>
-          <Text style={{
-            fontSize: 18,
-            alignSelf: 'center',
-            color: '#323232',
-            fontFamily: 'Manrope-SemiBold'
-          }}>
-            Detalhes do Kit
-          </Text>
+          onPress={() => {
+            //@ts-ignore
+            navigation.goBack()
+          }}
+        >
+          <ScreenBack width={20} height={20} />
+        </TouchableOpacity>
+        <Text style={{
+          fontSize: 18,
+          alignSelf: 'center',
+          color: '#323232',
+          fontFamily: 'Manrope-SemiBold'
+        }}>
+          Detalhes do Kit
+        </Text>
       </View>
 
       <View
@@ -104,22 +102,103 @@ export default function KitDetails({ navigation }: { navigation: any }) {
             width: 0,
             height: 12,
           },
-          shadowOpacity:  0.24,
+          shadowOpacity: 0.24,
           shadowRadius: 15.84,
           elevation: 10
-          }}
+        }}
       >
         <Image
-        //@ts-ignore
-        source={{uri: route.params.item.imagem}}
-        style={{
-          width: '80%',
-          height: '80%',
-          resizeMode: 'contain'
-        }}
+          source={{ uri: imageKit }}
+          style={{
+            width: '80%',
+            height: '80%',
+            resizeMode: 'contain'
+          }}
         />
+
+        <View
+          style={{
+            width: 40,
+            borderRadius: 10,
+            backgroundColor: '#A9A9A9',
+            position: 'absolute',
+            bottom: 10,
+            left: 20,
+            padding: 5,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              color: '#fff',
+              fontFamily: 'Manrope-SemiBold'
+            }}
+          >
+            {/*@ts-ignore*/}
+            {indexImg}/{route.params.item.images.length}
+          </Text>
+        </View>
+
       </View>
-      
+
+
+      {
+        //@ts-ignore
+        route.params.item.images.length > 1 && (
+          <ScrollView
+            horizontal
+            style={{
+              width: '100%',
+              height: 80,
+              marginVertical: 20
+            }}
+            contentContainerStyle={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              paddingHorizontal: 20,
+            }}
+          >
+            {
+              //@ts-ignore
+              route.params.item.images.map((image, index) => (
+                <Pressable
+                  onPress={() => {
+                    setImageKit(image)
+                    setIndexImg(index + 1)
+                  }}
+                  key={index}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    borderColor: imageKit === image ? '#EE2F2A' : '#9c9a9a',
+                    borderWidth: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    //@ts-ignore
+                    source={{ uri: image }}
+                    style={{
+                      width: '80%',
+                      height: '80%',
+                      resizeMode: 'contain'
+                    }}
+                  />
+                </Pressable>
+              ))
+            }
+
+          </ScrollView>
+        )
+      }
+
+
       <View
         style={{
           width: width,
@@ -139,13 +218,13 @@ export default function KitDetails({ navigation }: { navigation: any }) {
         </Text>
 
         <Text style={{
-            fontSize: 18,
-            color: '#A9A9A9',
-            fontFamily: 'GeneralSans-Medium'
-          }}>
-            {/*@ts-ignore*/}
-            R$ {route.params.item.preco}
-          </Text>
+          fontSize: 18,
+          color: '#A9A9A9',
+          fontFamily: 'GeneralSans-Medium'
+        }}>
+          {/*@ts-ignore*/}
+          R$ {route.params.item.preco}
+        </Text>
       </View>
 
       <View
@@ -169,9 +248,9 @@ export default function KitDetails({ navigation }: { navigation: any }) {
           }}
         >
           <TouchableOpacity
-            onPress={()=>{
-              if(qtsItens > 1)
-                setQtdItens(qtsItens-1)
+            onPress={() => {
+              if (qtsItens > 1)
+                setQtdItens(qtsItens - 1)
             }}
             style={{
               width: 40,
@@ -183,9 +262,9 @@ export default function KitDetails({ navigation }: { navigation: any }) {
               justifyContent: 'center'
             }}
           >
-            <Less width={15} height={15}/>
+            <Less width={15} height={15} />
           </TouchableOpacity>
-          
+
           <View
             style={{
               width: 20,
@@ -202,10 +281,10 @@ export default function KitDetails({ navigation }: { navigation: any }) {
               {qtsItens}
             </Text>
           </View>
-          
+
           <TouchableOpacity
-            onPress={()=>{
-              setQtdItens(qtsItens+1)
+            onPress={() => {
+              setQtdItens(qtsItens + 1)
             }}
             style={{
               width: 40,
@@ -217,34 +296,34 @@ export default function KitDetails({ navigation }: { navigation: any }) {
               justifyContent: 'center'
             }}
           >
-            <More width={15} height={15}/>
+            <More width={15} height={15} />
           </TouchableOpacity>
-          
+
         </View>
 
         <Pressable
-        onPress={()=>{
-          //@ts-ignore
-          handleToggleAddCart(route.params.item, qtsItens )
+          onPress={() => {
+            //@ts-ignore
+            handleToggleAddCart(route.params.item, qtsItens)
 
-        }}
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 15,
-          backgroundColor:'#EE2F2A',
-          borderRadius: 30,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text style={{
-          fontSize: 18,
-          color: '#fff',
-          fontFamily: 'GeneralSans-Bold'
-        }}>
-          Adicionar
-        </Text>
-      </Pressable>
+          }}
+          style={{
+            paddingHorizontal: 20,
+            paddingVertical: 15,
+            backgroundColor: '#EE2F2A',
+            borderRadius: 30,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{
+            fontSize: 18,
+            color: '#fff',
+            fontFamily: 'GeneralSans-Bold'
+          }}>
+            Adicionar
+          </Text>
+        </Pressable>
 
       </View>
 
@@ -272,17 +351,25 @@ export default function KitDetails({ navigation }: { navigation: any }) {
           gap: 20
         }}
       >
-        <Text
-          style={{
-            fontSize: 18,
-            color: '#4F4F4F',
-            fontFamily: 'GeneralSans-Medium'
-          }}
-        >
-          {/*@ts-ignore*/}
-          {route.params.item.detalhes}
-        </Text>
+        
+          {
+          //@ts-ignore
+            route.params?.item?.detalhes !== undefined && 
+            <Text
+            style={{
+              fontSize: 18,
+              color: '#4F4F4F',
+              fontFamily: 'GeneralSans-Medium'
+            }}
+            
+          >
+            {/*@ts-ignore*/}
+            {route.params.item.detalhes}
+            </Text>
+          }
+          
       </View>
+
 
     </ScrollView>
   );

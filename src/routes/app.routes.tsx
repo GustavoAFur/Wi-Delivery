@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, KeyboardAvoidingView, Text, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
+import { useCart } from '../cart/CartContext'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
@@ -30,17 +31,24 @@ import { useAuth } from '../hooks/auth'
 import { SelectKit } from '../screens/SelectKit'
 import ProductDetails from '../screens/ProductDetails'
 import KitDetails from '../screens/KitDetails'
-import { SingIn } from '../screens/SingIn'
+import { SignIn } from '../screens/SignIn'
 import { InserirDadosInfo } from '../screens/InserirDadosInfo'
 import { MyDetails } from '../screens/MyDetails'
 import { AdressDetails } from '../screens/AdressDetails'
 import { SignUp } from '../screens/SignUp'
+import { CustomWebView } from '../screens/CustomWebView'
+import { About } from '../screens/About'
+import { Help } from '../screens/Help'
+import { Cadastros } from '../screens/Cadastros'
+import { SeeMoreHighlights } from '../screens/SeeMoreHighlights'
+import { MyOrders } from '../screens/MyOrders'
 
 export function AppRoutes() {
 
   const { Navigator, Screen } = createStackNavigator()
 
   const { kitsCart } = useAuth()
+  const { products } = useCart()
 
   const [isComplete, setIsComplete] = useState<boolean | null>(true)
 
@@ -88,6 +96,7 @@ export function AppRoutes() {
         initialRouteName="Home"
         screenOptions={() => ({
           tabBarStyle: {
+            keyboardHidesTabBar : true,
             right: 10,
             left: 10,
             position: 'absolute',
@@ -229,7 +238,7 @@ export function AppRoutes() {
                   justifyContent: 'space-between'
                 }}>
                   {
-                    kitsCart.length > 0 && (
+                    products.length > 0 && (
                       <View
                         style={{
                           backgroundColor: '#D9042B',
@@ -239,7 +248,7 @@ export function AppRoutes() {
                           zIndex: 3,
                           position: 'absolute',
                           top: 5,
-                          right: 0,
+                          right: -5,
                           borderColor: '#fff',
                           borderWidth: 2,
                           justifyContent: 'center',
@@ -251,7 +260,7 @@ export function AppRoutes() {
                           color: '#fff',
                           fontFamily: 'GeneralSans-Semibold',
                         }}>
-                          {kitsCart.length}
+                          {products.length}
                         </Text>
                       </View>
                     )
@@ -264,9 +273,9 @@ export function AppRoutes() {
                       height: 32,
                     }} />
                   <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
+                    fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#000'
                   }}>
-                    Cart
+                    Carrinho
                   </Text>
                 </View>
               ) :
@@ -278,7 +287,7 @@ export function AppRoutes() {
                     justifyContent: 'space-between'
                   }}>
                     {
-                      kitsCart.length > 0 && (
+                      products.length > 0 && (
                         <View
                           style={{
                             backgroundColor: '#D9042B',
@@ -288,7 +297,7 @@ export function AppRoutes() {
                             zIndex: 3,
                             position: 'absolute',
                             top: 5,
-                            right: 0,
+                            right: -5,
                             borderColor: '#fff',
                             borderWidth: 2,
                             justifyContent: 'center',
@@ -298,9 +307,9 @@ export function AppRoutes() {
                           <Text style={{
                             fontSize: 10,
                             color: '#fff',
-                            fontFamily: 'GeneralSans-Semibold',
+                            fontFamily: 'DMSans-SemiBold',
                           }}>
-                            {kitsCart.length}
+                            {products.length}
                           </Text>
                         </View>
                       )
@@ -313,10 +322,10 @@ export function AppRoutes() {
                         height: 32,
                       }} />
                     <Text style={{
-                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Cart
+                      Carrinho
                     </Text>
                   </View>
                 )
@@ -343,9 +352,9 @@ export function AppRoutes() {
                       height: 32,
                     }} />
                   <Text style={{
-                    fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#000'
+                    fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#000'
                   }}>
-                    Profile
+                    Perfil
                   </Text>
                 </View>
               ) :
@@ -364,10 +373,10 @@ export function AppRoutes() {
                         height: 32,
                       }} />
                     <Text style={{
-                      fontFamily: 'GeneralSans-Semibold', fontSize: 10, color: '#A3A3A3'
+                      fontFamily: 'DMSans-SemiBold', fontSize: 10, color: '#A3A3A3'
                     }}>
 
-                      Profile
+                      Perfil
                     </Text>
                   </View>
                 )
@@ -390,9 +399,10 @@ export function AppRoutes() {
         <Screen name="TabNavigation" component={TabNavigation} />
         <Screen name="Home" component={Home} />
         <Screen name="SelectKit" component={SelectKit} />
+        <Screen name="Cadastros" component={Cadastros} />
         <Screen
-          name="Orffers"
-          component={Orffers}
+          name="SeeMoreHighlights"
+          component={SeeMoreHighlights}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}
@@ -430,13 +440,6 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            ...TransitionPresets.SlideFromRightIOS,
-          }}
-        />
-        <Screen
           name="MyDetails"
           component={MyDetails}
           options={{
@@ -446,6 +449,34 @@ export function AppRoutes() {
         <Screen
           name="AdressDetails"
           component={AdressDetails}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="CustomWebView"
+          component={CustomWebView}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="About"
+          component={About}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="Help"
+          component={Help}
+          options={{
+            ...TransitionPresets.SlideFromRightIOS,
+          }}
+        />
+        <Screen
+          name="MyOrders"
+          component={MyOrders}
           options={{
             ...TransitionPresets.SlideFromRightIOS,
           }}

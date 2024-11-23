@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity, Dimensions, StyleSheet, Image, StatusBar, FlatList, Alert, Modal, Pressable, Animated, TextInput } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
+//@ts-ignore
+import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 import ItensCart from '../components/ItensCart'
@@ -10,9 +12,13 @@ import { useAuth } from '../hooks/auth'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import Close from './../../assets/svgs/close.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import Close from '../../assets/svgs/close.svg'
 import LottieView from 'lottie-react-native'
+import InAppBrowser from 'react-native-inappbrowser-reborn'
+
+import { useCart } from '../cart/CartContext'
+import { HeaderScreens } from '../components/HeaderScreens'
 
 export function Cart({ navigation }: { navigation: any }) {
 
@@ -22,6 +28,10 @@ export function Cart({ navigation }: { navigation: any }) {
 
   const { kitsCart, setKitsCart } = useAuth()
 
+  const { products } = useCart()
+
+  const [url, setUrl] = useState('https://github.com/')
+
   const [modalVisible, setModalVisible] = useState(false)
   const [modalFinalizarVisible, setModalFinalizarVisible] = useState(false)
   const [totalCompra, setTotalCompra] = useState(0)
@@ -30,7 +40,7 @@ export function Cart({ navigation }: { navigation: any }) {
   const [troco, setTroco] = useState('')
 
   const [idItemRef, setIdItemRef] = useState(0)
-  const [dadosUsuario, setDadosUsuario] = useState({})
+  const [userData, setUserData] = useState({})
 
   const [openRet, setOpenRet] = useState(false)
   const [valueRet, setValueRet] = useState(null)
@@ -47,6 +57,14 @@ export function Cart({ navigation }: { navigation: any }) {
     { label: 'Cartão', value: 'cartao' }
   ])
 
+  const handleOpenLink = async () => {
+    try {
+      await InAppBrowser.open(url)
+    } catch (error) {
+      console.error('Failed to open link:', error)
+    }
+  }
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -61,8 +79,7 @@ export function Cart({ navigation }: { navigation: any }) {
           if (documentSnapshot.exists) {
             const id = documentSnapshot.id
             const data = documentSnapshot.data()
-            //@ts-ignore
-            setDadosUsuario({ id, ...data })
+            setUserData({ id, ...data })
           }
         } else {
           console.log('No user is signed in')
@@ -75,40 +92,17 @@ export function Cart({ navigation }: { navigation: any }) {
     fetchUserData()
   }, [])
 
-  useEffect(() => {
-    const dataArray = kitsCart.map((item) => {
-      //@ts-ignore
-      const valorItem = parseFloat(item.preco) * parseFloat(item.quantidade)
+  useMemo(() => {
+    const dataArray = products.map((item) => {
+      const valorItem = parseFloat(item.price) * (item.quantity || 1)
       return { valorItem }
     })
 
     const valorTotal = dataArray.reduce((total, item) => total + item.valorItem, 0)
     setTotalCompra(valorTotal)
-  }, [kitsCart])
+  }, [products])
 
-  function addQtd(idProd: any) {
-    setKitsCart(prevObjetos =>
-      prevObjetos.map(objeto =>
-        //@ts-ignore
-        objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade + 1 } : objeto
-      )
-    )
-  }
 
-  function decQtd(idProd: any) {
-    //@ts-ignore
-    setKitsCart(prevObjetos =>
-      prevObjetos.map(objeto =>
-        //@ts-ignore
-        objeto && objeto.id === idProd ? { ...objeto, quantidade: objeto.quantidade - 1 } : objeto
-      )
-    );
-  }
-
-  function delProdCart(value: string) {
-    //@ts-ignore
-    setKitsCart((state) => state.filter(item => item.id !== value))
-  }
 
   async function finalizarPedido(usuario: any) {
     setFinalizando(true)
@@ -124,24 +118,22 @@ export function Cart({ navigation }: { navigation: any }) {
           valor: totalCompra.toFixed(2),
           troco: troco !== '' ? parseFloat(troco) - totalCompra : 'Finalizadora sem troco'
         })
-      await Promise.all(kitsCart.map(async (itens) => {
+      await Promise.all(products.map(async (itens) => {
         await firestore()
           .collection('pedidos')
           .doc(idSnapshot.id)
           .collection('itens')
           .add({
-            //@ts-ignore
-            nome: itens.nome,
-            //@ts-ignore
-            preco: itens.preco,
-            //@ts-ignore
-            quantidade: itens.quantidade
+            name: itens.name,
+            price: itens.price,
+            quantity: itens.quantity || 1,
           })
-      }))
+      })).then(() => {
+        setKitsCart([])
+      }).finally(() => {
+        handleOpenLink()
+      })
 
-      Alert.alert("Pedido Cadastrado")
-      setKitsCart([])
-      navigation.goBack()
 
     } catch (error) {
       Alert.alert('Erro ao salvar pedido')
@@ -161,49 +153,18 @@ export function Cart({ navigation }: { navigation: any }) {
 
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
 
-      <View style={{
-        width: '100%',
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        borderBottomColor: '#E2E2E2',
-        borderBottomWidth: .5
-      }}>
-        <TouchableOpacity
-          style={{
-            width: 20,
-            height: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            left: 20
-          }}
-          onPress={() => {
-            //@ts-ignore
-            navigation.goBack()
-          }}
-        >
-          <ScreenBack width={20} height={20} />
-        </TouchableOpacity>
-        <Text style={{
-          fontSize: 18,
-          alignSelf: 'center',
-          color: '#323232',
-          fontFamily: 'GeneralSans-Semibold'
-        }}>
-          Meu carrinho
-        </Text>
+      <HeaderScreens
+        navigation={navigation}
+        title={'Carrinho'}
+      />
 
-      </View>
       {
-        kitsCart.length <= 0 ?
+        products.length <= 0 ?
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <Text style={{
               fontSize: 18,
               color: '#c6c6c6',
-              fontFamily: 'GeneralSans-SemiBold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Não há nenhum ítem no seu carrinho
             </Text>
@@ -213,59 +174,23 @@ export function Cart({ navigation }: { navigation: any }) {
             style={{
               marginBottom: 140
             }}
-            data={kitsCart}
-            //  @ts-ignore
-            keyExtractor={item => item.id}
-
+            data={products}
+            extraData={products}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              //@ts-ignore
-              let qtdProdutoSelecionado = kitsCart.find(objeto => objeto.id === item.id)
-
               return (
-                <ItensCart
-                  //@ts-ignore
-                  name={item.nome}
-                  //@ts-ignore
-                  price={parseFloat(item.preco)}
-                  //@ts-ignore
-                  imagem={item.imagem}
-                  //@ts-ignore
-                  und={item.und}
-                  //@ts-ignore
-                  quantidade={qtdProdutoSelecionado}
-
-                  addProd={() => {
-                    //@ts-ignore
-                    addQtd(item.id)
-                  }}
-                  decProd={() => {
-                    //@ts-ignore
-                    if (qtdProdutoSelecionado.quantidade <= 1) {
-                      //@ts-ignore
-                      setIdItemRef(item.id)
-                      setModalVisible(!modalVisible)
-                    } else {
-                      //@ts-ignore
-                      decQtd(item.id)
-                    }
-                  }}
-                  delProd={() => {
-                    //@ts-ignore
-                    setIdItemRef(item.id)
-                    setModalVisible(!modalVisible)
-
-                  }}
-                />
+                <ItensCart product={item} />
               )
-            }} />
+            }}
+          />
       }
 
+
       <TouchableOpacity
-        disabled={kitsCart.length <= 0 ? true : false}
+        disabled={products.length <= 0 ? true : false}
         onPress={() => {
-          //@ts-ignore
-          const hasKit = kitsCart.some(item => item.categoria === 'kit')
-          if(hasKit)
+          const hasKit = products.some(item => item.category === 'Kits')
+          if (hasKit)
             setModalFinalizarVisible(!modalFinalizarVisible)
           else
             Alert.alert('Você precisa ter pelo menos um KIT no seu carrino')
@@ -273,7 +198,7 @@ export function Cart({ navigation }: { navigation: any }) {
         style={{
           position: 'absolute',
           backgroundColor: '#EE2F2A',
-          opacity: kitsCart.length <= 0 ? .5 : 1,
+          opacity: products.length <= 0 ? .5 : 1,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
@@ -286,7 +211,7 @@ export function Cart({ navigation }: { navigation: any }) {
         <Text style={{
           fontSize: 16,
           color: '#fff',
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Finalizar Compra
         </Text>
@@ -296,6 +221,7 @@ export function Cart({ navigation }: { navigation: any }) {
             alignItems: 'center',
             justifyContent: 'center',
             padding: 5,
+            opacity: products.length <= 0 ? .5 : 1,
             backgroundColor: '#FF5F5A',
             right: 10,
             borderRadius: 5
@@ -304,56 +230,14 @@ export function Cart({ navigation }: { navigation: any }) {
           <Text style={{
             fontSize: 12,
             color: '#fff',
-            fontFamily: 'GeneralSans-Semibold',
+            fontFamily: 'DMSans-SemiBold',
           }}>
             R$ {totalCompra.toFixed(2)}
           </Text>
         </View>
 
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Deseja mesmo Excluir item?</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '85%',
-              }}
-            >
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
-                }
-                }>
-                <Text style={styles.textStyle}>Cancelar</Text>
-              </Pressable>
-
-              <Pressable
-                style={[styles.button, styles.buttonExcluir]}
-                onPress={() => {
-                  //@ts-ignore
-                  delProdCart(idItemRef)
-                  setModalVisible(!modalVisible)
-                }
-                }>
-                <Text style={styles.textStyle}>Excluir</Text>
-              </Pressable>
-            </View>
-
-          </View>
-        </View>
-      </Modal>
-
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -399,7 +283,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 18,
                 color: '#000',
-                fontFamily: 'GeneralSans-Semibold',
+                fontFamily: 'DMSans-SemiBold',
               }}
             >
               Checkout
@@ -429,7 +313,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
               }}
             >
               Total:
@@ -438,7 +322,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Semibold',
+                fontFamily: 'DMSans-SemiBold',
               }}
             >
               R$ {totalCompra.toFixed(2)}
@@ -456,13 +340,14 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
                 textAlign: 'left'
               }}
             >
               Retirada:
             </Text>
             <DropDownPicker
+              placeholder='Selecione'
               open={openRet}
               value={valueRet}
               items={itemsRet}
@@ -482,7 +367,7 @@ export function Cart({ navigation }: { navigation: any }) {
               }}
             />
           </View>
-            
+
           <View
             style={{
               width: '100%',
@@ -494,13 +379,14 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 16,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
                 textAlign: 'left'
               }}
             >
               Forma de Pagamento:
             </Text>
             <DropDownPicker
+              placeholder='Selecione'
               open={openPag}
               value={valuePag}
               items={itemsPag}
@@ -523,27 +409,27 @@ export function Cart({ navigation }: { navigation: any }) {
           {
             valuePag === 'dinheiro' &&
             <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: 10
-            }}>
+              style={{
+                width: '100%',
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                gap: 10
+              }}>
               <Text
                 style={{
                   fontSize: 16,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Medium',
+                  fontFamily: 'DMSans-Medium',
                   textAlign: 'left'
                 }}
               >
                 Troco para:
               </Text>
               <TextInput
-                value={troco }
+                value={troco}
                 onChangeText={setTroco}
                 placeholder='Ex: R$ 100,00'
                 placeholderTextColor={'#7C7C7C'}
@@ -574,7 +460,7 @@ export function Cart({ navigation }: { navigation: any }) {
               style={{
                 fontSize: 12,
                 color: '#000',
-                fontFamily: 'GeneralSans-Medium',
+                fontFamily: 'DMSans-Medium',
               }}
             >
               Ao comprar você concorda com nossos termos de
@@ -582,7 +468,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 style={{
                   fontSize: 12,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}
               >
                 {' '}uso{' '}
@@ -592,7 +478,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 style={{
                   fontSize: 12,
                   color: '#000',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}
               >
                 {' '}condições{' '}
@@ -602,7 +488,7 @@ export function Cart({ navigation }: { navigation: any }) {
 
           <TouchableOpacity
             onPress={() => {
-              finalizarPedido(dadosUsuario)
+              finalizarPedido(userData)
             }}
             style={{
               backgroundColor: '#EE2F2A',
@@ -626,7 +512,7 @@ export function Cart({ navigation }: { navigation: any }) {
                 <Text style={{
                   fontSize: 16,
                   color: '#fff',
-                  fontFamily: 'GeneralSans-Semibold',
+                  fontFamily: 'DMSans-SemiBold',
                 }}>
                   Finalizar Compra
                 </Text>
@@ -718,6 +604,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'center',
     color: '#323232',
-    fontFamily: 'Manrope-SemiBold'
+    fontFamily: 'DMSans-SemiBold'
   },
 })

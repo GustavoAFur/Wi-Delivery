@@ -93,59 +93,7 @@ export function ItensOffers({ name, imagem, price, navTo }: ItensProps & Pressab
             {name}
           </Text>
         </View>
-
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 2,
-          marginVertical: 5
-        }}>
-          <Image
-            resizeMode='contain'
-            style={{
-              width: 18,
-              height: 18,
-            }}
-            source={IconStar}
-          />
-
-          <Image
-            resizeMode='contain'
-            style={{
-              width: 18,
-              height: 18,
-            }}
-            source={IconStar}
-          />
-
-          <Image
-            resizeMode='contain'
-            style={{
-              width: 18,
-              height: 18,
-            }}
-            source={IconStar}
-          />
-
-          <Image
-            resizeMode='contain'
-            style={{
-              width: 18,
-              height: 18,
-            }}
-            source={IconStarN}
-          />
-
-          <Image
-            resizeMode='contain'
-            style={{
-              width: 18,
-              height: 18,
-            }}
-            source={IconStarN}
-          />
-        </View>
-
+        
         <View style={{
           alignItems: 'flex-start'
         }}>

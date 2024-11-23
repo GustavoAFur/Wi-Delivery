@@ -4,7 +4,7 @@ import React from 'react'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
 
 //@ts-ignore
 export function InfoPayment({navigation}) {

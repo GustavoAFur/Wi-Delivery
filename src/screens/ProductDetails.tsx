@@ -1,13 +1,27 @@
-import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, StatusBar, Image, ScrollView, Pressable, Alert, TouchableOpacity, ToastAndroid } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import React, { useEffect, useState } from 'react'
 
-import { NavigationProp, useRoute } from '@react-navigation/native'
-import { useAuth } from '../hooks/auth'
+import firestore from '@react-native-firebase/firestore'
 
-import ScreenBack from './../../assets/svgs/arrow-right.svg'
-import More from './../../assets/svgs/mais-black.svg'
-import Less from './../../assets/svgs/menos.svg'
+import { useRoute} from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native';
+
+import { useCart } from '../cart/CartContext'
+
+import ScreenBack from '../../assets/svgs/arrow-right.svg'
+import More from '../../assets/svgs/mais-black.svg'
+import Less from '../../assets/svgs/menos.svg'
+import { ProductsList } from '../components/PorductsList'
+
+interface product {
+  id: string
+  name: string
+  price: string
+  category: string
+  images: string[]
+}
+
 
 export default function ProductDetails({ navigation }: { navigation: any }) {
 
@@ -15,40 +29,67 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
   const { width, height } = Dimensions.get("window")
 
-  const { kitsCart, setKitsCart } = useAuth()
+  const [productsData, setProductsData] = useState<product[]>([])
+
+  const { products, addProduct } = useCart()
 
   const [qtsItens, setQtdItens] = useState(1)
+  //@ts-ignore
+  const [imageProduct, setImageProduct] = useState()
+  const [indexImg, setIndexImg] = useState(1)
 
-  function handleToggleAddCart(value: any, quantidade: number) {
-    //@ts-ignore
-    const hasKit = kitsCart.some(item => item.categoria === 'kit')
+  const attProductRelevance = (productId: string) => {
+    const postReference = firestore().doc(`products/${productId}`);
 
-    if (value.categoria === 'kit' || hasKit) {
-      setKitsCart(prevObjetos => {
-        //@ts-ignore
-        const objetoExistente = prevObjetos.find(objeto => objeto.id === value.id)
+    return firestore().runTransaction(async transaction => {
+      // Get post data first
+      const productSnapshot = await transaction.get(postReference);
 
-        if (objetoExistente) {
-          // Se o objeto já existir, atualize a quantidade
-          return prevObjetos.map(objeto =>
-            //@ts-ignore
-            objeto.id === value.id ? { ...objeto, quantidade: objeto.quantidade + quantidade } : objeto
-          )
-        } else {
-          // Se o objeto não existir, adicione-o com a quantidade especificada
-          return [...prevObjetos, { ...value, quantidade }]
-        }
-      })
-    } else {
-      Alert.alert("Adicione um kit antes")
-    }
+      if (!productSnapshot.exists) {
+        throw 'Post does not exist!';
+      }
 
-    navigation.goBack();
+      const currentRelevance = productSnapshot.data()?.relevance || 0;
+
+      transaction.update(postReference, {
+        relevance: currentRelevance + 1,
+      });
+    });
+  }
+  const hadleAddProduct =  (item : any, qtsItens: number) => {
+    addProduct(item, qtsItens)
+    attProductRelevance(item.id)
   }
 
   useEffect(() => {
     //@ts-ignore
-    console.log(route.params.item.nome)
+    setImageProduct(route.params.item.images[0])
+  },[])
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const produtosSnapShot = await firestore()
+          .collection('products')
+          //@ts-ignore
+          .where('category', '==', `${route.params.item.category}`)
+          .limit(11)
+          .get()
+
+        const arrayProducts: any = []
+        produtosSnapShot.forEach((items) => {
+          const id = items.id
+          const item = items.data()
+          arrayProducts.push({ id, ...item })
+        })
+        //@ts-ignore
+        const productsFiltered = arrayProducts.filter((item: any) => item.id !== route.params.item.id)
+        setProductsData(productsFiltered)
+
+      } catch (error) {
+        console.error("Error fetching produtos: ", error)
+      }
+    }
+    fetchProducts()
   }, [])
 
   return (
@@ -58,6 +99,10 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
         width: width,
         paddingTop: getStatusBarHeight(),
         backgroundColor: '#fff',
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: 40
       }}
     >
       <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
@@ -81,7 +126,6 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             left: 20
           }}
           onPress={() => {
-            //@ts-ignore
             navigation.goBack()
           }}
         >
@@ -91,7 +135,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           fontSize: 18,
           alignSelf: 'center',
           color: '#323232',
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Detalhes do Produto
         </Text>
@@ -99,8 +143,8 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
       <View
         style={{
-          width: '94%',
-          height: 280,
+          width: '95%',
+          height: 260,
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
@@ -118,20 +162,98 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
       >
         <Image
           //@ts-ignore
-          source={{ uri: route.params.item.imagem }}
+          source={{ uri: imageProduct }}
           style={{
             width: '80%',
             height: '80%',
             resizeMode: 'contain'
           }}
         />
+        <View
+          style={{
+            width: 40,
+            borderRadius: 10,
+            backgroundColor: '#A9A9A9',
+            position: 'absolute',
+            bottom: 10,
+            left: 20,
+            padding: 5,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              color: '#fff',
+              fontFamily: 'DMSans-SemiBold'
+            }}
+          >
+            {/*@ts-ignore*/}
+            {indexImg}/{route.params.item.images.length}
+          </Text>
+        </View>
       </View>
+
+      {
+        //@ts-ignore
+        route.params.item.images.length > 1 && (
+          <ScrollView
+            horizontal
+            style={{
+              width: '100%',
+              height: 80,
+              marginTop: 20
+            }}
+            contentContainerStyle={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              paddingHorizontal: 20,
+            }}
+          >
+            {
+              //@ts-ignore
+              route.params.item.images.map((image, index) => (
+                <Pressable
+                  onPress={() => {
+                    setImageProduct(image)
+                    setIndexImg(index + 1)
+                  }}
+                  key={index}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                    borderColor: imageProduct === image ? '#EE2F2A' : '#9c9a9a',
+                    borderWidth: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    //@ts-ignore
+                    source={{ uri: image }}
+                    style={{
+                      width: '80%',
+                      height: '80%',
+                      resizeMode: 'contain'
+                    }}
+                  />
+                </Pressable>
+              ))
+            }
+
+          </ScrollView>
+        )
+      }
 
       <View
         style={{
           width: width,
           paddingHorizontal: 20,
-          paddingVertical: 15,
+          marginTop: 10,
           flexDirection: 'row',
           justifyContent: 'space-between'
         }}
@@ -142,17 +264,10 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           fontFamily: 'GeneralSans-Bold'
         }}>
           {/*@ts-ignore*/}
-          {route.params.item.nome}
+          {route.params.item.name}
         </Text>
 
-        <Text style={{
-          fontSize: 18,
-          color: '#A9A9A9',
-          fontFamily: 'GeneralSans-Medium'
-        }}>
-          {/*@ts-ignore*/}
-          R$ {route.params.item.preco}
-        </Text>
+
       </View>
 
       <View
@@ -160,12 +275,21 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
           width: width,
           paddingLeft: 20,
           paddingRight: 20,
-          paddingVertical: 15,
+          paddingVertical: 10,
           alignItems: 'center',
           flexDirection: 'row',
           justifyContent: 'space-between'
         }}
       >
+
+        <Text style={{
+          fontSize: 18,
+          color: '#A9A9A9',
+          fontFamily: 'DMSans-Medium'
+        }}>
+          {/*@ts-ignore*/}
+          R$ {route.params.item.price}
+        </Text>
 
         <View
           style={{
@@ -204,7 +328,7 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 20,
               color: '#323232',
-              fontFamily: 'GeneralSans-Bold'
+              fontFamily: 'DMSans-Bold'
             }}>
               {qtsItens}
             </Text>
@@ -229,67 +353,98 @@ export default function ProductDetails({ navigation }: { navigation: any }) {
 
         </View>
 
-        <Pressable
-          onPress={() => {
-            //@ts-ignore
-            handleToggleAddCart(route.params.item, qtsItens)
-
-          }}
-          style={{
-            paddingHorizontal: 20,
-            paddingVertical: 15,
-            backgroundColor: '#EE2F2A',
-            borderRadius: 30,
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Text style={{
-            fontSize: 18,
-            color: '#fff',
-            fontFamily: 'GeneralSans-Bold'
-          }}>
-            Adicionar
-          </Text>
-        </Pressable>
-
       </View>
+      {
+        //@ts-ignore
+        route.params.item.details !== '' && (
+          <>
+            <View
+              style={{
+                width: width,
+                paddingLeft: 20,
+              }}
+            >
+              <Text style={{
+                fontSize: 20,
+                color: '#4F4F4F',
+                fontFamily: 'DMSans-Bold'
+              }}>
+                Detalhes:
+              </Text>
+            </View>
 
-      <View
-        style={{
-          width: width,
-          paddingLeft: 20,
-        }}
-      >
+            <View
+              style={{
+                width: width,
+                paddingTop: 10,
+                paddingBottom: 10,
+                paddingHorizontal: 20,
+                gap: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#A9A9A9',
+                  fontFamily: 'GeneralSans-Medium'
+                }}
+              >
+                {/*@ts-ignore*/}
+                {route.params.item.details}
+              </Text>
+            </View>
+          </>
+        )
+      }
+
+
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 15,
+        marginBottom: 15,
+        paddingHorizontal: 20,
+      }}>
         <Text style={{
           fontSize: 20,
           color: '#4F4F4F',
           fontFamily: 'GeneralSans-Bold'
         }}>
-          Detalhes:
+          Semelhantes
         </Text>
+
       </View>
 
-      <View
+      <ProductsList product={productsData} navigation={navigation} />
+
+      <Pressable
+        onPress={() => {
+          //@ts-ignore
+          hadleAddProduct(route.params.item, qtsItens)
+          navigation.goBack()
+          ToastAndroid.show('Adicionado ao carrinho', ToastAndroid.SHORT)
+        }}
         style={{
-          width: width,
-          paddingTop: 10,
-          paddingBottom: 10,
           paddingHorizontal: 20,
-          gap: 20
+          marginHorizontal: 20,
+          marginVertical: 20,
+          paddingVertical: 15,
+          backgroundColor: '#EE2F2A',
+          borderRadius: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+
         }}
       >
-        <Text
-          style={{
-            fontSize: 18,
-            color: '#4F4F4F',
-            fontFamily: 'GeneralSans-Medium'
-          }}
-        >
-          {/*@ts-ignore*/}
-          {route.params.item.detalhes}
+        <Text style={{
+          fontSize: 18,
+          color: '#fff',
+          fontFamily: 'DMSans-Bold'
+        }}>
+          Adicionar
         </Text>
-      </View>
+      </Pressable>
 
     </ScrollView>
   );

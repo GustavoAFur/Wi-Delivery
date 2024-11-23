@@ -5,28 +5,22 @@ import Mais from './../../assets/svgs/plus-svgrepo-com.svg'
 import Menos from './../../assets/svgs/menos.svg'
 import Close from './../../assets/svgs/close.svg'
 
-interface Props{
-  name: string,
-  imagem: string,
-  quantidade : string,
-  price: number,
-  und: string,
-  addProd: () => void,
-  decProd: () => void,
-  delProd: () => void
+import { useCart } from '../cart/CartContext'
+interface Props {
+  product: {
+    id: string
+    name: string
+    price: string
+    images: string[]
+    category: string
+    quantity: number
+  }
 }
 
-export default function ItensCart ({
-  name, 
-  imagem, 
-  quantidade,
-  price,
-  und,
-  addProd,
-  decProd,
-  delProd
-  }: Props & PressableProps) {
 
+export default function ItensCart ({product}: Props & PressableProps) {
+
+  const { deleteProduct, decreaseProductQuantity, increaseProductQuantity } = useCart()
 
   return (
     <View style={{
@@ -52,8 +46,7 @@ export default function ItensCart ({
           justifyContent: 'center'
         }}>
           <Image 
-            //@ts-ignore
-            source={{uri: imagem }}
+            source={{uri: product.images[0] }}
             style={styles.imageStyle}
           />
         </View>
@@ -77,10 +70,10 @@ export default function ItensCart ({
             <Text 
               style={{
                 color: '#1A1926', 
-                fontFamily: 'GeneralSans-Semibold'
+                fontFamily: 'DMSans-SemiBold'
               }}
             >
-              {name}
+              {product.name}
             </Text>
           </View>
           <View style={{ 
@@ -92,18 +85,24 @@ export default function ItensCart ({
             paddingLeft: 6,
           }}>
 
-            <Pressable onPress={decProd}>
+            <Pressable onPress={()=>{
+              if(product.quantity === 1){
+                deleteProduct(product.id)
+              }
+              decreaseProductQuantity(product)
+            }}>
               <View style={styles.menosMais}>
                 <Menos  width={15} height={15}/>
               </View>
             </Pressable>
             
               <View>
-                {/*@ts-ignore*/}
-                <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{quantidade.quantidade}</Text>
+                <Text style={{color: '#000',fontWeight: 'bold', fontSize: 18}}>{product.quantity}</Text>
               </View>
             
-            <Pressable onPress={addProd}>
+            <Pressable onPress={()=>{
+              increaseProductQuantity(product)
+            }}>
               <View style={styles.menosMais}>
                 <Mais  width={15} height={15} fill="#333"/>
               </View>
@@ -122,7 +121,17 @@ export default function ItensCart ({
         paddingRight: 5
       }}>
         <View >
-          <Pressable onPress={delProd}>
+          <Pressable 
+            style={{
+              width: 30,
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={()=>{
+              deleteProduct(product.id)
+            }}
+          >
             <Close  width={15} height={15}/> 
           </Pressable>
         </View>
@@ -134,11 +143,10 @@ export default function ItensCart ({
         >
           <Text style={{
             color: '#000',
-            fontFamily: 'GeneralSans-Semibold',
+            fontFamily: 'DMSans-SemiBold',
             fontSize: 15
             }}>
-              {/*@ts-ignore*/}
-              R$ {(parseFloat(price) * parseFloat(quantidade.quantidade)).toFixed(2)}
+              R$ {(parseFloat(product.price) * (product.quantity || 1)).toFixed(2)}
           </Text>
         </View>
       </View> 
