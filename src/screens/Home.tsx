@@ -112,8 +112,6 @@ export function Home({ navigation }: { navigation: any }) {
     fetchProducts()
   }, [])
 
-
-
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
@@ -163,7 +161,7 @@ export function Home({ navigation }: { navigation: any }) {
 
             <Text style={{
               fontSize: 13,
-              fontFamily: 'GeneralSans-Medium',
+              fontFamily: 'DMSans-Medium',
               color: '#67697A',
             }}>
               {saudacaoApp}
@@ -171,7 +169,7 @@ export function Home({ navigation }: { navigation: any }) {
 
             <Text style={{
               fontSize: 15,
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
               color: '#0F1121',
             }}>
               {dadosUsuario.nome ?? ''}
@@ -252,7 +250,7 @@ export function Home({ navigation }: { navigation: any }) {
         <Text style={{
           color: '#030303',
           fontSize: 18,
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Recomendados
         </Text>
@@ -276,7 +274,7 @@ export function Home({ navigation }: { navigation: any }) {
         <Text style={{
           color: '#030303',
           fontSize: 18,
-          fontFamily: 'GeneralSans-Semibold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Novidades
         </Text>
@@ -301,7 +299,7 @@ export function Home({ navigation }: { navigation: any }) {
           <Text style={{
             color: '#030303',
             fontSize: 18,
-            fontFamily: 'GeneralSans-Semibold',
+            fontFamily: 'DMSans-SemiBold',
           }}>
             Destaques do dia
           </Text>
@@ -316,7 +314,7 @@ export function Home({ navigation }: { navigation: any }) {
             }}>
             <Text style={{
               fontSize: 16,
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
               color: '#EE2F2A',
             }}>
               Ver mais

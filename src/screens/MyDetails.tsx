@@ -115,7 +115,7 @@ export function MyDetails({ navigation }: { navigation: any }) {
           fontSize: 18,
           alignSelf: 'center',
           color: '#323232',
-          fontFamily: 'GeneralSans-Semibold'
+          fontFamily: 'DMSans-SemiBold'
         }}>
           Meus Detalhes
         </Text>
@@ -184,7 +184,7 @@ export function MyDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 18,
               color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Nome:
             </Text>
@@ -201,7 +201,7 @@ export function MyDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 18,
               color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Sobrenome:
             </Text>
@@ -218,7 +218,7 @@ export function MyDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 18,
               color: '#000',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Telefone:
             </Text>
@@ -253,7 +253,7 @@ export function MyDetails({ navigation }: { navigation: any }) {
             <Text style={{
               fontSize: 18,
               color: '#fff',
-              fontFamily: 'GeneralSans-Semibold',
+              fontFamily: 'DMSans-SemiBold',
             }}>
               Atualizar
             </Text>
@@ -271,7 +271,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0.6,
     borderRadius: 8,
     fontSize: 16,
-    fontFamily: 'GeneralSans-Light',
+    fontFamily: 'DMSans-Light',
     paddingLeft: 10,
     marginVertical: 10,
     color: '#0008',

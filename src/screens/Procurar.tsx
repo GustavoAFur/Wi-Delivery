@@ -44,7 +44,7 @@ export function Procurar({ navigation }: { navigation: any }) {
         <Text style={{
           fontSize: 18,
           color: '#c6c6c6',
-          fontFamily: 'GeneralSans-SemiBold',
+          fontFamily: 'DMSans-SemiBold',
         }}>
           Procure por um produto da loja.
         </Text>
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     width: '88%',
     height: 45,
     alignSelf: 'center',
-    fontFamily: 'GeneralSans-Semibold',
+    fontFamily: 'DMSans-SemiBold',
     borderRadius: 16,
     paddingLeft: 20,
     color: '#7C7C7C'

@@ -70,7 +70,7 @@ export default function ItensCart ({product}: Props & PressableProps) {
             <Text 
               style={{
                 color: '#1A1926', 
-                fontFamily: 'GeneralSans-Semibold'
+                fontFamily: 'DMSans-SemiBold'
               }}
             >
               {product.name}
@@ -143,7 +143,7 @@ export default function ItensCart ({product}: Props & PressableProps) {
         >
           <Text style={{
             color: '#000',
-            fontFamily: 'GeneralSans-Semibold',
+            fontFamily: 'DMSans-SemiBold',
             fontSize: 15
             }}>
               R$ {(parseFloat(product.price) * (product.quantity || 1)).toFixed(2)}

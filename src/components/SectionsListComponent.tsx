@@ -47,7 +47,7 @@ const SectionsListComponent = ({ name, img,navTo}: Props & PressableProps) => {
         <View>
             <Text style={{
               color: '#4F4F4F',
-              fontFamily: 'GeneralSans-Bold', 
+              fontFamily: 'DMSans-Bold', 
             }}>{name}</Text>
           </View>
       </Pressable>
