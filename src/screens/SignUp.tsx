@@ -27,9 +27,9 @@ export function SignUp({navigation}: {navigation: any}) {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
 
   const [isFocused, setIsFocused] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ export function SignUp({navigation}: {navigation: any}) {
 
     if (email != '' && password != '') {
       auth()
-        .signInWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(email, password)
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             setmessageErro('Esse endereço de email já esta em uso!');
@@ -192,8 +192,8 @@ export function SignUp({navigation}: {navigation: any}) {
                 returnKeyType="go"
                 showSoftInputOnFocus={true}
                 selectTextOnFocus={true}
-                onChangeText={setEmail}
-                value={email}
+                onChangeText={setName}
+                value={name}
                 onFocus={() => {
                   setIsFocused('nameRef');
                 }}
@@ -364,7 +364,7 @@ export function SignUp({navigation}: {navigation: any}) {
                   fontFamily: 'DMSans-SemiBold',
                   color: '#FFFFFF',
                 }}>
-                Entrar
+                Criar conta
               </Text>
             )}
           </Pressable>

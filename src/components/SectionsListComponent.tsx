@@ -29,10 +29,10 @@ const SectionsListComponent = ({name, img, navTo}: Props & PressableProps) => {
         paddingVertical: 5,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: '#F2F3F2',
+        backgroundColor: '#FFFF',
         borderRadius: 30,
         borderColor: '#F2F3F2',
-        borderWidth: 0.8,
+        borderWidth: 1,
       }}>
       <View
         style={{
@@ -56,13 +56,12 @@ const SectionsListComponent = ({name, img, navTo}: Props & PressableProps) => {
         <Text
           style={{
             color: '#4F4F4F',
-            fontFamily: 'GeneralSans-Bold',
+            fontFamily: 'GeneralSans-Semibold',
           }}>
           {name}
         </Text>
       </View>
     </Pressable>
-
   );
 };
 

@@ -1,39 +1,36 @@
-import { FlatList, View } from "react-native"
-import { Products } from "./Products"
-interface  product {
-  id: string
-  name: string
-  price: string
-  category: string
-  images: string[]
+import {FlatList, View} from 'react-native';
+import {Products} from './Products';
+interface product {
+  id: string;
+  name: string;
+  price: string;
+  category: string;
+  images: string[];
 }
 
 interface Props {
-  product: product[]
-  navigation: any
+  product: product[];
+  navigation: any;
 }
 
-export function ProductsList({ product, navigation }: Props) {
-
-  return(
+export function ProductsList({product, navigation}: Props) {
+  return (
     <View
+      style={{
+        paddingHorizontal: 0,
+      }}>
+      <FlatList
         style={{
-          paddingHorizontal: 0
+          paddingHorizontal: 10,
         }}
-      >
-        <FlatList
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-          }}
-          horizontal
-          data={product} // wrap the product object in an array
-          renderItem={({ item }) => {
-            return (
-              <Products product={item} navigation={navigation}/>
-            )
-          }}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-  )
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={product} // wrap the product object in an array
+        renderItem={({item}) => {
+          return <Products product={item} navigation={navigation} />;
+        }}
+        keyExtractor={item => item.id}
+      />
+    </View>
+  );
 }

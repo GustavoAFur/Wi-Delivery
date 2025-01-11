@@ -4,65 +4,67 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View, Pressable,
+  View,
+  Pressable,
   FlatList,
   Image,
   Dimensions,
-} from 'react-native'
-import { useEffect, useState } from 'react'
+} from 'react-native';
+import {useEffect, useState} from 'react';
 
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
-import auth from '@react-native-firebase/auth'
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
-import { getStatusBarHeight } from 'react-native-status-bar-height'
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-import Mais from '../../assets/images/icons8-mais-100.png'
+import Mais from '../../assets/images/icons8-mais-100.png';
 
-import IconNotification from '../../assets/svgs/notification.svg'
+import IconNotification from '../../assets/svgs/notification.svg';
 
-import SectionsListComponent from '../components/SectionsListComponent'
-import { YourAdress } from '../components/YourAdress'
-import { ProductsList } from '../components/PorductsList'
-import { sections } from '../data/Sections'
-import { SearchInput } from '../components/SearchInput'
+import SectionsListComponent from '../components/SectionsListComponent';
+import {YourAdress} from '../components/YourAdress';
+import {ProductsList} from '../components/PorductsList';
+import {sections} from '../data/sections';
+import {SearchInput} from '../components/SearchInput';
 
- interface  product {
-  id: string
-  name: string
-  price: string
-  category: string
-  images: string[]
+interface product {
+  id: string;
+  name: string;
+  price: string;
+  category: string;
+  images: string[];
 }
 
-interface DadosUsuario{
-  name?: string
-  email?: string
-  street?: string
-  addressNumber?: string
-  address?: string
-  province?: string
-  image?: string
+interface DadosUsuario {
+  name?: string;
+  email?: string;
+  street?: string;
+  addressNumber?: string;
+  address?: string;
+  province?: string;
+  image?: string;
 }
 
 const dadosUsuario: DadosUsuario = {}; // Initialize dadosUsuario with an empty object
-export function Home({ navigation }: { navigation: any }) {
-
-  const horaAtual = new Date().getHours()
-  let saudacaoApp
+export function Home({navigation}: {navigation: any}) {
+  const horaAtual = new Date().getHours();
+  let saudacaoApp;
 
   if (horaAtual >= 5 && horaAtual < 12) {
-    saudacaoApp = 'Bom dia,'
+    saudacaoApp = 'Bom dia,';
   } else if (horaAtual >= 12 && horaAtual < 18) {
-    saudacaoApp = 'Boa tarde,'
+    saudacaoApp = 'Boa tarde,';
   } else {
-    saudacaoApp = 'Boa noite,'
+    saudacaoApp = 'Boa noite,';
   }
 
-  const [products, setProducts] = useState<product[]>([])
+  const [products, setProducts] = useState<product[]>([]);
 
-  const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario> ({})
+  const [dadosUsuario, setDadosUsuario] = useState<DadosUsuario>({});
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const currentUser = auth().currentUser;
@@ -74,8 +76,8 @@ export function Home({ navigation }: { navigation: any }) {
             .get();
 
           if (documentSnapshot.exists) {
-            const id = documentSnapshot.id
-            const data = documentSnapshot.data()
+            const id = documentSnapshot.id;
+            const data = documentSnapshot.data();
             //@ts-ignore
             setDadosUsuario({id, ...data});
           }
@@ -87,8 +89,8 @@ export function Home({ navigation }: { navigation: any }) {
       }
     };
 
-    fetchUserData()
-  },[dadosUsuario])
+    fetchUserData();
+  }, [dadosUsuario]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -97,49 +99,52 @@ export function Home({ navigation }: { navigation: any }) {
           .collection('products')
           .orderBy('relevance', 'desc')
           .limit(10)
-          .get()
+          .get();
 
-        const arrayProducts: any = []
-        produtosSnapShot.forEach((items) => {
-          const id = items.id
-          const item = items.data()
-          arrayProducts.push({ id, ...item })
-        })
-        
-        setProducts(arrayProducts)
+        const arrayProducts: any = [];
+        produtosSnapShot.forEach(items => {
+          const id = items.id;
+          const item = items.data();
+          arrayProducts.push({id, ...item});
+        });
+
+        setProducts(arrayProducts);
       } catch (error) {
-        console.error("Error fetching produtos: ", error)
+        console.error('Error fetching produtos: ', error);
       }
-    }
-    fetchProducts()
-  }, [])
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        paddingBottom: 100
+        paddingBottom: 100,
       }}
       style={{
         backgroundColor: '#ffff',
-
-      }}
-    >
-
-      <StatusBar translucent backgroundColor={'#00000000'} barStyle={'dark-content'} />
-
-      <View style={{
-        marginTop: getStatusBarHeight() + 24,
-        paddingHorizontal: 30,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
       }}>
-        <View style={{
+      <StatusBar
+        translucent
+        backgroundColor={'#00000000'}
+        barStyle={'dark-content'}
+      />
+
+      <View
+        style={{
+          marginTop: getStatusBarHeight() + 24,
+          paddingHorizontal: 30,
           flexDirection: 'row',
-          alignItems: 'center'
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
           <View
             style={{
               width: 42,
@@ -147,56 +152,52 @@ export function Home({ navigation }: { navigation: any }) {
               borderRadius: 21,
               borderWidth: 2,
               borderColor: '#FDE933',
-              backgroundColor: '#a0a0f7'
-            }}
-          >
+              backgroundColor: '#a0a0f7',
+            }}>
             <Image
               source={require('./../../assets/images/bolsa-de-compras.png')}
-              style={{ width: '100%', height: '100%' }}
+              style={{width: '100%', height: '100%'}}
             />
           </View>
 
-          <View style={{
-            marginLeft: 12,
-            justifyContent: 'space-between'
-          }}>
-
-            <Text style={{
-              fontSize: 13,
-              fontFamily: 'DMSans-Medium',
-              color: '#67697A',
+          <View
+            style={{
+              marginLeft: 12,
+              justifyContent: 'space-between',
             }}>
+            <Text
+              style={{
+                fontSize: 13,
+                fontFamily: 'DMSans-Medium',
+                color: '#67697A',
+              }}>
               {saudacaoApp}
             </Text>
 
-            <Text style={{
-              fontSize: 15,
-              fontFamily: 'DMSans-SemiBold',
-              color: '#0F1121',
-            }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: 'DMSans-SemiBold',
+                color: '#0F1121',
+              }}>
               {dadosUsuario.name ?? ''}
             </Text>
-
-
           </View>
         </View>
 
-        <Pressable style={{
-          width: 42,
-          height: 42,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-          onPress={() => navigation.navigate('VideoFullScreen', { categoria: 'Entradas' })}
-        >
-
+        <Pressable
+          style={{
+            width: 42,
+            height: 42,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={() =>
+            navigation.navigate('VideoFullScreen', {categoria: 'Entradas'})
+          }>
           <IconNotification />
         </Pressable>
       </View>
-
-      <SearchInput 
-        navTo={() => navigation.navigate('SearchScreen')}
-      />
 
       <YourAdress
         navTo={() => navigation.navigate('AdressDetails')}
@@ -205,137 +206,140 @@ export function Home({ navigation }: { navigation: any }) {
         neighborhood={dadosUsuario.province ?? ''}
       />
 
+      <SearchInput navTo={() => navigation.navigate('SearchScreen')} />
 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 20,
-          gap: 10
+          gap: 10,
         }}
         style={{
           marginTop: 20,
-          marginBottom: 10
-        }}
-      >
-        {
-          sections.map((item, index) => (
-            <SectionsListComponent
-              key={index}
-              img={item.imagem}
-              name={item.nome}
-              navTo={() => {
-                navigation.navigate('ProductsByCategory', { categoria: `${item.nome}`, filtroCategoria: `${item.value}` })
-              }}
-            />
-          ))
-        }
+          marginBottom: 10,
+        }}>
+        {sections.map((item, index) => (
+          <SectionsListComponent
+            key={index}
+            img={item.imagem}
+            name={item.nome}
+            navTo={() => {
+              navigation.navigate('ProductsByCategory', {
+                categoria: `${item.nome}`,
+                filtroCategoria: `${item.value}`,
+              });
+            }}
+          />
+        ))}
 
         <SectionsListComponent
           img={Mais}
           name={'Mais'}
           navTo={() => {
-            navigation.navigate('SecoesList')
+            navigation.navigate('SecoesList');
           }}
         />
-
       </ScrollView>
 
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 15,
-        marginBottom: 15,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderLeftColor: '#EE2F2A',
-        borderLeftWidth: 3,
-        borderTopLeftRadius: 1,
-        borderBottomLeftRadius: 1,
-      }}>
-        <Text style={{
-          color: '#030303',
-          fontSize: 18,
-          fontFamily: 'DMSans-SemiBold',
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 15,
+          marginBottom: 15,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          borderLeftColor: '#EE2F2A',
+          borderLeftWidth: 3,
+          borderTopLeftRadius: 1,
+          borderBottomLeftRadius: 1,
         }}>
-          Recomendados
-        </Text>
-      </View>
-      
-      <ProductsList navigation={navigation} product={products}/>
-
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 15,
-        marginBottom: 15,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderLeftColor: '#EE2F2A',
-        borderLeftWidth: 3,
-        borderTopLeftRadius: 1,
-        borderBottomLeftRadius: 1,
-      }}>
-        <Text style={{
-          color: '#030303',
-          fontSize: 18,
-          fontFamily: 'DMSans-SemiBold',
-        }}>
-          Novidades
-        </Text>
-        
-      </View>
-      
-      <View style={{
-        width: '100%',
-        height: 150,
-        marginTop: 10,
-        marginBottom: 10,
-        paddingHorizontal: 20,
-      }}>
-        <Image
-          source={require('../../assets/images/banner03.jpg')}
-          style={{ width: '100%', height: '100%',borderRadius: 10, }}
-        />
-      </View>
-
-      <View style={styles.Orffers}>
-        <View style={styles.OrffersInfo}>
-          <Text style={{
+        <Text
+          style={{
             color: '#030303',
             fontSize: 18,
             fontFamily: 'DMSans-SemiBold',
           }}>
+          Novidades
+        </Text>
+      </View>
+
+      <View
+        style={{
+          width: '100%',
+          height: 150,
+          marginTop: 10,
+          marginBottom: 10,
+          paddingHorizontal: 20,
+        }}>
+        <Image
+          source={require('../../assets/images/banner03.jpg')}
+          style={{width: '100%', height: '100%', borderRadius: 10}}
+        />
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 15,
+          marginBottom: 15,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          borderLeftColor: '#EE2F2A',
+          borderLeftWidth: 3,
+          borderTopLeftRadius: 1,
+          borderBottomLeftRadius: 1,
+        }}>
+        <Text
+          style={{
+            color: '#030303',
+            fontSize: 18,
+            fontFamily: 'DMSans-SemiBold',
+          }}>
+          Recomendados
+        </Text>
+      </View>
+
+      <ProductsList navigation={navigation} product={products} />
+
+      <View style={styles.Orffers}>
+        <View style={styles.OrffersInfo}>
+          <Text
+            style={{
+              color: '#030303',
+              fontSize: 18,
+              fontFamily: 'DMSans-SemiBold',
+            }}>
             Destaques do dia
           </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SeeMoreHighlights')
+              navigation.navigate('SeeMoreHighlights');
             }}
             style={{
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{
-              fontSize: 16,
-              fontFamily: 'DMSans-SemiBold',
-              color: '#EE2F2A',
-            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'DMSans-SemiBold',
+                color: '#EE2F2A',
+              }}>
               Ver mais
             </Text>
           </TouchableOpacity>
-
         </View>
       </View>
 
-      <ProductsList navigation={navigation} product={products}/>
-
+      <ProductsList navigation={navigation} product={products} />
     </ScrollView>
-
-  )
+  );
 }
 export const styles = StyleSheet.create({
   input: {
@@ -345,20 +349,20 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 16,
     paddingLeft: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header: {
     backgroundColor: '#F2B705',
     width: '100%',
     height: 195,
-    paddingTop: 20
+    paddingTop: 20,
   },
   details: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'center',
     width: '82%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   notification: {
     backgroundColor: '#fff',
@@ -367,11 +371,11 @@ export const styles = StyleSheet.create({
     borderRadius: 23,
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   userDetails: {
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
 
   scrollViewContent: {
@@ -380,21 +384,19 @@ export const styles = StyleSheet.create({
   },
   scrollViewContentOrffersNews: {
     paddingHorizontal: 20,
-
   },
   scrollViewContentNews: {
     paddingHorizontal: 20,
-    gap: 10
+    gap: 10,
   },
   scrollViewMain: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   sectionsItens: {
     width: 88,
     height: 108,
     marginRight: 6,
     alignItems: 'center',
-
   },
   sectionsImg: {
     backgroundColor: '#FFF',
@@ -414,11 +416,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: 46,
     height: 46,
-    borderRadius: 23
+    borderRadius: 23,
   },
   Orffers: {
     marginTop: 16,
-    marginBottom: 15
+    marginBottom: 15,
   },
   OrffersInfo: {
     flexDirection: 'row',
@@ -426,10 +428,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 10,
-        borderLeftColor: '#EE2F2A',
-        borderLeftWidth: 3,
-        borderTopLeftRadius: 1,
-        borderBottomLeftRadius: 1,
+    borderLeftColor: '#EE2F2A',
+    borderLeftWidth: 3,
+    borderTopLeftRadius: 1,
+    borderBottomLeftRadius: 1,
   },
   OrffersItem: {
     borderWidth: 0.5,
@@ -441,11 +443,8 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: '#fff',
     overflow: 'hidden',
-
   },
-  novidadesInfo: {
-
-  },
+  novidadesInfo: {},
   novidadesItens: {
     paddingHorizontal: 10,
   },
@@ -459,7 +458,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     overflow: 'hidden',
     alignSelf: 'center',
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   btnAdicionar: {
     backgroundColor: '#EE2F2A',
@@ -467,23 +466,22 @@ export const styles = StyleSheet.create({
     height: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10
+    borderRadius: 10,
   },
   imgProdView: {
     height: '50%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imgProd: {
     width: 80,
-    height: 80
+    height: 80,
   },
   detailsProd: {
     width: '86%',
     height: '45%',
     alignSelf: 'center',
     justifyContent: 'space-between',
-
   },
   menosMais: {
     width: 25,
@@ -492,7 +490,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     borderColor: '#d2d2d2',
-    borderWidth: .5,
+    borderWidth: 0.5,
   },
-
 });
